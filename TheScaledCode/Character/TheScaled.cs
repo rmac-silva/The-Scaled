@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using TheScaled.TheScaledCode.Cards;
 using TheScaled.TheScaledCode.Relics;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 
 namespace TheScaled.TheScaledCode.Character;
 
@@ -61,9 +62,16 @@ public class TheScaled : PlaceholderCharacterModel
             return icon;
         }
     }
+
+    public override NCreatureVisuals? CreateCustomVisuals()
+    {
+        return NodeFactory<NCreatureVisuals>.CreateFromScene("res://TheScaled/scenes/character/character.tscn");
+    }
+
     public override string CustomIconTexturePath => "character_icon_char_name.png".CharacterUiPath();
     public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
     public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
     public override string CustomEnergyCounterPath => "res://TheScaled/scenes/combat/energy_counters/scaled_energy_counter.tscn";
+    public override string CustomCharacterSelectBg => "res://TheScaled/scenes/char_select/char_select_bg_scaled.tscn";
 }

@@ -11,9 +11,9 @@
   "THESCALED-MUD_POWER.description": "Lose [gold]Dexterity[/gold] this turn.",
   "THESCALED-MUD_POWER.smartDescription": "Lose [blue]{Amount}[/blue] [gold]Dexterity[/gold] this turn.",
   "THESCALED-MUD_POWER.title": "Muddied",
-  "THESCALED-COMPROMISE_POWER.description": "Increases your exertion threshold by [blue]1[/blue] for [blue]X[/blue] turns.",
-  "THESCALED-COMPROMISE_POWER.smartDescription": "Increases your exertion threshold by [blue]1[/blue] for [blue]{Amount}[/blue] turns.",
-  "THESCALED-COMPROMISE_POWER.title": "CompromisePowerNameNeeded",
+  "THESCALED-COMPROMISE_POWER.description": "Increases your [gold]Exertion[/gold] threshold by [blue]1[/blue] for [blue]X[/blue] turns.",
+  "THESCALED-COMPROMISE_POWER.smartDescription": "Increases your [gold]Exertion[/gold] threshold by [blue]{Amount:diff()}[/blue] for [blue]{Amount}[/blue] turns.",
+  "THESCALED-COMPROMISE_POWER.title": "Compromise",
   "THESCALED-BIDE_POWER.description": "Next turn lower your [gold]Exertion[/gold] threshold by [blue]1[/blue]",
   "THESCALED-BIDE_POWER.smartDescription": "Next turn lower your [gold]Exertion[/gold] threshold by [blue]{Amount}[/blue].",
   "THESCALED-BIDE_POWER.title": "Biding Time",
@@ -30,5 +30,8 @@
   "THESCALED-SMOTHERING_PRESENCE_POWER.title": "Smothering Presence",
   "THESCALED-PRISMATIC_SCALES_POWER.description": "Whenever you gain [gold]Block[/gold], apply [gold]Drown[/gold] to ALL enemies.",
   "THESCALED-PRISMATIC_SCALES_POWER.smartDescription": "Whenever you gain [gold]Block[/gold], apply [blue]{Amount}[/blue] [gold]Drown[/gold] to ALL enemies.",
-  "THESCALED-PRISMATIC_SCALES_POWER.title": "Prismatic Scales"
+  "THESCALED-PRISMATIC_SCALES_POWER.title": "Prismatic Scales",
+  "THESCALED-INERTIA_POWER.description": "Lowers your [gold]Exertion[/gold] threshold.",
+  "THESCALED-INERTIA_POWER.smartDescription": "Lowers your [gold]Exertion[/gold] threshold by [blue]{ReductionAmount:diff()}[/blue] for [blue]{Amount}[/blue] turns.",
+  "THESCALED-INERTIA_POWER.title": "Inertia"
 }

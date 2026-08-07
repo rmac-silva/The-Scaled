@@ -54,6 +54,12 @@
 
   "THESCALED-TAKEDOWN.description": "Deal {Damage:diff()} damage. If the enemy is [gold]Drowning[/gold], hits twice.",
   "THESCALED-TAKEDOWN.title": "Takedown",
+  "THESCALED-AMBUSH.description": "Deal {Damage:diff()} damage. Deal an additional {GlobalDamage:diff()} damage and apply {FrailPower:diff()} [gold]Frail[/gold] to all enemies that intend to [gold]Block[/gold] this turn.",
+  "THESCALED-AMBUSH.title": "Ambush",
+  "THESCALED-HEADLONG_CHARGE.description": "Deal {Damage:diff()} damage. Exhaust {CardsToExhaust:diff()}{IfUpgraded:show:| random} {CardsToExhaust:plural:card|cards} from your hand.",
+  "THESCALED-HEADLONG_CHARGE.title": "Headlong Charge",
+  "THESCALED-INERTIA.description": "Deal {Damage:diff()} damage. Lower [gold]Exertion[/gold] threshold by 1 for {Turns:diff()} {Turns:plural:turn|turns}.",
+  "THESCALED-INERTIA.title": "Inertia",
 
   "THESCALED-SMOTHERING_PRESENCE.description": "Apply 1 [gold]Vulnerable[/gold] when you hit a [gold]Drowning[/gold] enemy. Removes {DrownReduction:diff()} [gold]Drown[/gold] from the enemy per hit.",
   "THESCALED-SMOTHERING_PRESENCE.title": "Smothering Presence",

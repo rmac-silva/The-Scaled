@@ -14,15 +14,17 @@ namespace TheScaled.TheScaledCode.Powers;
 /// across {Amount} turns
 /// </summary>
   
-public class CompromisePower : TheScaledPower
+  
+public class InertiaPower : TheScaledPower
 {
     private bool _shouldIgnoreNextInstance;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<ExertionPower>()];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("ReductionAmount",0m)];
 
-    protected virtual bool IsPositive => true;
+    protected virtual bool IsPositive => false;
 
     private int Sign
     {
@@ -36,7 +38,7 @@ public class CompromisePower : TheScaledPower
         }
     }
 
-    public override PowerType Type => PowerType.Debuff;
+    public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
@@ -44,9 +46,9 @@ public class CompromisePower : TheScaledPower
     {
         _shouldIgnoreNextInstance = false;
     }
-
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
+
         //Amount only represents how many turns this power will last. 
         //So if it was a negative gain, we are simply ticking down turns.
         if(power != this || amount <= 0)
@@ -70,9 +72,10 @@ public class CompromisePower : TheScaledPower
             );
         }
     }
+    
 
 
-    public void IncreaseAmount()
+    public void IncreaseReductionAmount()
     {
         base.DynamicVars["ReductionAmount"].BaseValue++;
     }

@@ -8,13 +8,7 @@ public static class IntentHelper
 {
     public static bool IntendsToBlock(MoveState nextMove)
     {
-        nextMove.Intents.Any(delegate(AbstractIntent intent)
-        {
-            IntentType intentType = intent.IntentType;
-            return intentType == IntentType.Defend ? true : false;
-        });
-
-        return false;
+       return nextMove.Intents.Any(intent => intent.IntentType == IntentType.Defend);
     }
 }
 }

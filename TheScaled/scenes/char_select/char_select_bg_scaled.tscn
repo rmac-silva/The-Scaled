@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://ds75hjm851hwx"]
+
+[ext_resource type="Texture2D" uid="uid://8867hpi65hl4" path="res://Art/CharacterSelect/bg.png" id="1_v8i1w"]
+[ext_resource type="Texture2D" uid="uid://b7qhvstig4mul" path="res://Art/Vfx/light.png" id="2_u7i82"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qoc78"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_gusj6"]
+_data = [Vector2(0, 0.418), 0.0, 0.0, 0, 0, Vector2(0.503, 0.508), 0.0, 0.0, 0, 0, Vector2(1, 0.423), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_onaui"]
+offsets = PackedFloat32Array(0, 0.607, 0.9955556)
+colors = PackedColorArray(0.42745098, 0.42745098, 0.42745098, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="Curve" id="Curve_l8mn6"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 29.047), 27.715, 0.0, 0, 0]
+point_count = 2
+
+[node name="CharSelectBgScaled" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -521.0
+offset_right = 1600.0
+offset_bottom = 679.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1280, 600)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -22.0
+offset_right = 1929.0
+offset_bottom = 1178.0
+texture = ExtResource("1_v8i1w")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="EyeLight" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_qoc78")
+position = Vector2(1060, 238)
+amount = 1
+texture = ExtResource("2_u7i82")
+lifetime = 6.0
+local_coords = true
+gravity = Vector2(0, 0)
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_gusj6")
+color = Color(0.54901963, 0.8784314, 0.4745098, 0.4509804)
+color_ramp = SubResource("Gradient_onaui")
+
+[node name="Fireflies" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_qoc78")
+position = Vector2(829, 1099)
+amount = 12
+texture = ExtResource("2_u7i82")
+lifetime = 10.0
+preprocess = 5.0
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(1000, 1)
+gravity = Vector2(0, -35)
+radial_accel_min = 0.5
+radial_accel_max = 3.0
+damping_min = 3.797
+damping_max = 6.329
+damping_curve = SubResource("Curve_l8mn6")
+scale_amount_min = 0.5
+scale_amount_curve = SubResource("Curve_gusj6")
+color = Color(0.5104338, 0.8885444, 0.43755057, 0.69803923)
+color_ramp = SubResource("Gradient_onaui")

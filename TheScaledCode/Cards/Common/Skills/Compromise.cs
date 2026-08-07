@@ -31,7 +31,7 @@ public class Compromise : TheScaledCard
             await PlayerCmd.GainEnergy(base.DynamicVars.Energy.BaseValue, base.Owner);
             
             //Gain 1 exertion for two(three) turns
-            await PowerCmd.Apply<CompromisePower>(choiceContext,base.Owner.Creature,DynamicVars["ExertionDuration"].BaseValue,base.Owner.Creature,cardPlay.Card);
+            (await PowerCmd.Apply<CompromisePower>(choiceContext,base.Owner.Creature,DynamicVars["ExertionDuration"].BaseValue,base.Owner.Creature,cardPlay.Card))?.IncreaseAmount();
 
             //Enchant a random card with muddied
             CardPile pile = PileType.Hand.GetPile(base.Owner);
