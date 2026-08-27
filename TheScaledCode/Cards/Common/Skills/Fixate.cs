@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using TheScaled.TheScaledCode.Enchantments;
 using TheScaled.TheScaledCode.Powers;
@@ -30,14 +29,7 @@ public class Fixate : SetupCard
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, base.DynamicVars.Weak.IntValue,base.Owner.Creature,this);
 
         //Create 1 mud card
-        List<CardModel> list = new List<CardModel>();
-        for (int i = 0; i < base.DynamicVars["MudAmount"].IntValue; i++)
-        {
-            CardModel card = base.CombatState.CreateCard<Mud>(base.Owner);
-            list.Add(card);
-        }
-        //Add the cards to the discard pile
-        await CardPileCmd.AddGeneratedCardsToCombat(list, PileType.Discard, base.Owner);
+        await Mud.AddMudCard(PileType.Hand, base.DynamicVars["MudAmount"].IntValue, base.Owner);
 
         //Call setup
         await base.OnPlay(choiceContext, cardPlay);

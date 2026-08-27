@@ -62,4 +62,26 @@ public class Mud : TheScaledCard
         }
         
     }
+
+    /// <summary>
+    /// Adds 'amount' Mud card(s) to the specified pile for the given player.
+    /// </summary>
+    /// <param name="pile"></param>
+    /// <param name="amount"></param>
+    /// <param name="owner"></param>
+    /// <returns></returns>
+    public static async Task AddMudCard(PileType pile, int amount, Player owner)
+    {
+        ArgumentNullException.ThrowIfNull(owner.Creature.CombatState, "owner.Creature.CombatState");
+
+        List<CardModel> list = new List<CardModel>();
+        for (int i = 0; i < amount; i++)
+        {
+            CardModel card = owner.Creature.CombatState.CreateCard<Mud>(owner);
+            list.Add(card);
+        }
+        //Add the cards to the discard pile
+        await CardPileCmd.AddGeneratedCardsToCombat(list, pile, owner);
+        CardCmd.Preview(list, 0.4f);
+    }
 }

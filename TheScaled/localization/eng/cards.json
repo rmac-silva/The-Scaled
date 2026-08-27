@@ -58,14 +58,20 @@
 
   "THESCALED-TAKEDOWN.description": "Deal {Damage:diff()} damage. If the enemy is [gold]Drowning[/gold], hits twice.",
   "THESCALED-TAKEDOWN.title": "Takedown",
-  "THESCALED-HEADLONG_CHARGE.description": "Deal {Damage:diff()} damage. Exhaust {CardsToExhaust:diff()}{IfUpgraded:show:| random} {CardsToExhaust:plural:card|cards} from your hand.",
-  "THESCALED-HEADLONG_CHARGE.title": "Headlong Charge",
   "THESCALED-INERTIA.description": "Being reworked.",
   "THESCALED-INERTIA.title": "Inertia",
   "THESCALED-TAIL_SWEEP.description": "Deal {Damage:diff()} damage to ALL enemies twice. Afflict {MuddiedCount} cards in your Draw Pile with [gold]Muddied[/gold].",
   "THESCALED-TAIL_SWEEP.title": "Tail Sweep",
   "THESCALED-CHARGE_THROUGH.description": "Deal {Damage:diff()} damage to ALL enemies that intend to attack.\n[gold]Setup[/gold] ALL enemies: Deal {AmbushEffect:diff()} damage.",
   "THESCALED-CHARGE_THROUGH.title": "Charge Through",
+  "THESCALED-GUT_STRIKE.description": "Deal {Damage:diff()} damage.\n[gold]Ambush[/gold] {Ambush:diff()}. Add {MudAmount} [gold]Mud[/gold] into your Discard Pile.",
+  "THESCALED-GUT_STRIKE.title": "Gut Strike",
+  "THESCALED-LEFT_HOOK.description": "Deal {Damage:diff()} damage.\n[gold]Setup[/gold]: Return this card to your [blue]Hand[/blue].",
+  "THESCALED-LEFT_HOOK.title": "Left Hook",
+  "THESCALED-VYING_LUNGE.description": "Deal {Damage:diff()} damage. If this is the first time this card has been played this turn, gain {{Energy:diff()} {Energy:energyIcons()}}.",
+  "THESCALED-VYING_LUNGE.title": "Vying Lunge",
+  "THESCALED-ENGULF.description": "Deal {CalculatedDamage:diff()} damage. Deal an additional {ExtraDamage:diff()} damage for each Muddied card in your deck.",
+  "THESCALED-ENGULF.title": "Engulf",
 
   "THESCALED-BRUMATION.description": "Gain {CalculationExtra:diff()} [gold]Plating[/gold] for each enemy.",
   "THESCALED-BRUMATION.title": "Brumation"
