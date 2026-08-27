@@ -14,7 +14,7 @@ public class Growl : TheScaledCard
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<VulnerablePower>(1)];
         public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>()];
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<VulnerablePower>(1)];
 
         public Growl() : base(0, CardType.Skill, CardRarity.Common, TargetType.AllEnemies)
         {

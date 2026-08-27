@@ -37,12 +37,12 @@ public class TheScaled : PlaceholderCharacterModel
         ModelDb.Card<DefendScaled>(),
         ModelDb.Card<DefendScaled>(),
         ModelDb.Card<Chomp>(),
-        ModelDb.Card<Respite>(),
+        ModelDb.Card<Lurk>(),
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
     [
-        ModelDb.Relic<NaturalInstinct>()
+        ModelDb.Relic<PredatoryInstinct>()
     ];
     
     public override CardPoolModel CardPool => ModelDb.CardPool<TheScaledCardPool>();

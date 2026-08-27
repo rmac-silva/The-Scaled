@@ -34,6 +34,7 @@
 
         <ModsPath>$(Sts2Path)/mods/</ModsPath>
         <Sts2DataDir>$(Sts2Path)/data_sts2_linuxbsd_x86_64</Sts2DataDir>
+        <GodotPath Condition="'$(GodotPath)' == ''">\home\ricardo\Coding\Godot\MegaDot_v4.5.1-stable_mono_linux.x86_64</GodotPath>
     </PropertyGroup>
 
     <!-- macOS -->

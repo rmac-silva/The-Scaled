@@ -11,11 +11,11 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class RuggedScales : TheScaledCard
 {
-    public RuggedScales() : base(1, CardType.Skill, CardRarity.Common, TargetType.None)
+    public RuggedScales() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(9, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("ThornsGain", 3)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(6, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("ThornsGain", 5)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ThornsPower>()];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -27,6 +27,5 @@ public class RuggedScales : TheScaledCard
     protected override void OnUpgrade()
     {
         base.DynamicVars.Block.UpgradeValueBy(3);
-        base.DynamicVars["ThornsGain"].UpgradeValueBy(2);
     }
 }

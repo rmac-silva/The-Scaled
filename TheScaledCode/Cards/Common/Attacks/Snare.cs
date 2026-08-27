@@ -12,7 +12,7 @@ namespace TheScaled.TheScaledCode.Cards;
 public class Snare : TheScaledCard
 {
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("DrownAmount", 2m)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("DrownAmount", 5m)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>()];
 
     public Snare() : base(1, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)
@@ -22,7 +22,7 @@ public class Snare : TheScaledCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-		await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+		await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).FromCard(this,cardPlay).Targeting(cardPlay.Target)
 			.WithHitFx("vfx/vfx_attack_slash")
 			.Execute(choiceContext);
         

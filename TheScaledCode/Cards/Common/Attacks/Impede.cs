@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -17,7 +18,7 @@ public class Impede : TheScaledCard
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
             new DamageVar(8m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
-            new DynamicVar("StrengthLoss",4),
+            new DynamicVar("StrengthLoss",5),
         ];  
         protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 
@@ -30,7 +31,7 @@ public class Impede : TheScaledCard
             ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
             
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
@@ -42,7 +43,7 @@ public class Impede : TheScaledCard
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars["StrengthLoss"].UpgradeValueBy(3);
+            base.DynamicVars["StrengthLoss"].UpgradeValueBy(2);
         }
     }
 }

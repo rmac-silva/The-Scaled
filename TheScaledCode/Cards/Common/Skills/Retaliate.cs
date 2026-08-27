@@ -14,7 +14,7 @@ public class Retaliate : TheScaledCard
     {
         public override bool GainsBlock => true;
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(6m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("StrengthLoss",2)];
+        [new BlockVar(5m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("StrengthLoss",2)];
         protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
         protected override bool ShouldGlowGoldInternal
         {
@@ -47,7 +47,7 @@ public class Retaliate : TheScaledCard
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Block.UpgradeValueBy(3);
+            base.DynamicVars["StrengthLoss"].UpgradeValueBy(1);
         }
     }
 }

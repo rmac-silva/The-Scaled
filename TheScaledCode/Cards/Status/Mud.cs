@@ -1,12 +1,11 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using TheScaled.TheScaledCode.Enchantments;
-using TheScaled.TheScaledCode.Helpers;
-using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Cards;
 
@@ -14,7 +13,7 @@ public class Mud : TheScaledCard
 {
     public override int MaxUpgradeLevel => 0;
     public override bool HasTurnEndInHandEffect => true;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Ethereal];
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         HoverTipFactory.FromEnchantment<Muddied>();
 
@@ -31,24 +30,36 @@ public class Mud : TheScaledCard
 
     protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
     {
-        IEnumerable<CardModel> hand = PileType.Hand.GetPile(base.Owner).Cards.ToList();
 
-        foreach (var card in hand)
+        var pile = PileType.Hand.GetPile(base.Owner);
+        
+        await MuddyCards(pile,1,base.Owner);
+
+        
+
+    }
+
+    /// <summary>
+    /// Applies the Muddied enchantment to a number of cards in the specified pile, up to the specified amount.
+    /// If not enough cards are available, it will apply the enchantment to as many as possible.
+    /// </summary>
+    /// <param name="pile"></param>
+    /// <param name="amount"></param>
+    /// <param name="owner"></param>
+    /// <returns></returns>
+    public static async Task MuddyCards(CardPile pile, int amount, Player owner)
+    {
+        EnchantmentModel muddied = ModelDb.Enchantment<Muddied>();
+
+        for (int i = 0; i < amount; i++)
         {
-            if (EnchanteableHelper.CanBeEnchantedByMuddied(card))
+            CardModel? cardModel = owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards.Where(muddied.CanEnchant));
+
+            if (cardModel != null)
             {
-                CardCmd.Enchant<Muddied>(card, 1);
+                CardCmd.Enchant<Muddied>(cardModel, 1);
             }
         }
-
-        //Lose one dexterity next turn
-        (await PowerCmd.Apply<MudPower>(
-            choiceContext,
-            base.Owner.Creature,
-            base.DynamicVars["DexterityLoss"].BaseValue,
-            base.Owner.Creature,
-            this
-        ))?.SkipNextTick();
         
     }
 }

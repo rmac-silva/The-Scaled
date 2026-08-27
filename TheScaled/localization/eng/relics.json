@@ -1,5 +1,5 @@
 {
-  "THESCALED-NATURAL_INSTINCT.description": "At the start of combat, gain [blue]{PlayerExertionGain}[/blue] [gold]Exertion[/gold].",
-  "THESCALED-NATURAL_INSTINCT.flavor": "TODO",
-  "THESCALED-NATURAL_INSTINCT.title": "Natural Instincts"
+  "THESCALED-PREDATORY_INSTINCT.description": "At the start of each combat, apply [blue]{EnemyAmbushGain}[/blue] [gold]Ambush[/gold] to ALL enemies.",
+  "THESCALED-PREDATORY_INSTINCT.flavor": "TODO Flavor Text",
+  "THESCALED-PREDATORY_INSTINCT.title": "Predatory Instincts"
 }

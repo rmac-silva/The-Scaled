@@ -2,19 +2,12 @@ using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Enchantments
 {
     public class Muddied : CustomEnchantmentModel
     {
-        protected override IEnumerable<DynamicVar> CanonicalVars =>
-            [new DynamicVar("DexterityDown", 1)];
-        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<MudPower>()];
 
         public override bool IsStackable => true;
 
@@ -63,13 +56,23 @@ namespace TheScaled.TheScaledCode.Enchantments
 
         public override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay? cardPlay)
         {
-            await PowerCmd.Apply<MudPower>(
-                choiceContext,
-                base.Card.Owner.Creature,
-                base.DynamicVars["DexterityDown"].BaseValue,
-                base.Card.Owner.Creature,
-                base.Card
-            );
+
+            //Pick a random card from the draw pile
+            var pile = CardPile.Get(PileType.Draw, base.Card.Owner);
+
+            if(pile == null || pile.Cards.Count == 0)
+            {
+                return;
+            }
+
+            CardModel? cardModel = Card.Owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards);
+            if (cardModel != null)
+            {
+                CardCmd.Enchant<Muddied>(cardModel, 1);
+                CardCmd.Preview(cardModel,0.3f);
+                await CardPileCmd.Add(cardModel, PileType.Discard, CardPilePosition.Top);
+
+            }
         }
     }
 }

@@ -33,7 +33,7 @@ public class DrownedPower : TheScaledPower
             {
                 //The target is the owner of the power.
                 //Damage him according to the amount of the power.
-                await CreatureCmd.Damage(choiceContext,base.Owner,base.Amount,ValueProp.Unblockable | ValueProp.Unpowered, base.Owner, null);
+                await CreatureCmd.Damage(choiceContext,base.Owner,base.Amount,ValueProp.Unblockable | ValueProp.Unpowered,base.Owner);
 
                 //Tick down the power by 1
                 await PowerCmd.Decrement(this);

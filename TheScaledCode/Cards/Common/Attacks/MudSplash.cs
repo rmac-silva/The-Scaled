@@ -12,7 +12,7 @@ public class MudSplash : TheScaledCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DamageVar(5m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
+            new DamageVar(7m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
             new DynamicVar("MudAmount", 2m),
         ];
 
@@ -27,8 +27,7 @@ public class MudSplash : TheScaledCard
         
         await DamageCmd
             .Attack(base.DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .WithHitCount(2)
+            .FromCard(this,cardPlay)
             .TargetingAllOpponents(base.CombatState)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
@@ -45,6 +44,6 @@ public class MudSplash : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.Damage.UpgradeValueBy(2);
+        base.DynamicVars.Damage.UpgradeValueBy(3);
     }
 }

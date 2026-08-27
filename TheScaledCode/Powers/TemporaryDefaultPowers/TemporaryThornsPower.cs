@@ -135,7 +135,7 @@ public abstract class TemporaryThornsPower : CustomPowerModel, ITemporaryPower
 		}
 		else
 		{
-			await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), target, (decimal)Sign * amount, applier, cardSource, silent: true);
+			await PowerCmd.Apply<ThornsPower>(new ThrowingPlayerChoiceContext(), target, (decimal)Sign * amount, applier, cardSource, silent: true);
 		}
 	}
 
@@ -160,7 +160,7 @@ public abstract class TemporaryThornsPower : CustomPowerModel, ITemporaryPower
 		{
 			Flash();
 			await PowerCmd.Remove(this);
-			await PowerCmd.Apply<StrengthPower>(choiceContext, base.Owner, -Sign * base.Amount, base.Owner, null);
+			await PowerCmd.Apply<ThornsPower>(choiceContext, base.Owner, -Sign * base.Amount, base.Owner, null);
 		}
 	}
 }
