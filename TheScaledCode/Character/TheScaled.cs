@@ -14,6 +14,7 @@ namespace TheScaled.TheScaledCode.Character;
   
   
   
+ 
 public class TheScaled : PlaceholderCharacterModel
 {
     public const string CharacterId = "TheScaled";

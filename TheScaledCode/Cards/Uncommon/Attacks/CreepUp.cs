@@ -2,29 +2,30 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Cards;
 
-public class HeadlongCharge : TheScaledCard
+  
+public class CreepUp : TheScaledCard
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    public HeadlongCharge() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy)
+    public CreepUp() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
-
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(18,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new RepeatVar(3)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(base.CombatState, "base.CombatState");
+        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
         await DamageCmd
             .Attack(base.DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
-            .TargetingRandomOpponents(base.CombatState)
-            .WithHitCount(base.DynamicVars.Repeat.IntValue)
+            .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+
+        await PowerCmd.Apply<FreeAfflictedCardPower>(choiceContext,base.Owner.Creature,1,base.Owner.Creature,this);
     }
 
     protected override void OnUpgrade()

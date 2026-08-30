@@ -25,8 +25,8 @@ public class Brumation : TheScaledCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState);
-        var enemies = base.Owner.Creature.CombatState.Enemies;
+        ArgumentNullException.ThrowIfNull(base.CombatState);
+        var enemies = base.CombatState.Enemies;
         await PowerCmd.Apply<Ambush>(choiceContext,enemies,-base.DynamicVars["Ambush"].IntValue,base.Owner.Creature, this);
 
         await PowerCmd.Apply<PlatingPower>(choiceContext, base.Owner.Creature,base.DynamicVars["PlatingPower"].IntValue,base.Owner.Creature,this);

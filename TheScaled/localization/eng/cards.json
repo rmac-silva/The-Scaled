@@ -16,7 +16,7 @@
   "THESCALED-SNARE.title": "Snare",
   "THESCALED-VICIOUS_STRIKE.description": "Deal {Damage:diff()} damage. When this card is drawn, afflict it with [gold]Muddied[/gold].",
   "THESCALED-VICIOUS_STRIKE.title": "Vicious Strike",
-  "THESCALED-MUD.description": "At the end of your turn, apply [gold]Muddied[/gold] to all cards in your hand. Lose {DexterityLoss:diff()} [gold]Dexterity[/gold] next turn.",
+  "THESCALED-MUD.description": "At the end of your turn, apply [gold]Muddied[/gold] to a random card in your hand.",
   "THESCALED-MUD.title": "Mud",
   "THESCALED-FEINT_STRIKE.description": "Deal {Damage:diff()} damage. Draw {Cards:diff()} {Cards:plural:card|cards}.",
   "THESCALED-FEINT_STRIKE.title": "Feint Strike",
@@ -72,6 +72,10 @@
   "THESCALED-VYING_LUNGE.title": "Vying Lunge",
   "THESCALED-ENGULF.description": "Deal {CalculatedDamage:diff()} damage. Deal an additional {ExtraDamage:diff()} damage for each Muddied card in your deck.",
   "THESCALED-ENGULF.title": "Engulf",
+  "THESCALED-HEADLONG_CHARGE.description": "Deal {Damage:diff()} damage to a random enemy {Repeat:diff()} {Repeat:plural:times|time}.",
+  "THESCALED-HEADLONG_CHARGE.title": "Headlong Charge",
+  "THESCALED-CREEP_UP.description": "Deal {Damage:diff()} damage. The next [gold]Afflicted[/gold] card you play costs [blue]0[/blue] [gold]Energy[/gold].",
+  "THESCALED-CREEP_UP.title": "CreepUp",
 
   "THESCALED-BRUMATION.description": "Gain {CalculationExtra:diff()} [gold]Plating[/gold] for each enemy.",
   "THESCALED-BRUMATION.title": "Brumation"

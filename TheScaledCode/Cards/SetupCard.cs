@@ -65,9 +65,9 @@ public abstract class SetupCard : TheScaledCard
 
     protected async Task ApplyAmbushToAllEnemies(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState, "wner.Creature.CombatState");
+        ArgumentNullException.ThrowIfNull(base.CombatState, "wner.Creature.CombatState");
 
-        var listOfEnemies = base.Owner.Creature.CombatState.Enemies;
+        var listOfEnemies = base.CombatState.Enemies;
 
         var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand,cardPlay.Target));
         ModLog.Info(this, $"Setup Card Description: {description}");

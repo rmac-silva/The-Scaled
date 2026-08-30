@@ -11,7 +11,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class ChargeThrough : SetupCard
 {
-    public ChargeThrough(int cost, CardType type, CardRarity rarity, TargetType target) : base(cost, type, rarity, target)
+    public ChargeThrough() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
     {
     }
 

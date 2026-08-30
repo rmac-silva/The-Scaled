@@ -1,0 +1,109 @@
+[gd_scene load_steps=11 format=3 uid="uid://teiub05u4aig"]
+
+[ext_resource type="Texture2D" uid="uid://ds6vs8ncv6nyc" path="res://TheScaled/images/vfx/ui_card/ui_card_mask.png" id="1_sbmpt"]
+[ext_resource type="Texture2D" uid="uid://clmkl57uss3sy" path="res://TheScaled/images/vfx/ui_card/ui_card_border_glow.png" id="2_mbuhc"]
+[ext_resource type="Shader" uid="uid://h87wrc7bi15e" path="res://scenes/cards/overlays/afflictions/thescaled-muddied.gdshader" id="3_ovh1m"]
+[ext_resource type="Texture2D" uid="uid://lc3b2bh3hfx4" path="res://Art/Cards/Afflictions/MuddiedOverlay.png" id="4_y0jsp"]
+[ext_resource type="Texture2D" uid="uid://dy5brt1r0ew3r" path="res://Art/Cards/Afflictions/MuddiedGoop1.png" id="5_85iqn"]
+[ext_resource type="Texture2D" uid="uid://oonf26v4jfvy" path="res://Art/Cards/Afflictions/MuddiedGoop2.png" id="6_dwq1k"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k52gi"]
+shader = ExtResource("3_ovh1m")
+shader_parameter/mud_texture = ExtResource("4_y0jsp")
+shader_parameter/wave_speed = 0.80000003474012
+shader_parameter/wave_frequency = 10.0
+shader_parameter/wave_amplitude = 0.01
+
+[sub_resource type="Curve" id="Curve_v0g51"]
+_data = [Vector2(0, 0.6966293), 0.0, 0.0, 0, 0, Vector2(1, 0.8314607), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_lb3gb"]
+curve = SubResource("Curve_v0g51")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2g77e"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 117.93
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_lb3gb")
+
+[node name="vfx_ui_card_affliction_muddied" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -211.0
+offset_right = -150.0
+offset_bottom = -211.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="card_mask" type="TextureRect" parent="."]
+clip_children = 1
+custom_minimum_size = Vector2(300, 422)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 300.0
+offset_bottom = 422.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_sbmpt")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="card_glow" type="TextureRect" parent="."]
+self_modulate = Color(0.67701566, 0.37799957, 0.17058516, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 300.0
+offset_bottom = 422.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_mbuhc")
+expand_mode = 1
+
+[node name="muddied_main" type="TextureRect" parent="."]
+self_modulate = Color(0.67701566, 0.37799957, 0.17058516, 1)
+material = SubResource("ShaderMaterial_k52gi")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 300.0
+offset_bottom = 422.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_y0jsp")
+expand_mode = 1
+
+[node name="MudGoop1" type="GPUParticles2D" parent="."]
+visible = false
+position = Vector2(123, 125)
+amount = 1
+texture = ExtResource("5_85iqn")
+lifetime = 3.0
+randomness = 0.26
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_2g77e")
+
+[node name="MudGoop2" type="GPUParticles2D" parent="."]
+visible = false
+position = Vector2(180, 302)
+amount = 1
+texture = ExtResource("6_dwq1k")
+lifetime = 3.0
+randomness = 0.26
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_2g77e")

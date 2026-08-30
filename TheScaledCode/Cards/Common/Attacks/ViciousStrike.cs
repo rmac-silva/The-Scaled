@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using TheScaled.TheScaledCode.Enchantments;
+using TheScaled.TheScaledCode.Afflictions;
 
 
 namespace TheScaled.TheScaledCode.Cards;
@@ -15,7 +15,7 @@ public class ViciousStrike : TheScaledCard
 {
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromEnchantment<Muddied>().First()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First()];
     public ViciousStrike() : base(0, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)
     {
     }
@@ -40,7 +40,7 @@ public class ViciousStrike : TheScaledCard
             return;
         }
 
-        CardCmd.Enchant<Muddied>(this,1);
+        await CardCmd.Afflict<Muddied>(this,1);
     }
 
     protected override void OnUpgrade()

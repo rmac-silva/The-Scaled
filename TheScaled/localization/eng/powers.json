@@ -12,5 +12,8 @@
   "THESCALED-SETUP_POWER.title": "Setting Up...",
   "THESCALED-INERTIA_POWER.description": "Deals damage based on the number of turns that have passed. Increasing each time.",
   "THESCALED-INERTIA_POWER.smartDescription": "TODO",
-  "THESCALED-INERTIA_POWER.title": "Inertia"
+  "THESCALED-INERTIA_POWER.title": "Inertia",
+  "THESCALED-FREE_AFFLICTED_CARD_POWER.description": "The next Afflicted card you play this combat costs [gold]1[/gold] less.",
+  "THESCALED-FREE_AFFLICTED_CARD_POWER.smartDescription": "The next [gold]1[/gold] Afflicted card you play this combat costs [gold]1[/gold] less.",
+  "THESCALED-FREE_AFFLICTED_CARD_POWER.title": "Free Afflicted Card"
 }

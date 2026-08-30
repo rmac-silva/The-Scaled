@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
-using TheScaled.TheScaledCode.Enchantments;
+using TheScaled.TheScaledCode.Afflictions;
 using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Cards;
@@ -60,7 +60,7 @@ public class Fixate : SetupCard
             return;
         }
 
-        var muddiedCards = PileType.Deck.GetPile(info.applier.Player).Cards.Where(c => c.Enchantment != null && c.Enchantment is Muddied).ToList();
+        var muddiedCards = PileType.Deck.GetPile(info.applier.Player).Cards.Where(c => c.Affliction != null && c.Affliction is Muddied).ToList();
         var damage = base.DynamicVars.Damage.BaseValue * muddiedCards.Count;
 
         await DamageCmd.Attack(damage)

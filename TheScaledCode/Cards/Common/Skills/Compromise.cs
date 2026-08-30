@@ -21,8 +21,8 @@ public class Compromise : TheScaledCard
     {
         
         //Reduce Ambush on all enemies by 1
-        ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState);
-        var enemies = base.Owner.Creature.CombatState.Enemies;
+        ArgumentNullException.ThrowIfNull(base.CombatState);
+        var enemies = base.CombatState.Enemies;
         await PowerCmd.Apply<Ambush>(choiceContext,enemies,-base.DynamicVars["Ambush"].IntValue,base.Owner.Creature, this);
 
         //Gain energy next turn

@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using TheScaled.TheScaledCode.Enchantments;
+using TheScaled.TheScaledCode.Afflictions;
 
 namespace TheScaled.TheScaledCode.Cards;
 
@@ -15,7 +15,7 @@ public class Mud : TheScaledCard
     public override bool HasTurnEndInHandEffect => true;
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Ethereal];
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        HoverTipFactory.FromEnchantment<Muddied>();
+        HoverTipFactory.FromAffliction<Muddied>();
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("DexterityLoss", 1)];
@@ -49,15 +49,15 @@ public class Mud : TheScaledCard
     /// <returns></returns>
     public static async Task MuddyCards(CardPile pile, int amount, Player owner)
     {
-        EnchantmentModel muddied = ModelDb.Enchantment<Muddied>();
+        AfflictionModel muddied = ModelDb.Affliction<Muddied>();
 
         for (int i = 0; i < amount; i++)
         {
-            CardModel? cardModel = owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards.Where(muddied.CanEnchant));
+            CardModel? cardModel = owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards.Where(muddied.CanAfflict));
 
             if (cardModel != null)
             {
-                CardCmd.Enchant<Muddied>(cardModel, 1);
+                await CardCmd.Afflict<Muddied>(cardModel, 1);
             }
         }
         

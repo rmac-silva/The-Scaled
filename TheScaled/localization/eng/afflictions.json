@@ -1,4 +1,5 @@
 {
     "THESCALED-MUDDIED.description" : "When played, move a random card in your [blue]Draw Pile[/blue] to your discard pile and Afflict it with [gold]Muddied[/gold].",
+    "THESCALED-MUDDIED.extraCardText" : "Muddied",
     "THESCALED-MUDDIED.title" : "Muddied"
 }
