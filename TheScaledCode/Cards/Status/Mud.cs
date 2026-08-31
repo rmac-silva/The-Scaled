@@ -1,5 +1,7 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -50,5 +52,15 @@ public class Mud : TheScaledCard
             this
         ))?.SkipNextTick();
         
+    }
+
+    public static IEnumerable<Mud> Create(Player owner, int amount, ICombatState combatState)
+    {
+        List<Mud> list = new List<Mud>();
+		for (int i = 0; i < amount; i++)
+		{
+			list.Add(combatState.CreateCard<Mud>(owner));
+		}
+		return list;
     }
 }

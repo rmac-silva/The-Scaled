@@ -33,5 +33,12 @@
   "THESCALED-PRISMATIC_SCALES_POWER.title": "Prismatic Scales",
   "THESCALED-INERTIA_POWER.description": "Lowers your [gold]Exertion[/gold] threshold.",
   "THESCALED-INERTIA_POWER.smartDescription": "Lowers your [gold]Exertion[/gold] threshold by [blue]{ReductionAmount:diff()}[/blue] for [blue]{Amount}[/blue] turns.",
-  "THESCALED-INERTIA_POWER.title": "Inertia"
+  "THESCALED-INERTIA_POWER.title": "Inertia",
+  "THESCALED-MARSHAL_POWER.description": "Gain [gold]Block[/gold] at the start of your turn.",
+  "THESCALED-MARSHAL_POWER.smartDescription": "Gain [blue]{Block}[/blue] [gold]Block[/gold] at the start of your turn.",
+  "THESCALED-MARSHAL_POWER.title": "Marshal",
+  "THESCALED-CLIMAX_JUMPING_POWER.description": "This creature takes [blue]{DamageMult}[/blue] times the damage from other players and attacks are played [blue]{CardMult}[/blue] extra times this turn.",
+  "THESCALED-CLIMAX_JUMPING_POWER.remoteDescription": "You deal [blue]{DamageMult}[/blue] times the damage to this enemy, and attacks are played [blue]{CardMult}[/blue] extra times because of [gold]{Applier}[/gold].",
+  "THESCALED-CLIMAX_JUMPING_POWER.smartDescription": "Other allies deal [blue]{DamageMult:diff()}[/blue] times more damage to this enemy and attacks are played [blue]{PlayMult:diff()}[/blue] extra times this turn.",
+  "THESCALED-CLIMAX_JUMPING_POWER.title": "Climax Jumping"
 }

@@ -2,5 +2,9 @@
   "THE_ARCHITECT.talk.THESCALED-THE_SCALED.0-0r.char": "I am angry at the architect",
   "THE_ARCHITECT.talk.THESCALED-THE_SCALED.0-0r.next": "Continue",
   "THE_ARCHITECT.talk.THESCALED-THE_SCALED.0-1r.ancient": "You die",
-  "THE_ARCHITECT.talk.THESCALED-THE_SCALED.0-attack": "Both"
+  "THE_ARCHITECT.talk.THESCALED-THE_SCALED.0-attack": "Both",
+  "THESCALED-LEVIATHAN_ANCIENT.epithet": "Epithet",
+  "THESCALED-LEVIATHAN_ANCIENT.talk.ANY.0-0r.ancient": "Reusable generic greeting.",
+  "THESCALED-LEVIATHAN_ANCIENT.talk.firstVisitEver.0-0.ancient": "First time greeting.",
+  "THESCALED-LEVIATHAN_ANCIENT.title": "Leviathan"
 }

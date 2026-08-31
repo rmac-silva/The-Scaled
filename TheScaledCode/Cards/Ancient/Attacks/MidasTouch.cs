@@ -1,0 +1,83 @@
+
+
+using BaseLib.Abstracts;
+using BaseLib.Utils;
+using Godot;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Factories;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.TestSupport;
+using MegaCrit.Sts2.Core.ValueProps;
+using TheScaled.TheScaledCode.Cards;
+
+namespace TheScaled.TheScaledCode.Ancients;
+
+// (2E) Deal 54(63) damage. If Fatal gain 66(99) Gold.
+
+
+
+  
+  
+  
+  
+
+public class MidasTouch : AncientCard
+{
+    public const int goldAmount = 20;
+
+	private const string _goldKey = "Gold";
+
+	public override bool CanBeGeneratedInCombat => false;
+
+	protected override IEnumerable<DynamicVar> CanonicalVars => [
+		new DamageVar(54, ValueProp.Move),
+		new DynamicVar("Gold", 66m)
+	];
+
+	protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.Fatal)];
+
+	public MidasTouch()
+		: base(2, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
+	{
+	}
+
+	protected override void OnUpgrade()
+	{
+		base.DynamicVars.Damage.UpgradeValueBy(9m);
+		base.DynamicVars["Gold"].UpgradeValueBy(33m);
+	}
+
+	protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+	{
+		ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
+		bool shouldTriggerFatal = cardPlay.Target.Powers.All((PowerModel p) => p.ShouldOwnerDeathTriggerFatal());
+		Vector2? monsterPos = null;
+		if (TestMode.IsOff)
+		{
+			monsterPos = NCombatRoom.Instance.GetCreatureNode(cardPlay.Target)?.VfxSpawnPosition;
+		}
+
+		AttackCommand attackCommand = await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
+			.WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3")
+			.Execute(choiceContext);
+			
+		if (shouldTriggerFatal && attackCommand.Results.SelectMany((List<DamageResult> r) => r).Any((DamageResult r) => r.WasTargetKilled))
+		{
+			if (monsterPos.HasValue)
+			{
+				VfxCmd.PlayVfx(monsterPos.Value, "vfx/vfx_coin_explosion_regular", NCombatRoom.Instance?.CombatVfxContainer);
+			}
+			await PlayerCmd.GainGold(base.DynamicVars["Gold"].IntValue, base.Owner);
+		}
+	}
+}
