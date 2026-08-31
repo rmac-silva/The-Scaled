@@ -1,75 +1,73 @@
 using BaseLib.Abstracts;
+using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
-using TheScaled.TheScaledCode.Powers;
 
-namespace TheScaled.TheScaledCode.Enchantments
+namespace TheScaled.TheScaledCode.Afflictions
 {
-    public class Muddied : CustomEnchantmentModel
+    public class Muddied : AfflictionModel, ICustomModel
     {
-        protected override IEnumerable<DynamicVar> CanonicalVars =>
-            [new DynamicVar("DexterityDown", 1)];
-        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<MudPower>()];
 
         public override bool IsStackable => true;
-
-        protected override string? CustomIconPath => base.CustomIconPath;
-
-        public override bool CanEnchantCardType(CardType cardType)
+        public override bool CanAfflictUnplayableCards => false;
+        public override bool HasExtraCardText => true;
+        private bool CanEnchantCardType(CardType cardType)
         {
             return cardType == CardType.Attack
                 || cardType == CardType.Skill
                 || cardType == CardType.Power;
         }
 
-        public override bool CanEnchant(CardModel card)
+        public override bool CanAfflictCardType(CardType card)
         {
-            if (card == null)
-                return false;
-
             // Check card type validation
-            if (!CanEnchantCardType(card.Type))
+            if (!CanEnchantCardType(card))
             {
                 return false;
             }
-
-            // Check deck unplayable status
-            CardPile? pile = card.Pile;
-            if (
-                pile != null
-                && pile.Type == PileType.Deck
-                && card.Keywords.Contains(CardKeyword.Unplayable)
-            )
-            {
-                return false;
-            }
-
-            // Check existing enchantments
-            if (
-                card.Enchantment != null
-                && (!IsStackable || card.Enchantment.GetType() != GetType())
-            )
-            {
-                return false;
-            }
-
             return true;
         }
 
-        public override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay? cardPlay)
+        public override bool CanAfflict(CardModel card)
+	{
+		if (!CanAfflictCardType(card.Type))
+		{
+			return false;
+		}
+		if (card.Keywords.Contains(CardKeyword.Unplayable) && !CanAfflictUnplayableCards)
+		{
+			return false;
+		}
+		if (card.Affliction != null && (!IsStackable || card.Affliction.GetType() != GetType()))
+		{
+			return false;
+		}
+		return true;
+	}
+
+        public override async Task OnPlay(PlayerChoiceContext choiceContext, Creature? target)
         {
-            await PowerCmd.Apply<MudPower>(
-                choiceContext,
-                base.Card.Owner.Creature,
-                base.DynamicVars["DexterityDown"].BaseValue,
-                base.Card.Owner.Creature,
-                base.Card
-            );
+            ModLog.Info(this,$"Muddied Resource Exists: {HasOverlay} | Checked Path: {OverlayPath}. | Backup: {ResourceLoader.Exists(OverlayPath)}");
+            //Pick a random card from the draw pile
+            var pile = CardPile.Get(PileType.Draw, base.Card.Owner);
+
+            if(pile == null || pile.Cards.Count == 0)
+            {
+                return;
+            }
+
+            CardModel? cardModel = Card.Owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards);
+            if (cardModel != null)
+            {
+                await CardCmd.Afflict<Muddied>(cardModel, 1);
+                await CardPileCmd.Add(cardModel, PileType.Discard, CardPilePosition.Top);
+                CardCmd.Preview(cardModel,0.3f);
+
+            }
         }
     }
 }

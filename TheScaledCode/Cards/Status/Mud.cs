@@ -1,4 +1,3 @@
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -6,9 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using TheScaled.TheScaledCode.Enchantments;
-using TheScaled.TheScaledCode.Helpers;
-using TheScaled.TheScaledCode.Powers;
+using TheScaled.TheScaledCode.Afflictions;
 
 namespace TheScaled.TheScaledCode.Cards;
 
@@ -16,9 +13,9 @@ public class Mud : TheScaledCard
 {
     public override int MaxUpgradeLevel => 0;
     public override bool HasTurnEndInHandEffect => true;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Ethereal];
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        HoverTipFactory.FromEnchantment<Muddied>();
+        HoverTipFactory.FromAffliction<Muddied>();
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("DexterityLoss", 1)];
@@ -33,34 +30,58 @@ public class Mud : TheScaledCard
 
     protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
     {
-        IEnumerable<CardModel> hand = PileType.Hand.GetPile(base.Owner).Cards.ToList();
 
-        foreach (var card in hand)
+        var pile = PileType.Hand.GetPile(base.Owner);
+        
+        await MuddyCards(pile,1,base.Owner);
+
+        
+
+    }
+
+    /// <summary>
+    /// Applies the Muddied enchantment to a number of cards in the specified pile, up to the specified amount.
+    /// If not enough cards are available, it will apply the enchantment to as many as possible.
+    /// </summary>
+    /// <param name="pile"></param>
+    /// <param name="amount"></param>
+    /// <param name="owner"></param>
+    /// <returns></returns>
+    public static async Task MuddyCards(CardPile pile, int amount, Player owner)
+    {
+        AfflictionModel muddied = ModelDb.Affliction<Muddied>();
+
+        for (int i = 0; i < amount; i++)
         {
-            if (EnchanteableHelper.CanBeEnchantedByMuddied(card))
+            CardModel? cardModel = owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards.Where(muddied.CanAfflict));
+
+            if (cardModel != null)
             {
-                CardCmd.Enchant<Muddied>(card, 1);
+                await CardCmd.Afflict<Muddied>(cardModel, 1);
             }
         }
-
-        //Lose one dexterity next turn
-        (await PowerCmd.Apply<MudPower>(
-            choiceContext,
-            base.Owner.Creature,
-            base.DynamicVars["DexterityLoss"].BaseValue,
-            base.Owner.Creature,
-            this
-        ))?.SkipNextTick();
         
     }
 
-    public static IEnumerable<Mud> Create(Player owner, int amount, ICombatState combatState)
+    /// <summary>
+    /// Adds 'amount' Mud card(s) to the specified pile for the given player.
+    /// </summary>
+    /// <param name="pile"></param>
+    /// <param name="amount"></param>
+    /// <param name="owner"></param>
+    /// <returns></returns>
+    public static async Task AddMudCard(PileType pile, int amount, Player owner)
     {
-        List<Mud> list = new List<Mud>();
-		for (int i = 0; i < amount; i++)
-		{
-			list.Add(combatState.CreateCard<Mud>(owner));
-		}
-		return list;
+        ArgumentNullException.ThrowIfNull(owner.Creature.CombatState, "owner.Creature.CombatState");
+
+        List<CardModel> list = new List<CardModel>();
+        for (int i = 0; i < amount; i++)
+        {
+            CardModel card = owner.Creature.CombatState.CreateCard<Mud>(owner);
+            list.Add(card);
+        }
+        //Add the cards to the discard pile
+        await CardPileCmd.AddGeneratedCardsToCombat(list, pile, owner);
+        CardCmd.Preview(list, 0.4f);
     }
 }

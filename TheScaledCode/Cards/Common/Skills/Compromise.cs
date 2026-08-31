@@ -3,49 +3,34 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using TheScaled.TheScaledCode.Enchantments;
 using TheScaled.TheScaledCode.Powers;
 
-namespace TheScaled.TheScaledCode.Cards
-{
-      
-  
-  
+namespace TheScaled.TheScaledCode.Cards;
+
 public class Compromise : TheScaledCard
+{
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.ForEnergy(base.Owner)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<Ambush>(1), new EnergyVar(2)];
+    public Compromise() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+    {
+    }
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         
-        protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("ExertionDuration",3), new EnergyVar(2)];
-        public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => [base.EnergyHoverTip,HoverTipFactory.FromPower<ExertionPower>(),HoverTipFactory.FromEnchantment<Muddied>().First()];
+        //Reduce Ambush on all enemies by 1
+        ArgumentNullException.ThrowIfNull(base.CombatState);
+        var enemies = base.CombatState.Enemies;
+        await PowerCmd.Apply<Ambush>(choiceContext,enemies,-base.DynamicVars["Ambush"].IntValue,base.Owner.Creature, this);
 
-        public Compromise() : base(1, CardType.Skill, CardRarity.Common, TargetType.None)
-        {
-        }
+        //Gain energy next turn
+        await PowerCmd.Apply<EnergyNextTurnPower>(choiceContext, base.Owner.Creature, base.DynamicVars.Energy.BaseValue, base.Owner.Creature, this);
+    }
 
-        protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-        {
-            //Gain 2 energy
-            await PlayerCmd.GainEnergy(base.DynamicVars.Energy.BaseValue, base.Owner);
-            
-            //Gain 1 exertion for two(three) turns
-            (await PowerCmd.Apply<CompromisePower>(choiceContext,base.Owner.Creature,DynamicVars["ExertionDuration"].BaseValue,base.Owner.Creature,cardPlay.Card))?.IncreaseAmount();
-
-            //Enchant a random card with muddied
-            CardPile pile = PileType.Hand.GetPile(base.Owner);
-            CardModel? cardModel = base.Owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards);
-            if (cardModel != null)
-            {
-                CardCmd.Enchant<Muddied>(cardModel,1);
-            }
-        }
-
-        protected override void OnUpgrade()
-        {
-            base.EnergyCost.UpgradeBy(-1);
-            base.DynamicVars["ExertionDuration"].UpgradeValueBy(-1);
-        }
+    protected override void OnUpgrade()
+    {
+        base.DynamicVars.Energy.UpgradeValueBy(1);
     }
 }

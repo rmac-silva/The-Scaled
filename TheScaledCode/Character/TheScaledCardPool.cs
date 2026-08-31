@@ -16,9 +16,9 @@ public class TheScaledCardPool : CustomCardPoolModel
     They are applied as a shader onto an already colored image,
     so it may take some experimentation to find a color you like.
     Generally they should be values between 0 and 1. */
-    public override float H => 247.27f/360f; //Hue; changes the color.
-    public override float S => 44f/100f; //Saturation
-    public override float V => 29.41f/100f; //Brightness
+    public override float H => 240f/360f; //Hue; changes the color.
+    public override float S => 84f/100f; //Saturation
+    public override float V => 33f/100f; //Brightness
     
     //Alternatively, leave these values at 1 and provide a custom frame image.
     /*public override Texture2D CustomFrame(CustomCardModel card)

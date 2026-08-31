@@ -7,8 +7,7 @@ public static class ShouldRemoveDueToAmountPatch
 {
     private static readonly HashSet<Type> IgnoredPowerTypes = new()
     {
-        typeof(ExertionPower),
-        typeof(TemporaryExertionDownPower)
+        typeof(Ambush)
     };
 
     /// <summary>

@@ -12,29 +12,47 @@ namespace TheScaled.TheScaledCode.Cards
   
   
   
-public class Stalk : TheScaledCard
+public class Stalk : SetupCard
     {
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new CardsVar(2), new DynamicVar("StrengthLoss",2)];
-        public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+        [new BlockVar(5,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),new PowerVar<FrailPower>(2)];
 
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<FrailPower>()];
 
-        public Stalk() : base(1, CardType.Skill, CardRarity.Common, TargetType.None)
+        protected override SetupCardType CardSetupType => SetupCardType.Debuff;
+
+        public Stalk() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
         {
         }
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            //Draw 2 cards
-            await CardPileCmd.Draw(choiceContext,DynamicVars.Cards.BaseValue,base.Owner);
-            //Lose 1 Strength this turn
-            await PowerCmd.Apply<StalkPower>(choiceContext, base.Owner.Creature, DynamicVars["StrengthLoss"].BaseValue, base.Owner.Creature, cardPlay.Card);
+            await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
+
+            await base.OnPlay(choiceContext, cardPlay);
         }
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Cards.UpgradeValueBy(1);
+            base.DynamicVars.Block.UpgradeValueBy(3);
+            base.DynamicVars["FrailPower"].UpgradeValueBy(1);
+        }
+
+        protected override async Task AmbushEffect(AmbushMethodInfo info)
+        {
+            if(info.target is null)
+            {
+                ModLog.Warning(this,$"Warning. info.target is null when calling AmbushEffect.");
+                return;
+            }
+
+            if(info.applier is null )
+            {
+                ModLog.Warning(this,$"Warning. info.applier is null when calling AmbushEffect.");
+                return;
+            }
+
+            await PowerCmd.Apply<FrailPower>(info.choiceContext is null ? new ThrowingPlayerChoiceContext() : info.choiceContext, info.target, base.DynamicVars["FrailPower"].IntValue, base.Owner.Creature, this);
         }
     }
 }

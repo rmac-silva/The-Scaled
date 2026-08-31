@@ -11,7 +11,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class Takedown : TheScaledCard
 {
-    public Takedown() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public Takedown() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 
@@ -28,7 +28,7 @@ public class Takedown : TheScaledCard
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>()];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(12m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -38,7 +38,7 @@ public class Takedown : TheScaledCard
 
         await DamageCmd
             .Attack(base.DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this,cardPlay)
             .WithHitCount(nrHits)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
@@ -47,7 +47,7 @@ public class Takedown : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.Damage.UpgradeValueBy(4);
+        base.DynamicVars.Damage.UpgradeValueBy(2);
     }
 
 }

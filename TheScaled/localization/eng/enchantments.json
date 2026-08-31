@@ -1,6 +1,0 @@
-{
-    "THESCALED-ADHESIVE.description" : "Gain [gold]Retain[/gold]. When this card is played, lose {Energy:diff()} {Energy:energyIcons()} and return this card to your [gold]Hand[/gold].",
-    "THESCALED-ADHESIVE.title" : "Adhesive",
-    "THESCALED-MUDDIED.description" : "Reduces your [gold]Dexterity[/gold] by {DexterityDown:diff()} this turn when played.",
-    "THESCALED-MUDDIED.title" : "Muddied"
-}
