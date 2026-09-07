@@ -1,4 +1,3 @@
-using System.Security;
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -6,9 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.RelicPools;
-using TheScaled.TheScaledCode.Character;
 
 namespace TheScaled.TheScaledCode.Relics.Ancient;
 
@@ -43,25 +40,25 @@ public class AceOfCups : CustomRelicModel
     }
     private bool _shouldTrigger = false;
 
-    public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position)
+    public override CardLocation ModifyCardPlayResultLocation(CardModel card, bool isAutoPlay, ResourceInfo resources, CardLocation cardLocation)
     {
-        ModLog.Info(this,$"Moving {card.Id} to {pileType}");
+        
         //If it's not our card we ignore it
         if (card.Owner != base.Owner)
 		{
-			return (pileType, position);
+			return cardLocation;
 		}
 
         //If it's not being moved to the discard pile
-        if (pileType != PileType.Discard)
+        if (cardLocation.pileType != PileType.Discard)
 		{
-			return (pileType, position);
+			return cardLocation;
 		}
         
         if(!ShouldTrigger)
         {
             ShouldTrigger = !ShouldTrigger;
-            return (pileType, position);
+            return cardLocation;
         }
 
 
@@ -70,7 +67,8 @@ public class AceOfCups : CustomRelicModel
 
         //Otherwise, it's our card, it should trigger and it's being moved to the discard pile
         //So we can shuffle it to the draw pile instead
-        return (PileType.Draw, CardPilePosition.Random);
+        Flash();
+        return new CardLocation(card.Owner,PileType.Draw, CardPilePosition.Random);
     }
 
     public override async Task AfterCardDiscarded(PlayerChoiceContext choiceContext, CardModel card)
@@ -93,16 +91,5 @@ public class AceOfCups : CustomRelicModel
 
         await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Random);
     }
-
-
-    public override Task AfterModifyingCardPlayResultPileOrPosition(CardModel card, PileType pileType, CardPilePosition position)
-	{
-		if (card.Owner != base.Owner)
-		{
-			return Task.CompletedTask;
-		}
-		Flash();
-		return Task.CompletedTask;
-	}
     
 }

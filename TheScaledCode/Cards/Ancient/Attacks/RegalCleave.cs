@@ -1,14 +1,7 @@
-
-
-using BaseLib.Abstracts;
-using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -39,7 +32,7 @@ public class RegalCleave : AncientCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
 	{
 		ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-		await DamageCmd.Attack(base.DynamicVars.CalculatedDamage).FromCard(this).Targeting(cardPlay.Target)
+		await DamageCmd.Attack(base.DynamicVars.CalculatedDamage).FromCard(this,cardPlay).Targeting(cardPlay.Target)
 			.WithHitFx("vfx/vfx_dramatic_stab", null, "blunt_attack.mp3")
 			.Execute(choiceContext);
 	}

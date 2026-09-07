@@ -1,7 +1,6 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -13,7 +12,6 @@ using MegaCrit.Sts2.Core.Platform;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using TheScaled.TheScaledCode.Ancients;
-using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Powers;
   
@@ -31,11 +29,14 @@ public sealed class ClimaxJumpingPower : CustomPowerModel
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<ClimaxJumping>()];
 	public override Task AfterApplied(Creature? applier, CardModel? cardSource)
 	{
+		ArgumentNullException.ThrowIfNull(base.Applier);
+		ArgumentNullException.ThrowIfNull(base.Applier.Player);
+
 		((StringVar)base.DynamicVars["Applier"]).StringValue = PlatformUtil.GetPlayerName(RunManager.Instance.NetService.Platform, base.Applier.Player.NetId);
 		return Task.CompletedTask;
 	}
 
-	public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+	public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
 	{
 		if (target != base.Owner)
 		{

@@ -14,6 +14,7 @@ public class GutStrike : TheScaledCard
     public GutStrike() : base(2,CardType.Attack,CardRarity.Uncommon,TargetType.AnyEnemy)
     {
     }
+    protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>(),HoverTipFactory.FromAffliction<Muddied>().First()];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(24m,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),new PowerVar<Ambush>(5),new DynamicVar("MudAmount",3)];

@@ -12,6 +12,7 @@
   "NEOW.talk.THESCALED-THE_SCALED.2-0r.char": "[i]The Scaled growls[/i]",
   "NEOW.talk.THESCALED-THE_SCALED.2-0r.next": "Advance",
   "NEOW.talk.THESCALED-THE_SCALED.2-1r.ancient": "[sine]..i.. brought.. you.. back..[/sine]",
+  "NEOW.talk.THESCALED-THE_SCALED.2-1r.next": "Continue",
   "NEOW.talk.THESCALED-THE_SCALED.2-2r.ancient": "[sine]..i.. am not.. the enemy..[/sine]",
   "TEZCATARA.talk.THESCALED-THE_SCALED.0-0r.ancient": "What are you doing here, Little one?",
   "TEZCATARA.talk.THESCALED-THE_SCALED.0-0r.next": "Approach [i][sine]carefully[/sine][/i]",
@@ -32,5 +33,11 @@
   "PAEL.talk.THESCALED-THE_SCALED.2-0r.next": "Tolerate",
   "PAEL.talk.THESCALED-THE_SCALED.2-1r.ancient": "[thinky_dots]Let go of your limitations, and sleep...[/thinky_dots]",
   "PAEL.talk.THESCALED-THE_SCALED.2-1r.next": "Rest",
-  "PAEL.talk.THESCALED-THE_SCALED.2-2r.ancient": "[i]Pael is asleep. Take what is yours[/i]"
+  "PAEL.talk.THESCALED-THE_SCALED.2-2r.ancient": "[i]Pael is asleep. Take what is yours[/i]",
+  "THESCALED-LEVIATHAN_ANCIENT.epithet": "Epithet",
+  "THESCALED-LEVIATHAN_ANCIENT.talk.ANY.0-0r.ancient": "Reusable generic greeting.",
+  "THESCALED-LEVIATHAN_ANCIENT.talk.firstVisitEver.0-0.ancient": "First time greeting.",
+  "THESCALED-LEVIATHAN_ANCIENT.title": "Leviathan",
+  "OROBAS.talk-THESCALED-THE_SCALED.0-0.ancient": "Beast!? Climb high?",
+  "OROBAS.talk-THESCALED-THE_SCALED.0-0.char": "[i]The Scaled growls[/i]"
 }

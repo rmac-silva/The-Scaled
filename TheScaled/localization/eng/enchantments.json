@@ -1,0 +1,4 @@
+{
+    "THESCALED-ADHESIVE.description" : "Gain [gold]Retain[/gold]. When this card is played, lose {Energy:diff()} {Energy:energyIcons()} and return this card to your [gold]Hand[/gold].",
+    "THESCALED-ADHESIVE.title" : "Adhesive"
+}

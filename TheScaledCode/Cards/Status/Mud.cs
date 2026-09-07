@@ -47,10 +47,10 @@ public class Mud : TheScaledCard
     /// <param name="amount"></param>
     /// <param name="owner"></param>
     /// <returns></returns>
-    public static async Task MuddyCards(CardPile pile, int amount, Player owner)
+    public static async Task MuddyCards(CardPile pile, int amount, Player owner, bool skipVisuals = false)
     {
         AfflictionModel muddied = ModelDb.Affliction<Muddied>();
-
+        var cardsAffected = new List<CardModel>();
         for (int i = 0; i < amount; i++)
         {
             CardModel? cardModel = owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards.Where(muddied.CanAfflict));
@@ -58,8 +58,12 @@ public class Mud : TheScaledCard
             if (cardModel != null)
             {
                 await CardCmd.Afflict<Muddied>(cardModel, 1);
+                cardsAffected.Add(cardModel);
             }
         }
+
+
+        if(!skipVisuals) {CardCmd.Preview(cardsAffected,0.8f);}
         
     }
 

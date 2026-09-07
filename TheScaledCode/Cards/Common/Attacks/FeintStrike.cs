@@ -15,6 +15,7 @@ namespace TheScaled.TheScaledCode.Cards
                 new CardsVar(2)
             ];
         
+    protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {

@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 
 namespace TheScaled.TheScaledCode.Afflictions
@@ -65,7 +64,7 @@ namespace TheScaled.TheScaledCode.Afflictions
             {
                 await CardCmd.Afflict<Muddied>(cardModel, 1);
                 await CardPileCmd.Add(cardModel, PileType.Discard, CardPilePosition.Top);
-                CardCmd.Preview(cardModel,0.3f);
+                CardCmd.Preview(cardModel,0.8f);
 
             }
         }

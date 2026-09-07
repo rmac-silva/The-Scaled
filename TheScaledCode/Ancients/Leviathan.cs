@@ -2,7 +2,6 @@ using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Acts;
 using TheScaled.TheScaledCode.Relics.Ancient;
 
 namespace TheScaled.TheScaledCode.Ancients;

@@ -5,12 +5,27 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Runs;
+using TheScaled.TheScaledCode.Ancients;
 namespace TheScaled.TheScaledCode.Powers;
 
 /// <summary>
 /// Struct for storing information to be used by Setup cards. Can contain a variety of information
 /// to use during the ambush trigger.
 /// </summary>
+
+public struct AmbushEntry
+{
+    public AmbushEffect effect;
+    public CardModel source;
+
+    public AmbushEntry(AmbushEffect e, CardModel src)
+    {
+        this.effect = e;
+        this.source = src;
+    }
+}
+
 public struct AmbushMethodInfo
 {
     public Creature? applier;
@@ -40,12 +55,12 @@ public class Ambush : TheScaledPower
         new DynamicVar("AmbushThreshold",0m),
         new DynamicVar("AmbushThresholdBase",5m),
     ];
-    private List<AmbushEffect> EffectsForOwner =>
+    private List<AmbushEntry> EffectsForOwner =>
     _queuedEffects.TryGetValue(base.Owner, out var effects)
         ? effects
         : (_queuedEffects[base.Owner] = []);
 
-    private readonly Dictionary<Creature, List<AmbushEffect>> _queuedEffects = [];
+    private readonly Dictionary<Creature, List<AmbushEntry>> _queuedEffects = [];
 
     /// <summary>
     /// Checks if the Ambush power has been applied to a creature, and logs the application.
@@ -97,9 +112,9 @@ public class Ambush : TheScaledPower
     {
         var effects = EffectsForOwner;
 
-        foreach (var effect in effects.ToArray())
+        foreach (var entry in effects.ToArray())
         {
-            await effect(info);
+            await entry.effect(info);
         }
 
         effects.Clear();
@@ -122,7 +137,33 @@ public class Ambush : TheScaledPower
     /// This is called by Setup cards to register their effects.
     /// </summary>
     /// <param name="effect"></param>
-    public async Task AddAmbushEffect(AmbushEffect effect, HoverTip hoverTip)
+    public async Task AddAmbushEffect(AmbushEntry effect, HoverTip hoverTip)
+    {
+        var setupPower = base.Owner.GetPower<SetupPower>();
+
+        if (setupPower is null)
+        {
+            setupPower = await PowerCmd.Apply<SetupPower>(
+                new ThrowingPlayerChoiceContext(),
+                base.Owner,
+                1,
+                null,
+                null);
+        }
+
+        //Increase the threshold by one, representing the added setup effect
+        base.DynamicVars["AmbushThreshold"].BaseValue++;
+        
+        setupPower?.AddHovertip(hoverTip);
+        
+        EffectsForOwner.Add(effect);
+    }
+
+    /// <summary>
+    /// Adds a pre-existing ambush effect. This means that the hovertip already exists, and we simply need to add it to the list of effects.
+    /// </summary>
+    /// <param name="effect"></param>
+    public async Task AddExistingAmbushEffect(AmbushEntry effect)
     {
         var setupPower = base.Owner.GetPower<SetupPower>();
 
@@ -139,8 +180,30 @@ public class Ambush : TheScaledPower
         //Increase the threshold by one, representing the added setup effect
         base.DynamicVars["AmbushThreshold"].BaseValue++;
 
-        setupPower?.AddHovertip(hoverTip);
+        #pragma warning disable CS8602 // Dereference of a possibly null reference.
+        var hoverTip = setupPower.GetHoverTip($"Setup ({effect.source.Title})");
+        
+
+        setupPower.AddHovertip(hoverTip);
+        
         EffectsForOwner.Add(effect);
+    }
+
+    /// <summary>
+    /// Randomly copies and applies a single Setup that's already applied.
+    /// </summary>
+    /// <returns></returns>
+    public async Task CopyAndApplyRandomAmbushEffect(IRunState runState)
+    {
+        //Fetch existing effects
+        var effects = EffectsForOwner;
+
+        //Pick a random one
+        var chosenEffect = runState.Rng.Niche.NextItem(effects);
+
+        await AddExistingAmbushEffect(chosenEffect);
+
+        CardCmd.Preview(chosenEffect.source,0.8f);
     }
 
     /// <summary>

@@ -9,7 +9,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
-using TheScaled.TheScaledCode.Character;
 
 namespace TheScaled.TheScaledCode.Relics.Ancient;
 
@@ -18,7 +17,7 @@ public class SeaUrchin : CustomRelicModel
 {
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
-    private CardModel _exhaustedCard = null;
+    private CardModel? _exhaustedCard = null;
 
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {

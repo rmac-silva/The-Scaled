@@ -2,7 +2,6 @@ using BaseLib.Abstracts;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models.RelicPools;
-using TheScaled.TheScaledCode.Character;
 
 namespace TheScaled.TheScaledCode.Relics.Ancient;
 

@@ -65,12 +65,27 @@ public class SetupPower : TheScaledPower
         base.RemoveInternal();
 
     }
+    
+
     public void AddHovertip(HoverTip hoverTip)
     {
         ModLog.Info(this,$"Adding hover tip {hoverTip} to {base.Owner}");
         _extraHoverTips[base.Owner] = _extraHoverTips.TryGetValue(base.Owner, out var existingTips) 
             ? existingTips.Append(hoverTip) 
             : new List<HoverTip> { hoverTip };
+    }
+
+    public HoverTip GetHoverTip(string Title)
+    {
+        ModLog.Info(this,$"Fetching hover tip from: {HoverTipsForOwner} | {Title}.\nList:");
+        foreach (var item in HoverTipsForOwner)
+        {
+            ModLog.Info(this,$"{item}");
+        }
+
+        var res = HoverTipsForOwner.FirstOrDefault( (HoverTip h) => h.Title == Title);
+        ModLog.Info(this,$"Fetched {res}");
+        return res;
     }
 
     public override Task AfterCombatEnd(CombatRoom room)

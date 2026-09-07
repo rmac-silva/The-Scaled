@@ -10,10 +10,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.RelicPools;
-using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
-using TheScaled.TheScaledCode.Character;
 
 namespace TheScaled.TheScaledCode.Relics.Ancient;
 
@@ -51,18 +49,16 @@ public class RottenDiaphragm : CustomRelicModel
         InvokeDisplayAmountChanged();
     }
 
-    public override Task AfterModifyingCardPlayResultPileOrPosition(
-        CardModel card,
-        PileType pileType,
-        CardPilePosition position
+    public override CardLocation ModifyCardPlayResultLocation(
+        CardModel card, bool isAutoPlay, ResourceInfo resources, CardLocation cardLocation
     )
     {
         if (card.Owner != base.Owner)
         {
-            return Task.CompletedTask;
+            return cardLocation;
         }
         Flash();
-        return Task.CompletedTask;
+        return cardLocation;
     }
 
     public override Task AfterSideTurnStart(
@@ -96,10 +92,7 @@ public class RottenDiaphragm : CustomRelicModel
         {
             return options;
         }
-        if (options.CustomCardPool != null)
-        {
-            return options;
-        }
+        
         if (options.CardPools.All((CardPoolModel p) => p.IsColorless))
         {
             return options;

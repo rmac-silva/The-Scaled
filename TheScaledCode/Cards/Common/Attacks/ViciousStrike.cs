@@ -13,6 +13,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class ViciousStrike : TheScaledCard
 {
+    protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First()];

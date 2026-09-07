@@ -1,29 +1,12 @@
-
-
-using BaseLib.Abstracts;
-using BaseLib.Utils;
-using Godot;
-using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Extensions;
-using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.Nodes.Rooms;
-using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.ValueProps;
 using TheScaled.TheScaledCode.Cards;
-using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Ancients;
   
@@ -60,24 +43,16 @@ public class Plagiarize : AncientCard
 				PowerModel? powerModel = PowerCmd.FindExistingInstanceForStacking(item, base.Owner.Creature, item.Applier);
 				if (powerModel != null)
 				{
-					DoHackyThingsForSpecificPowers(powerModel);
+					// DoHackyThingsForSpecificPowers(powerModel);
 					await PowerCmd.ModifyAmount(choiceContext, powerModel, item.Amount, item.Applier, this);
 				}
 				else
 				{
 					PowerModel power = (PowerModel)item.ClonePreservingMutability();
-					DoHackyThingsForSpecificPowers(power);
+					// DoHackyThingsForSpecificPowers(power);
 					await PowerCmd.Apply(choiceContext, power, base.Owner.Creature, item.Amount, item.Applier, this);
 				}
 			}
-	}
-
-	private static void DoHackyThingsForSpecificPowers(PowerModel power)
-	{
-		if (power is ITemporaryPower temporaryPower)
-		{
-			temporaryPower.IgnoreNextInstance();
-		}
 	}
 
 	protected override void OnUpgrade()

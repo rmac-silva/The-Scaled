@@ -10,6 +10,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class FollowUpStrike : SetupCard
 {
+    protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7m,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("AmbushEffect",4)];
 

@@ -11,9 +11,7 @@ using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rewards;
-using MegaCrit.Sts2.Core.Runs;
 using TheScaled.TheScaledCode.Cards;
-using TheScaled.TheScaledCode.Character;
 
 namespace TheScaled.TheScaledCode.Relics.Ancient;
 
@@ -43,6 +41,9 @@ public class AbhorrentMass : CustomRelicModel
         {
             Rng rng = base.Owner.RunState.Rng.UpFront;
             var r = rng.NextItem(possibleRelics);
+
+            if(r == null || r.Relic==null) {return;}
+
             relicsOffered.Add(new RelicReward(r.Relic, base.Owner));
         }
 

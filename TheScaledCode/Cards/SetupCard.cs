@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models.Events;
 using TheScaled.TheScaledCode.Helpers;
 using TheScaled.TheScaledCode.Powers;
-
 namespace TheScaled.TheScaledCode.Cards;
 
 public abstract class SetupCard : TheScaledCard
@@ -35,14 +35,21 @@ public abstract class SetupCard : TheScaledCard
     public static string GetCleanSetupText(string input)
     {
         //Strip out all BBCode style tags
-        string strippedText = Regex.Replace(input, @"\[/?[^\]]+\]", "");
+        ModLog.Info(null,$"[SetupCard.cs] Input for Setup Text Cleaning: {input}");
 
         //Setup finding
-        int setupIndex = strippedText.IndexOf("Setup:", StringComparison.OrdinalIgnoreCase);
-        
+        int setupIndex = input.IndexOf("[gold]Setup[/gold]:", StringComparison.OrdinalIgnoreCase);
+
         if (setupIndex != -1)
         {
-            return strippedText.Substring(setupIndex + "Setup:".Length).Trim();
+            var textWithoutSetup = input.Substring(setupIndex + "[gold]Setup[/gold]:".Length);
+            int positionOfNewLine = textWithoutSetup.IndexOf("\n");
+            if (positionOfNewLine == -1)
+            {
+                positionOfNewLine = textWithoutSetup.Length;
+            }
+
+            return textWithoutSetup.Substring(0, positionOfNewLine).Trim();
         }
 
         return string.Empty; // Return empty string if "Setup:" is not found
@@ -58,8 +65,10 @@ public abstract class SetupCard : TheScaledCard
         {
             var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand,cardPlay.Target));
             ModLog.Info(this, $"Setup Card Description: {description}");
+
+            AmbushEntry entry = new AmbushEntry(AmbushEffect,this);
         
-            await ambush.AddAmbushEffect(AmbushEffect, TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType));
+            await ambush.AddAmbushEffect(entry, TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType));
         }
     }
 
@@ -76,9 +85,11 @@ public abstract class SetupCard : TheScaledCard
         {
             var ambush = enemy.GetPower<Ambush>();
 
+            AmbushEntry entry = new AmbushEntry(AmbushEffect,this);
+
             if (ambush is not null)
             {
-                await ambush.AddAmbushEffect(AmbushEffect, TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType));
+                await ambush.AddAmbushEffect(entry, TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType));
             }
         }
     }

@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using TheScaled.TheScaledCode.Powers;
 
@@ -12,6 +13,10 @@ namespace TheScaled.TheScaledCode.Cards;
 public class InstinctiveStrike : TheScaledCard
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+    protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<Ambush>(2)];
 
     public InstinctiveStrike() : base(0, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)

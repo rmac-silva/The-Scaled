@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Enchantments
 {
@@ -71,30 +70,28 @@ namespace TheScaled.TheScaledCode.Enchantments
             await PlayerCmd.GainEnergy(-base.DynamicVars.Energy.BaseValue,base.Card.Owner);
         }
 
-        public override (PileType, CardPilePosition) ModifyCardPlayResultPileTypeAndPosition(CardModel card, bool isAutoPlay, ResourceInfo resources, PileType pileType, CardPilePosition position)
+        public override CardLocation ModifyCardPlayResultLocation(CardModel card, bool isAutoPlay, ResourceInfo resources, CardLocation cardLocation)
     {
         //If it's not our card we ignore it
         if (card.Owner != base.Card.Owner)
 		{
-			return (pileType, position);
+			return cardLocation;
 		}
 
         //If it's not the enchanted card, we ignore it
         if(card != base.Card)
         {
-            return (pileType, position);
+            return cardLocation;
         }
 
         //If it's not being moved to the discard pile
-        if (!CanBeReturned(pileType))
+        if (!CanBeReturned(cardLocation.pileType))
 		{
-			return (pileType, position);
+			return cardLocation;
 		}
         
-
-
         //Otherwise, place it back into your hand
-        return (PileType.Hand, CardPilePosition.Top);
+        return new CardLocation(card.Owner,PileType.Hand,CardPilePosition.Top);
     }
 
     /// <summary>

@@ -18,7 +18,7 @@ public class TailSweep : TheScaledCard
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First()];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
+        
         ArgumentNullException.ThrowIfNull(CombatState, "CombatState");
 
         await DamageCmd
