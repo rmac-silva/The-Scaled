@@ -31,7 +31,7 @@ public class Chomp : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await base.OnPlay(choiceContext, cardPlay);
+        await base.AddSetup(choiceContext, cardPlay);
         
 
     }
@@ -42,7 +42,7 @@ public class Chomp : SetupCard
     }
 
 
-    protected override async Task AmbushEffect(AmbushMethodInfo info)
+    protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,int> _)
     {
         if (info.target == null)
         {

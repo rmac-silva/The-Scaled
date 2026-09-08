@@ -34,6 +34,6 @@ public class Engulf : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.CalculationBase.UpgradeValueBy(3);
+        base.DynamicVars.ExtraDamage.UpgradeValueBy(2);
     }
 }

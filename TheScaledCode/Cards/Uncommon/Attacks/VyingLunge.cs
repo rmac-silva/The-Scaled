@@ -15,6 +15,14 @@ public class VyingLunge : TheScaledCard
     {
     }
 
+    protected override bool ShouldGlowGoldInternal
+    {
+        get
+        {
+            return !HasBeenPlayedThisTurn;
+        }
+    }
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8m,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),new EnergyVar(1)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.ForEnergy(base.Owner)];
     private bool HasBeenPlayedThisTurn => CombatManager.Instance.History.CardPlaysFinished.Any((CardPlayFinishedEntry e) => e.CardPlay.Card == this && e.HappenedThisTurn(base.CombatState));

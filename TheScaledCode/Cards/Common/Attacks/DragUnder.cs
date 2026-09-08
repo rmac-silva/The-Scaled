@@ -4,13 +4,14 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using TheScaled.TheScaledCode.Powers;
+using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Cards;
-public class Ambuscade : SetupCard
+public class DragUnder : SetupCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(9,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),new DynamicVar("AmbushEffect",6), new DynamicVar("AmbushAmount",3)];
     
-    public Ambuscade() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+    public DragUnder() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>(), AmbushHoverTip];
@@ -27,7 +28,7 @@ public class Ambuscade : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await base.OnPlay(choiceContext, cardPlay);
+        await base.AddSetup(choiceContext, cardPlay);
         
     }
 
@@ -36,7 +37,7 @@ public class Ambuscade : SetupCard
         base.DynamicVars.Damage.UpgradeValueBy(3);
     }
 
-    protected override Task AmbushEffect(AmbushMethodInfo info)
+    protected override Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
     {
         if(info.target == null)
         {

@@ -1,5 +1,5 @@
-﻿<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
-    <Import Project=".\Sts2PathDiscovery.props"/>
+<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
+    <Import Project=".\Sts2PathDiscovery.props" />
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>true</ImplicitUsings>
@@ -17,7 +17,7 @@
         <NoWarn>$(NoWarn);MSB3270</NoWarn>
     </PropertyGroup>
 
-    <ItemGroup Condition="Exists('$(Sts2DataDir)')" >
+    <ItemGroup Condition="Exists('$(Sts2DataDir)')">
         <Reference Include="0Harmony">
             <HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
             <Private>false</Private>
@@ -53,10 +53,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Condition="Exists('Directory.Build.props')" Include="Directory.Build.props"/>
+        <None Condition="Exists('Directory.Build.props')" Include="Directory.Build.props" />
         <None Include=".gitignore" />
         <None Include="TheScaled.json" />
-        <None Include="project.godot"/>
+        <None Include="project.godot" />
         <None Include="TheScaled/**" />
     </ItemGroup>
 
@@ -67,10 +67,8 @@
       <Folder Include="TheScaled\images\relics\big\" />
     </ItemGroup>
     
-    <Target Name="CheckDependencyPaths" >
-        <Error
-                Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'"
-                Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')" />
+    <Target Name="CheckDependencyPaths">
+        <Error Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'" Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')" />
     </Target>
 
     <Target Name="UpdateDependencyVersions" BeforeTargets="BeforeBuild" Condition="Exists('.godot/mono/temp/obj/project.assets.json')">

@@ -55,7 +55,13 @@ public abstract class SetupCard : TheScaledCard
         return string.Empty; // Return empty string if "Setup:" is not found
     }
 
-    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    /// <summary>
+    /// Adds a given setup to the target.
+    /// </summary>
+    /// <param name="choiceContext"></param>
+    /// <param name="cardPlay"></param>
+    /// <returns></returns>
+    protected async Task AddSetup(PlayerChoiceContext choiceContext, CardPlay cardPlay, Dictionary<string,decimal>? data = null)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
@@ -63,39 +69,63 @@ public abstract class SetupCard : TheScaledCard
 
         if (ambush is not null)
         {
-            var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand,cardPlay.Target));
-            ModLog.Info(this, $"Setup Card Description: {description}");
+            
+            
 
-            AmbushEntry entry = new AmbushEntry(AmbushEffect,this);
+            AmbushEntry entry;
+
+            if(data is null)
+            {
+                entry = new AmbushEntry(AmbushEffect,this);
+            } else
+            {
+                entry = new AmbushEntry(AmbushEffect,this, data);
+            }
         
-            await ambush.AddAmbushEffect(entry, TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType));
+            await ambush.AddAmbushEffect(entry, GetHovertip(cardPlay));
         }
     }
 
-    protected async Task ApplyAmbushToAllEnemies(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+
+
+    protected async Task AddSetupToAllEnemies(PlayerChoiceContext choiceContext, CardPlay cardPlay, Dictionary<string, decimal>? data = null)
     {
         ArgumentNullException.ThrowIfNull(base.CombatState, "wner.Creature.CombatState");
 
         var listOfEnemies = base.CombatState.Enemies;
 
-        var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand,cardPlay.Target));
-        ModLog.Info(this, $"Setup Card Description: {description}");
-
         foreach (var enemy in listOfEnemies)
         {
             var ambush = enemy.GetPower<Ambush>();
 
-            AmbushEntry entry = new AmbushEntry(AmbushEffect,this);
+            AmbushEntry entry;
+
+            if (data is null)
+            {
+                entry = new AmbushEntry(AmbushEffect, this);
+            }
+            else
+            {
+                entry = new AmbushEntry(AmbushEffect, this, data);
+            }
 
             if (ambush is not null)
             {
-                await ambush.AddAmbushEffect(entry, TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType));
+                await ambush.AddAmbushEffect(entry, GetHovertip(cardPlay));
             }
         }
     }
 
+    public HoverTip GetHovertip(CardPlay? cardPlay)
+    {
+        var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand, cardPlay?.Target));
 
-    protected abstract Task AmbushEffect(AmbushMethodInfo info);
+        /*ModLog.Info(this, $"Setup Card Description: {description}");*/
+        return TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType);
+    }
+
+
+    protected abstract Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
 
     protected IHoverTip AmbushHoverTip => HoverTipFactory.FromPower<SetupPower>();
 }

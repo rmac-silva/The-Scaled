@@ -9,14 +9,14 @@ using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Cards;
 
-public class Fixate : SetupCard
+public class Entomb : SetupCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WeakPower>(1), new DynamicVar("MudAmount", 1),new DamageVar(2,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<WeakPower>(),HoverTipFactory.FromCard<Mud>()];
 
     protected override SetupCardType CardSetupType => SetupCardType.Offensive;
 
-    public Fixate() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
+    public Entomb() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 
@@ -29,10 +29,10 @@ public class Fixate : SetupCard
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, base.DynamicVars.Weak.IntValue,base.Owner.Creature,this);
 
         //Create 1 mud card
-        await Mud.AddMudCard(PileType.Hand, base.DynamicVars["MudAmount"].IntValue, base.Owner);
+        await Mud.AddMudCard(PileType.Discard, base.DynamicVars["MudAmount"].IntValue, base.Owner);
 
         //Call setup
-        await base.OnPlay(choiceContext, cardPlay);
+        await base.AddSetup(choiceContext, cardPlay);
     }
 
     protected override void OnUpgrade()
@@ -40,7 +40,7 @@ public class Fixate : SetupCard
         base.DynamicVars.Damage.UpgradeValueBy(1);
     }
 
-    protected override async Task AmbushEffect(AmbushMethodInfo info)
+    protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
     {
         if(info.applier is null )
         {

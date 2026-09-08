@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 
-namespace TheScaled.TheScaledCode.Powers;
+namespace TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 /// <summary>
 ///
@@ -40,5 +40,7 @@ public class DrownedPower : TheScaledPower
             }
         }
     }
+
+    
 
 }

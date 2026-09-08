@@ -29,7 +29,7 @@ public class Stalk : SetupCard
         {
             await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
 
-            await base.OnPlay(choiceContext, cardPlay);
+            await base.AddSetup(choiceContext, cardPlay);
         }
 
         protected override void OnUpgrade()
@@ -38,7 +38,7 @@ public class Stalk : SetupCard
             base.DynamicVars["FrailPower"].UpgradeValueBy(1);
         }
 
-        protected override async Task AmbushEffect(AmbushMethodInfo info)
+        protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
         {
             if(info.target is null)
             {

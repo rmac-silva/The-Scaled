@@ -13,7 +13,7 @@ namespace TheScaled.TheScaledCode.Cards
   
 public class Vigil : TheScaledCard
     {
-        public Vigil() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+        public Vigil() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.None)
         {
         }
 

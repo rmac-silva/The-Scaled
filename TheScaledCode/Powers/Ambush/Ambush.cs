@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -18,11 +19,19 @@ public struct AmbushEntry
 {
     public AmbushEffect effect;
     public CardModel source;
+    public Dictionary<string, decimal> data;
 
     public AmbushEntry(AmbushEffect e, CardModel src)
     {
         this.effect = e;
         this.source = src;
+        this.data = new Dictionary<string, decimal>();
+    }
+    public AmbushEntry(AmbushEffect e, CardModel src, Dictionary<string, decimal> data)
+    {
+        this.effect = e;
+        this.source = src;
+        this.data = data;
     }
 }
 
@@ -32,7 +41,7 @@ public struct AmbushMethodInfo
     public Creature? target;
     public PlayerChoiceContext? choiceContext;
 
-    public AmbushMethodInfo(Creature? applier = null, Creature? target = null, PlayerChoiceContext? choiceContext = null)
+    public AmbushMethodInfo(Creature? applier, Creature target, PlayerChoiceContext choiceContext)
     {
         this.applier = applier;
         this.target = target;
@@ -40,7 +49,7 @@ public struct AmbushMethodInfo
     }
 }
 
-public delegate Task AmbushEffect(AmbushMethodInfo info);
+public delegate Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
   
   
 public class Ambush : TheScaledPower
@@ -114,7 +123,7 @@ public class Ambush : TheScaledPower
 
         foreach (var entry in effects.ToArray())
         {
-            await entry.effect(info);
+            await entry.effect(info,entry.data);
         }
 
         effects.Clear();

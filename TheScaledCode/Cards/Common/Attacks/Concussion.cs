@@ -29,7 +29,7 @@ public class Concussion : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await base.OnPlay(choiceContext, cardPlay);
+        await base.AddSetup(choiceContext, cardPlay);
     }
 
     protected override void OnUpgrade()
@@ -38,7 +38,7 @@ public class Concussion : SetupCard
         base.DynamicVars["FrailPower"].UpgradeValueBy(1);
     }
 
-    protected override async Task AmbushEffect(AmbushMethodInfo info)
+    protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
     {
         if(info.target is null)
         {
@@ -53,7 +53,7 @@ public class Concussion : SetupCard
         }
 
         await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), info.target, base.DynamicVars.Vulnerable.BaseValue, base.Owner.Creature, this);
-        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), info.target, base.DynamicVars["FrailPower"].BaseValue, base.Owner.Creature, this);
+        await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), info.target, base.DynamicVars["FrailPower"].BaseValue, base.Owner.Creature, this);
 
         return;
     }

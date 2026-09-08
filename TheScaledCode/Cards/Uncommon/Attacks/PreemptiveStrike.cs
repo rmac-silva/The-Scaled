@@ -9,9 +9,9 @@ using TheScaled.TheScaledCode.Powers;
 namespace TheScaled.TheScaledCode.Cards;
 
   
-public class ChargeThrough : SetupCard
+public class PreemptiveStrike : SetupCard
 {
-    public ChargeThrough() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
+    public PreemptiveStrike() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
     {
     }
 
@@ -41,7 +41,7 @@ public class ChargeThrough : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await base.ApplyAmbushToAllEnemies(choiceContext, cardPlay);
+        await base.AddSetupToAllEnemies(choiceContext, cardPlay);
     }
 
     protected override void OnUpgrade()

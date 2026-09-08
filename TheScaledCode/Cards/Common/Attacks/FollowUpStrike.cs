@@ -30,7 +30,7 @@ public class FollowUpStrike : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await base.OnPlay(choiceContext, cardPlay);
+        await base.AddSetup(choiceContext, cardPlay);
         
     }
 
@@ -39,7 +39,7 @@ public class FollowUpStrike : SetupCard
         base.DynamicVars["AmbushEffect"].UpgradeValueBy(2);
     }
 
-    protected override Task AmbushEffect(AmbushMethodInfo info)
+    protected override Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
     {
         if(info.target == null)
         {

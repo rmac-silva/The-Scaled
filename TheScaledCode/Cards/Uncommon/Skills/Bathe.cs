@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using TheScaled.TheScaledCode.Powers;
+using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Cards
 {
@@ -22,7 +22,7 @@ public class Bathe : TheScaledCard
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
                 new CardsVar(1),
-                new PowerVar<DrownedPower>(3),
+                new PowerVar<DrownedPower>(2),
             ];
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             [HoverTipFactory.FromPower<DrownedPower>(), HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];

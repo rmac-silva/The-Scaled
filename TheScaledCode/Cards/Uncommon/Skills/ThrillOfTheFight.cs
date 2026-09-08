@@ -27,6 +27,8 @@ public class ThrillOfTheFight : TheScaledCard
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             [HoverTipFactory.FromPower<Ambush>(),HoverTipFactory.ForEnergy(this)];
 
+        protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
+
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);

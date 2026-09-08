@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using TheScaled.TheScaledCode.Powers;
+using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Cards
 {
@@ -14,9 +14,9 @@ namespace TheScaled.TheScaledCode.Cards
   
   
   
-public class GaspingRecess : TheScaledCard
+public class Trawl : TheScaledCard
     {
-        public GaspingRecess() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+        public Trawl() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
         {
         }
 
@@ -69,10 +69,6 @@ public class GaspingRecess : TheScaledCard
                 await PowerCmd.Apply<FrailPower>(choiceContext,enemy,base.DynamicVars["FrailPower"].IntValue,base.Owner.Creature,this);
                 reduction++;            
             }
-            
-            
-
-            
         }
 
         protected override void OnUpgrade()

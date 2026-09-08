@@ -18,7 +18,8 @@ public class Brumation : TheScaledCard
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<PlatingPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => 
-	[	new PowerVar<PlatingPower>(5)
+	[	new PowerVar<PlatingPower>(5),
+        new PowerVar<Ambush>(1)
 
 
     ];

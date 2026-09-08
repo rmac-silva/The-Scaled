@@ -35,7 +35,7 @@ public class LeftHook : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         
-        await base.OnPlay(choiceContext, cardPlay);
+        await base.AddSetup(choiceContext, cardPlay);
     }
 
     

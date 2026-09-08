@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using TheScaled.TheScaledCode.Ancients;
 
-namespace TheScaled.TheScaledCode.Powers;
+namespace TheScaled.TheScaledCode.Powers.Cards;
   
 public sealed class ClimaxJumpingPower : CustomPowerModel
 {
