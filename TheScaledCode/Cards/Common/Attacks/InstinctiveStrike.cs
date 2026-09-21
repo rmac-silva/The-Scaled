@@ -10,7 +10,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
   
   
-public class InstinctiveStrike : TheScaledCard
+public class CalculatedStrike : TheScaledCard
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
     protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
@@ -19,7 +19,7 @@ public class InstinctiveStrike : TheScaledCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<Ambush>(2)];
 
-    public InstinctiveStrike() : base(0, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)
+    public CalculatedStrike() : base(0, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)
     {
     }
 
