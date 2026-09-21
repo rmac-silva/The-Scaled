@@ -18,7 +18,7 @@ public class LeftHook : SetupCard
 
     protected override SetupCardType CardSetupType => SetupCardType.Mystery;
 
-    protected override async Task AmbushEffect(AmbushMethodInfo info)
+    protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
     {
         await CardPileCmd.Add(this,PileType.Hand);
         return;

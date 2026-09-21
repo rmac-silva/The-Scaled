@@ -1,3 +1,5 @@
+using BaseLib.Abstracts;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -5,12 +7,15 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using TheScaled.TheScaledCode.Afflictions;
 
 namespace TheScaled.TheScaledCode.Cards;
 
-public class Mud : TheScaledCard
+[Pool(typeof(StatusCardPool))]
+public class Mud : CustomCardModel
 {
+    public override string CustomPortraitPath => "res://TheScaled/images/card_portraits/big/mud.png";
     public override int MaxUpgradeLevel => 0;
     public override bool HasTurnEndInHandEffect => true;
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Ethereal];

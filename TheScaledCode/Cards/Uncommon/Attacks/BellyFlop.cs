@@ -31,13 +31,10 @@ public class BellyFlop : TheScaledCard
         var allEnemies = this.CombatState.Enemies;
         foreach (var e in allEnemies)
         {
-            if (e.HasPower<Ambush>())
+            var ambushPower =e.GetPower<Ambush>();
+            if(ambushPower != null)
             {
-                var ambushPower = e.GetPower<Ambush>();
-                if (ambushPower != null)
-                {
-                    await ambushPower.CopyAndApplyRandomAmbushEffect(base.Owner.RunState);
-                }
+                ambushPower.SetAmount(0);
             }
         }
 

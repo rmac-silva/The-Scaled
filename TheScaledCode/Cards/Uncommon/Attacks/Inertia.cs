@@ -12,6 +12,8 @@ public class Inertia : SetupCard
     {
     }
 
+    private string dummy_tooltip = "[gold]Setup[/gold]: Deal {0} damage, then reapply this [gold]Setup[/gold] with 50% additional damage.";
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
 
@@ -29,23 +31,16 @@ public class Inertia : SetupCard
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+        var data = new Dictionary<string, decimal>(1)
+        {
+            { "damage", base.DynamicVars.Damage.BaseValue }
+        };
+        await AddSetup(choiceContext,cardPlay,data);
 
     }
 
     protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> data)
     {
-        if (info.choiceContext is null)
-        {
-            ModLog.Warning(this, "ChoiceContext for AmbushMethodInfo was null, which should not happen.");
-            return;
-        }
-
-        if (info.target is null)
-        {
-            ModLog.Warning(this, "Target for AmbushMethodInfo was null, which should not happen.");
-            return;
-        }
-
         if (info.applier is null)
         {
             ModLog.Warning(this, "Applier for AmbushMethodInfo was null, which should not happen.");
@@ -74,7 +69,10 @@ public class Inertia : SetupCard
                 };
 
                 var newEntry = new AmbushEntry(this.AmbushEffect, this, newData);
-                await ambushPower.AddAmbushEffect(newEntry, GetHovertip(null));
+
+                var tt = dummy_tooltip.Replace("{0}",((int)newData["damage"]).ToString());
+
+                await ambushPower.AddAmbushEffect(newEntry, GetHovertip(null,tt));
             }
         }
         else

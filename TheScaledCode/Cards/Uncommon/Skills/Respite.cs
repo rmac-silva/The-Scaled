@@ -33,7 +33,7 @@ namespace TheScaled.TheScaledCode.Cards
             await PowerCmd.Apply<DrawCardsNextTurnPower>(
                 choiceContext,
                 base.Owner.Creature,
-                base.DynamicVars["AmbushEffect"].IntValue,
+                base.DynamicVars.Cards.IntValue,
                 base.Owner.Creature,
                 this
             );
@@ -45,7 +45,7 @@ namespace TheScaled.TheScaledCode.Cards
             base.DynamicVars.Block.UpgradeValueBy(4);
         }
 
-        protected override async Task AmbushEffect(AmbushMethodInfo info)
+        protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
         {
 
             if(info.choiceContext == null)

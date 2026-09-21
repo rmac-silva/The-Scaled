@@ -35,7 +35,7 @@ public class Exertion : SetupCard
             base.DynamicVars.Cards.UpgradeValueBy(1);
         }
 
-        protected override async Task AmbushEffect(AmbushMethodInfo info)
+        protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
         {
             await PlayerCmd.GainEnergy(base.DynamicVars.Energy.IntValue,base.Owner);
         }

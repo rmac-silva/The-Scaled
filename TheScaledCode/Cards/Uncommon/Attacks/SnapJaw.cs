@@ -27,14 +27,13 @@ public class SnapJaw : TheScaledCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        if(cardPlay.Target.HasPower<Ambush>())
+        
+        var ambushPower = cardPlay.Target.GetPower<Ambush>();
+        if(ambushPower != null)
         {
-            var ambushPower = cardPlay.Target.GetPower<Ambush>();
-            if(ambushPower != null)
-            {
-                await ambushPower.CopyAndApplyRandomAmbushEffect(base.Owner.RunState);
-            }
+            await ambushPower.CopyAndApplyRandomAmbushEffect(base.Owner.RunState);
         }
+        
     }
 
     protected override void OnUpgrade()

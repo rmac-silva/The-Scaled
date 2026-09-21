@@ -124,6 +124,12 @@ public abstract class SetupCard : TheScaledCard
         return TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType);
     }
 
+    public HoverTip GetHovertip(CardPlay? cardPlay, string descriptionOverride)
+    {
+        /*ModLog.Info(this, $"Setup Card Description: {description}");*/
+        return TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", descriptionOverride, CardSetupType);
+    }
+
 
     protected abstract Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
 

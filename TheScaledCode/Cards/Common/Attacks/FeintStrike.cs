@@ -8,7 +8,7 @@ namespace TheScaled.TheScaledCode.Cards
     public class FeintStrike : TheScaledCard
     {
         public FeintStrike()
-            : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+            : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
                 new DamageVar(11m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),

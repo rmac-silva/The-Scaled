@@ -17,7 +17,7 @@ public class Abyss : CustomCardModel
     public Abyss() : base(0, CardType.Curse, CardRarity.Curse, TargetType.None)
     {
     }
-    public override String CustomPortraitPath => "res://TheScaled/images/card_portraits/big/abyss.png";
+    public override string CustomPortraitPath => "res://TheScaled/images/card_portraits/big/abyss.png";
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Eternal,CardKeyword.Ethereal,CardKeyword.Unplayable];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(2)];
 

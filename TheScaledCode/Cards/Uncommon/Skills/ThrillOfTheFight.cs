@@ -38,8 +38,8 @@ public class ThrillOfTheFight : TheScaledCard
             {
                 return;
             }
-
-            for (int i = 0; i < ambPwr.Amount; i++)
+            int currentAmount = ambPwr.Amount;
+            for (int i = 0; i < currentAmount; i++)
             {
                 ambPwr.SetAmount(ambPwr.Amount - 1);
                 await PlayerCmd.GainEnergy(1,base.Owner);

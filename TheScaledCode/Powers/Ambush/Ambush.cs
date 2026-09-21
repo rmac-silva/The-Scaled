@@ -8,13 +8,13 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using TheScaled.TheScaledCode.Ancients;
+
 namespace TheScaled.TheScaledCode.Powers;
 
 /// <summary>
 /// Struct for storing information to be used by Setup cards. Can contain a variety of information
 /// to use during the ambush trigger.
 /// </summary>
-
 public struct AmbushEntry
 {
     public AmbushEffect effect;
@@ -27,6 +27,7 @@ public struct AmbushEntry
         this.source = src;
         this.data = new Dictionary<string, decimal>();
     }
+
     public AmbushEntry(AmbushEffect e, CardModel src, Dictionary<string, decimal> data)
     {
         this.effect = e;
@@ -38,8 +39,8 @@ public struct AmbushEntry
 public struct AmbushMethodInfo
 {
     public Creature? applier;
-    public Creature? target;
-    public PlayerChoiceContext? choiceContext;
+    public Creature target;
+    public PlayerChoiceContext choiceContext;
 
     public AmbushMethodInfo(Creature? applier, Creature target, PlayerChoiceContext choiceContext)
     {
@@ -49,27 +50,34 @@ public struct AmbushMethodInfo
     }
 }
 
-public delegate Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
-  
-  
+public delegate Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> data);
+
 public class Ambush : TheScaledPower
 {
-    
     public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Counter;
     public override bool AllowNegative => false;
     protected override bool IsVisibleInternal => true; //Not visible on enemies in the future.
     public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier; //One per player, stacking
-    protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DynamicVar("AmbushThreshold",0m),
-        new DynamicVar("AmbushThresholdBase",5m),
-    ];
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DynamicVar("AmbushThreshold", 0m), new DynamicVar("AmbushThresholdBase", 5m)];
     private List<AmbushEntry> EffectsForOwner =>
-    _queuedEffects.TryGetValue(base.Owner, out var effects)
-        ? effects
-        : (_queuedEffects[base.Owner] = []);
+        _queuedEffects.TryGetValue(base.Owner, out var effects)
+            ? effects
+            : (_queuedEffects[base.Owner] = []);
 
     private readonly Dictionary<Creature, List<AmbushEntry>> _queuedEffects = [];
+    public int NumSetupsForCreature
+    {
+        get
+        {
+            if (_queuedEffects.TryGetValue(base.Owner, out var effects))
+            {
+                return effects.Count;
+            }
+            return 0;
+        }
+    }
 
     /// <summary>
     /// Checks if the Ambush power has been applied to a creature, and logs the application.
@@ -79,10 +87,9 @@ public class Ambush : TheScaledPower
     /// <returns></returns>
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
-        ModLog.Info(this,$"Ambush has been applied to {base.Owner}");
+        ModLog.Info(this, $"Ambush has been applied to {base.Owner}");
         ResetAmbushThreshold();
         return Task.CompletedTask;
-
     }
 
     /// <summary>
@@ -94,19 +101,34 @@ public class Ambush : TheScaledPower
     /// <param name="applier"></param>
     /// <param name="cardSource"></param>
     /// <returns></returns>
-    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(
+        PlayerChoiceContext choiceContext,
+        PowerModel power,
+        decimal amount,
+        Creature? applier,
+        CardModel? cardSource
+    )
     {
-        if(power != this)
+        if (power != this)
         {
             return;
         }
-        ModLog.Info(this,$"Ambush has been changed to {base.Amount} | {amount} | Threshold: {base.DynamicVars["AmbushThreshold"].IntValue}");
-        if(base.Amount >= base.DynamicVars["AmbushThreshold"].IntValue)
+        ModLog.Info(
+            this,
+            $"Ambush has been changed to {base.Amount} | {amount} | Threshold: {base.DynamicVars["AmbushThreshold"].IntValue}"
+        );
+        if (base.Amount >= base.DynamicVars["AmbushThreshold"].IntValue)
         {
-            await TriggerAmbush(new AmbushMethodInfo(applier: base.Applier, target:base.Owner, choiceContext: choiceContext));
+            await TriggerAmbush(
+                new AmbushMethodInfo(
+                    applier: base.Applier,
+                    target: base.Owner,
+                    choiceContext: choiceContext
+                )
+            );
         }
 
-        if(base.Amount < 0)
+        if (base.Amount < 0)
         {
             base.SetAmount(0);
         }
@@ -114,35 +136,45 @@ public class Ambush : TheScaledPower
     }
 
     /// <summary>
-    /// Triggers the ambush, resetting the count back to 1 and triggering all 
+    /// Triggers the ambush, resetting the count back to 1 and triggering all
     /// Setup effects
     /// </summary>
     private async Task TriggerAmbush(AmbushMethodInfo info)
     {
         var effects = EffectsForOwner;
-
-        foreach (var entry in effects.ToArray())
-        {
-            await entry.effect(info,entry.data);
-        }
+        var savedListOfEffects = effects.ToArray();
 
         effects.Clear();
+
         base.Owner.GetPower<SetupPower>()?.RemoveSetup();
         base.SetAmount(0);
         ResetAmbushThreshold();
+
+        // Do the registered effects last, since they can re-add setups & such
+        foreach (var entry in savedListOfEffects)
+        {
+            await entry.effect(info, entry.data);
+        }
+
     }
 
     /// <summary>
     /// Public method for triggering an Ambush from external sources. Could be from a relic.
-    /// Ignores threshold amount and triggers an ambush immediately 
+    /// Ignores threshold amount and triggers an ambush immediately
     /// </summary>
     public async Task TriggerAmbushExternal()
     {
-        await TriggerAmbush(new AmbushMethodInfo(applier:base.Applier, target :base.Owner, choiceContext: new ThrowingPlayerChoiceContext()));
+        await TriggerAmbush(
+            new AmbushMethodInfo(
+                applier: base.Applier,
+                target: base.Owner,
+                choiceContext: new ThrowingPlayerChoiceContext()
+            )
+        );
     }
 
     /// <summary>
-    /// Adds an ambush effect to the queue. 
+    /// Adds an ambush effect to the queue.
     /// This is called by Setup cards to register their effects.
     /// </summary>
     /// <param name="effect"></param>
@@ -157,14 +189,15 @@ public class Ambush : TheScaledPower
                 base.Owner,
                 1,
                 null,
-                null);
+                null
+            );
         }
 
         //Increase the threshold by one, representing the added setup effect
         base.DynamicVars["AmbushThreshold"].BaseValue++;
-        
+
         setupPower?.AddHovertip(hoverTip);
-        
+
         EffectsForOwner.Add(effect);
     }
 
@@ -183,18 +216,18 @@ public class Ambush : TheScaledPower
                 base.Owner,
                 1,
                 null,
-                null);
+                null
+            );
         }
 
         //Increase the threshold by one, representing the added setup effect
         base.DynamicVars["AmbushThreshold"].BaseValue++;
 
-        #pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         var hoverTip = setupPower.GetHoverTip($"Setup ({effect.source.Title})");
-        
 
         setupPower.AddHovertip(hoverTip);
-        
+
         EffectsForOwner.Add(effect);
     }
 
@@ -212,7 +245,7 @@ public class Ambush : TheScaledPower
 
         await AddExistingAmbushEffect(chosenEffect);
 
-        CardCmd.Preview(chosenEffect.source,0.8f);
+        CardCmd.Preview(chosenEffect.source, 0.8f);
     }
 
     /// <summary>
@@ -226,17 +259,16 @@ public class Ambush : TheScaledPower
     }
 
     /// <summary>
-    /// Resets the Ambush threshold back to the base value. 
+    /// Resets the Ambush threshold back to the base value.
     /// </summary>
     private void ResetAmbushThreshold()
     {
-        base.DynamicVars["AmbushThreshold"].BaseValue = base.DynamicVars["AmbushThresholdBase"].BaseValue + GetNumSetups();
-        
+        base.DynamicVars["AmbushThreshold"].BaseValue =
+            base.DynamicVars["AmbushThresholdBase"].BaseValue + GetNumSetups();
     }
 
     private int GetNumSetups()
     {
         return base.Owner.GetPower<SetupPower>()?.AmbushThresholdIncrease ?? 0;
     }
-    
 }

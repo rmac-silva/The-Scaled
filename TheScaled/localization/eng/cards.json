@@ -56,7 +56,7 @@
 
   "THESCALED-TAKEDOWN.description": "Deal {Damage:diff()} damage.\nIf the enemy is [gold]Drowning[/gold], hits twice.",
   "THESCALED-TAKEDOWN.title": "Takedown",
-  "THESCALED-INERTIA.description": "[blue]Being reworked.[/blue]",
+  "THESCALED-INERTIA.description": "Deal {Damage:diff()} damage.\n[gold]Setup[/gold]: Deal {Damage:diff()} damage, then reapply this [gold]Setup[/gold] with 50% additional damage.",
   "THESCALED-INERTIA.title": "Inertia",
   "THESCALED-TAIL_SWEEP.description": "Deal {Damage:diff()} damage to ALL enemies twice.\nAfflict {MuddiedCount} cards in your [gold]Draw Pile[/gold] with [gold]Muddied[/gold].",
   "THESCALED-TAIL_SWEEP.title": "Tail Sweep",
@@ -113,6 +113,18 @@
   "THESCALED-PRISMATIC_SCALES.title": "Prismatic Scales",
   "THESCALED-DWELLING.description": "At the end of your turn, gain [gold]Block[/gold] equal to [gold]Ambush[/gold] on ALL enemies.",
   "THESCALED-DWELLING.title": "Dwelling",
+
+  "THESCALED-SUFFOCATE.description": "Deal {CalculationBase:diff()} damage.\nReduce this card’s cost by 1 and increase its damage by 7 for each [gold]Setup[/gold] on ALL enemies.\nTrigger [gold]Ambush[/gold].\n{InCombat:(Deal {CalculatedDamage:diff()} damage)|}",
+  "THESCALED-SUFFOCATE.title": "Suffocate",
+  "THESCALED-RAVAGE.description": "Deal {CalculationBase:diff()} damage.\nDeal an additional {ExtraDamage:diff()} damage for each Energy gained this combat.{InCombat:\n(Deals {CalculatedDamage:diff()} damage)|}",
+  "THESCALED-RAVAGE.title": "Ravage",
+  "THESCALED-LACERATE.description": "Deal {Damage:diff} damage twice.\nTransform a random [gold]Muddied[/gold] card in your deck into [gold]Lacerate[/gold]. Increase the damage of ALL [gold]Lacerate[/gold] cards by {Increase:diff} for the rest of combat.",
+  "THESCALED-LACERATE.title": "Lacerate",
+  "THESCALED-HUNTERS_MARK.description": "Deal {Damage:diff()} damage.\n[gold]Setup[/gold]: Deal 15 damage and reapply this [gold]Setup[/gold].",
+  "THESCALED-HUNTERS_MARK.title": "Hunter's Mark",
+  "THESCALED-FROM_THE_DEPTHS.description": "Deal {Damage:diff()} damage.\nApply {DrownedPower:diff()} [gold]Drown[/gold] to ALL enemies.",
+  "THESCALED-FROM_THE_DEPTHS.title": "From the Depths",
+  
 
 
   "THESCALED-ABYSS.description": "At the start of combat, move this to your [gold]Discard Pile[/gold].\nWhenever this card is drawn, lose {Energy:energyIcons()}.",

@@ -29,7 +29,6 @@ public class Vigil : TheScaledCard
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
             ArgumentNullException.ThrowIfNull(
                 base.Owner.Creature.CombatState,
                 "Owner.Creature.CombatState"
@@ -37,7 +36,7 @@ public class Vigil : TheScaledCard
 
             await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
 
-            await PowerCmd.Apply<BlurPower>(choiceContext,cardPlay.Target,base.DynamicVars["BlurPower"].IntValue,base.Owner.Creature,this);
+            await PowerCmd.Apply<BlurPower>(choiceContext,base.Owner.Creature,base.DynamicVars["BlurPower"].IntValue,base.Owner.Creature,this);
             
         }
 
