@@ -59,6 +59,20 @@ public class Suffocate : TheScaledCard
             return Task.CompletedTask;
     }
 
+    public override  Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        if(card != this)
+        {
+            return Task.CompletedTask;
+        }
+
+        ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState);
+
+        var totalSetups = base.Owner.Creature.CombatState.Enemies.Sum((Creature c) => c.GetPower<Ambush>()?.NumSetupsForCreature ?? 0);
+        SetCost(totalSetups);
+        return Task.CompletedTask;
+    }
+
     public override Task AfterCardEnteredCombat(CardModel card)
     {
         if (card != this)

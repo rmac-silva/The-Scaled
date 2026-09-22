@@ -28,7 +28,7 @@ public class MudBath : TheScaledCard
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
                 new CardsVar(4),
-                new DynamicVar("AfflictedCards",3)
+                new DynamicVar("AfflictedCards",2)
             ];
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -40,8 +40,9 @@ public class MudBath : TheScaledCard
         {
 
             var pile = CardPile.Get(PileType.Draw,base.Owner);
+            var handPile = CardPile.Get(PileType.Hand,base.Owner);
 
-            if(pile is null)
+            if(pile is null || handPile is null)
             {
                 return;
             }
@@ -50,13 +51,14 @@ public class MudBath : TheScaledCard
 
             foreach(var card in cardsAffected)
             {
-                await CardPileCmd.Add(card,CardPile.Get(PileType.Hand,base.Owner));
+
+                await CardPileCmd.Add(card, handPile);
             }
         }
 
         protected override void OnUpgrade()
         {
-            
+            base.DynamicVars["AfflictedCards"].UpgradeValueBy(1);
         }
     }
 }

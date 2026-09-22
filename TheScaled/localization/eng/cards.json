@@ -107,7 +107,7 @@
 
   "THESCALED-BRUMATION.description": "ALL enemies lose {Ambush:diff()} [gold]Ambush[/gold].\nGain {PlatingPower:diff()} Plating.",
   "THESCALED-BRUMATION.title": "Brumation",
-  "THESCALED-SMOTHERING_PRESENCE.description": "Apply {PowerAmount:diff()} [gold]Vulnerable[/gold] whenever you hit a [gold]Drowning[gold] enemy, but consume an additional {ExtraConsumption:diff()} stacks of [gold]Drown[/gold] per hit.",
+  "THESCALED-SMOTHERING_PRESENCE.description": "Apply {PowerAmount:diff()} [gold]Vulnerable[/gold] whenever you hit a [gold]Drowning[/gold] enemy, but consume an additional {ExtraConsumption:diff()} stacks of [gold]Drown[/gold] per hit.",
   "THESCALED-SMOTHERING_PRESENCE.title": "Smothering Presence",
   "THESCALED-PRISMATIC_SCALES.description": "Whenever you gain [gold]Block[/gold], apply 1 [gold]Drown[/gold] to ALL enemies.",
   "THESCALED-PRISMATIC_SCALES.title": "Prismatic Scales",

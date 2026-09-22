@@ -15,10 +15,12 @@ namespace TheScaled.TheScaledCode.Cards;
 [Pool(typeof(StatusCardPool))]
 public class Mud : CustomCardModel
 {
-    public override string CustomPortraitPath => "res://TheScaled/images/card_portraits/big/mud.png";
+    public override string CustomPortraitPath =>
+        "res://TheScaled/images/card_portraits/big/mud.png";
     public override int MaxUpgradeLevel => 0;
     public override bool HasTurnEndInHandEffect => true;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Ethereal];
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust, CardKeyword.Ethereal];
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         HoverTipFactory.FromAffliction<Muddied>();
 
@@ -35,13 +37,9 @@ public class Mud : CustomCardModel
 
     protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
     {
-
         var pile = PileType.Hand.GetPile(base.Owner);
-        
-        await MuddyCards(pile,1,base.Owner);
 
-        
-
+        await MuddyCards(pile, 1, base.Owner);
     }
 
     /// <summary>
@@ -52,24 +50,36 @@ public class Mud : CustomCardModel
     /// <param name="amount"></param>
     /// <param name="owner"></param>
     /// <returns></returns>
-    public static async Task< IEnumerable<CardModel> > MuddyCards(CardPile pile, int amount, Player owner, bool skipVisuals = false)
+    public static async Task<IEnumerable<CardModel>> MuddyCards(
+        CardPile pile,
+        int amount,
+        Player owner,
+        bool skipVisuals = false
+    )
     {
         AfflictionModel muddied = ModelDb.Affliction<Muddied>();
         var cardsAffected = new List<CardModel>();
         for (int i = 0; i < amount; i++)
         {
-            CardModel? cardModel = owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards.Where(muddied.CanAfflict));
+            CardModel? cardModel = owner.RunState.Rng.CombatCardSelection.NextItem(
+                pile.Cards.Where(muddied.CanAfflict)
+            );
 
             if (cardModel != null)
             {
-                await CardCmd.Afflict<Muddied>(cardModel, 1);
                 cardsAffected.Add(cardModel);
+                if (skipVisuals)
+                {
+                    await CardCmd.Afflict<Muddied>(cardModel, 1);
+                }
             }
         }
 
+        if (!skipVisuals)
+        {
+            await CardCmd.AfflictAndPreview<Muddied>(cardsAffected, 1);
+        }
 
-        if(!skipVisuals) {CardCmd.Preview(cardsAffected,0.8f);}
-        
         return cardsAffected;
     }
 

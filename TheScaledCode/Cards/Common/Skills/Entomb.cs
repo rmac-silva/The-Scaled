@@ -48,7 +48,7 @@ public class Entomb : SetupCard
             return;
         }
 
-        if(info.applier.Player is null)
+        if(info.applier is null || info.applier.Player is null || info.applier.Player.PlayerCombatState is null)
         {
             ModLog.Warning(this,$"Warning. Applier.Player is null when calling AmbushEffect.");
             return;
@@ -60,7 +60,7 @@ public class Entomb : SetupCard
             return;
         }
 
-        var muddiedCards = PileType.Deck.GetPile(info.applier.Player).Cards.Where(c => c.Affliction != null && c.Affliction is Muddied).ToList();
+        var muddiedCards = info.applier.Player.PlayerCombatState.AllCards.Where(c => c.Affliction != null && c.Affliction is Muddied).ToList();
         var damage = base.DynamicVars.Damage.BaseValue * muddiedCards.Count;
 
         await DamageCmd.Attack(damage)
