@@ -46,9 +46,12 @@ public class MudBath : TheScaledCard
                 return;
             }
 
-            await Mud.MuddyCards(pile,base.DynamicVars["AfflictedCards"].IntValue,base.Owner);
+            var cardsAffected = await Mud.MuddyCards(pile,base.DynamicVars["AfflictedCards"].IntValue,base.Owner);
 
-            await CardPileCmd.Draw(choiceContext, base.DynamicVars.Cards.IntValue, base.Owner);
+            foreach(var card in cardsAffected)
+            {
+                await CardPileCmd.Add(card,CardPile.Get(PileType.Hand,base.Owner));
+            }
         }
 
         protected override void OnUpgrade()

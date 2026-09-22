@@ -52,7 +52,7 @@ public class Mud : CustomCardModel
     /// <param name="amount"></param>
     /// <param name="owner"></param>
     /// <returns></returns>
-    public static async Task MuddyCards(CardPile pile, int amount, Player owner, bool skipVisuals = false)
+    public static async Task< IEnumerable<CardModel> > MuddyCards(CardPile pile, int amount, Player owner, bool skipVisuals = false)
     {
         AfflictionModel muddied = ModelDb.Affliction<Muddied>();
         var cardsAffected = new List<CardModel>();
@@ -70,6 +70,7 @@ public class Mud : CustomCardModel
 
         if(!skipVisuals) {CardCmd.Preview(cardsAffected,0.8f);}
         
+        return cardsAffected;
     }
 
     /// <summary>

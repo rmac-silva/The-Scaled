@@ -41,7 +41,7 @@ namespace TheScaled.TheScaledCode.Afflictions
 		{
 			return false;
 		}
-		if (card.Affliction != null && (!IsStackable || card.Affliction.GetType() != GetType()))
+		if (card.Affliction != null && (!IsStackable || card.Affliction.GetType() == GetType()))
 		{
 			return false;
 		}

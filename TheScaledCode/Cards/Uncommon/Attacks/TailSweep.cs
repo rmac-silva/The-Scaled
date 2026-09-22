@@ -22,17 +22,17 @@ public class TailSweep : TheScaledCard
         ArgumentNullException.ThrowIfNull(CombatState, "CombatState");
 
         await DamageCmd
-            .Attack(base.DynamicVars.Damage.BaseValue)
+            .Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this,cardPlay)
-            .TargetingAllOpponents(base.CombatState)
-            .WithHitCount(base.DynamicVars.Repeat.IntValue)
+            .TargetingAllOpponents(CombatState)
+            .WithHitCount(DynamicVars.Repeat.IntValue)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
         
 
-        var pile = PileType.Discard.GetPile(base.Owner);
-        await Mud.MuddyCards(pile,base.DynamicVars["MuddiedCount"].IntValue,base.Owner);
+        var pile = PileType.Draw.GetPile(Owner);
+        await Mud.MuddyCards(pile,DynamicVars["MuddiedCount"].IntValue,Owner);
 
     }
 
