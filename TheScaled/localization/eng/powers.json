@@ -1,6 +1,6 @@
 {
-  "THESCALED-DROWNED_POWER.description": "Deals additional damage when attacked based on stacks of [gold]Drown[/gold]. Ticks down by [blue]1[/blue] when hit.",
-  "THESCALED-DROWNED_POWER.smartDescription": "Whenever you attack this enemy, they take [blue]{Amount}[/blue] damage. Ticks down by [blue]1[/blue] when hit.",
+  "THESCALED-DROWNED_POWER.description": "Deals additional damage when taking unblocked damage, based on the stacks of [gold]Drown[/gold]. Ticks down by [blue]1[/blue] when hit.",
+  "THESCALED-DROWNED_POWER.smartDescription": "Whenever you deal unblocked damage to this enemy, they take [blue]{Amount}[/blue] damage. Ticks down by [blue]1[/blue] when hit.",
   "THESCALED-DROWNED_POWER.title": "Drowning",
   "THESCALED-TEMPORARY_THORNS.description": "Gain [gold]Thorns[/gold] this turn.",
   "THESCALED-TEMPORARY_THORNS_DOWN.description": "Lose [gold]Thorns[/gold] this turn.",

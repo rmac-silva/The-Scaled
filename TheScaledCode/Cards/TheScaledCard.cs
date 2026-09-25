@@ -4,6 +4,8 @@ using BaseLib.Utils;
 using TheScaled.TheScaledCode.Character;
 using TheScaled.TheScaledCode.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using Godot;
+using MegaCrit.Sts2.Core.Modding;
 
 namespace TheScaled.TheScaledCode.Cards;
 
@@ -17,16 +19,59 @@ namespace TheScaled.TheScaledCode.Cards;
 public abstract class TheScaledCard(int cost, CardType type, CardRarity rarity, TargetType target) :
     CustomCardModel(cost, type, rarity, target)
 {
+
+    private bool HasArt(string path)
+    {
+        return ResourceLoader.Exists(path);
+    }
     //Image size:
     //Normal art: 1000x760 (Using 500x380 should also work, it will simply be scaled.)
     //Full art: 606x852
-    public override string CustomPortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigCardImagePath();
+    public override string CustomPortraitPath
+    {
+        get
+        {
+            var portraitPath = $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigCardImagePath();
+            if (HasArt(portraitPath))
+            {
+                return portraitPath;
+            } else
+            {
+                return "stick.png".BigCardImagePath();
+            }
+        }
+    } 
     
     //Smaller variants of card images for efficiency:
     //Smaller variant of fullart: 250x350
     //Smaller variant of normalart: 250x190
     
     //Uses card_portraits/card_name.png as image path. These should be smaller images.
-    public override string PortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
-    public override string BetaPortraitPath => $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
+    public override string PortraitPath
+    {
+        get
+        {
+            var portraitPath = $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
+            if (HasArt(portraitPath))
+            {
+                return portraitPath;
+            } else
+            {
+                return "stick.png".CardImagePath();
+            }
+        }
+    } 
+    public override string BetaPortraitPath{
+        get
+        {
+            var portraitPath = $"beta/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePath();
+            if (HasArt(portraitPath))
+            {
+                return portraitPath;
+            } else
+            {
+                return "stick.png".CardImagePath();
+            }
+        }
+    } 
 }

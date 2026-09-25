@@ -31,6 +31,7 @@ public class DrownedPower : TheScaledPower
             //Deal damage to the enemy equal to the power amount
             if(target == base.Owner)
             {
+                await Cmd.Wait(0.3f);
                 //The target is the owner of the power.
                 //Damage him according to the amount of the power.
                 await CreatureCmd.Damage(choiceContext,base.Owner,base.Amount,ValueProp.Unblockable | ValueProp.Unpowered,base.Owner);

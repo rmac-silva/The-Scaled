@@ -1,5 +1,4 @@
 **Bugfixes**:
-- Fixed an issue where Suffocate would not properly recalculate its energy costs
-- Fixed Entomb not calculating its damage correctly
-- Fixed Retaliate not having Exhaust
-- Fixed MudBath not upgrading
+- Fixed missing card arts, will default to Stick.png if not found
+- Removed exhaust from Retaliate
+- Changed Drowned Tooltip + Added a delay when displaying the damage
