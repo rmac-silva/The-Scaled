@@ -1,17 +1,13 @@
 using HarmonyLib;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using TheScaled.TheScaledCode.Afflictions;
 using TheScaled.TheScaledCode.Powers;
 using TheScaled.TheScaledCode.Powers.Cards;
-using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Cards
 {
@@ -63,18 +59,15 @@ public class Maelstrom : TheScaledCard
                     continue;
                 }
 
-                ModLog.Info(this,$"Selected {c.Title} for random setup!");
-
                 var ambPwr = cardPlay.Target.GetPower<Ambush>();
 
                 if(ambPwr != null && c is SetupCard)
                 {
                     var ambEntry = new AmbushEntry(setupCard.AmbushEffect,setupCard,setupCard.SetupData);
                     await ambPwr.AddAmbushEffect(ambEntry,setupCard.GetHovertip(cardPlay.Target));
-                    CardCmd.Preview(c,0.4f);
-                    await Cmd.Wait(0.4f);
                 }
             }
+                    CardCmd.Preview(cardModels.ToList(),1f);
 
             await PowerCmd.Apply<AmbushNextTurn>(choiceContext,cardPlay.Target,base.DynamicVars["Ambush"].IntValue * num,base.Owner.Creature,this);
 

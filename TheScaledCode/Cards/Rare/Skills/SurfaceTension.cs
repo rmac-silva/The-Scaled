@@ -24,7 +24,7 @@ public class SurfaceTension : TheScaledCard
                 new BlockVar(18,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
             ];
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<DrownedPower>()];
+            [HoverTipFactory.FromPower<DrownedPower>(),HoverTipFactory.FromPower<SurfaceTensionPower>()];
         
 
 

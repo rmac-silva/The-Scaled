@@ -1,9 +1,12 @@
 **Added Cards:**
-- M.A.D.
-- Surface Tension
-- Seethe
-- Maelstrom
+- Ancient Form
+- Waterlogged
+- Tooth
+- Pursuit
+
+**Changed Cards:**
+- Thrill of the Fight now exhausts.
 
 **Bug Fixes:**
-- Fixed Bathe being stuck in the middle of the screen
-- Fixed Snap Jaw not being able to be played when the enemy has no setups?
+- Fixed Maelstrom not being able to play and its card preview.
+- Fixed Maelstrom ambush next turn not working properly.

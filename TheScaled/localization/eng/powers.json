@@ -28,6 +28,13 @@
   "THESCALED-AMBUSH_NEXT_TURN.description": "Adds [gold]Ambush[/gold] at the start of your next turn.",
   "THESCALED-AMBUSH_NEXT_TURN.smartDescription": "Adds [blue]{Amount}[/blue] [gold]Ambush[/gold] at the start of your next turn.",
   "THESCALED-AMBUSH_NEXT_TURN.title": "Ambush Next Turn",
+  "THESCALED-PURSUIT_POWER.description": "The next card you play cost 1E less.",
+  "THESCALED-PURSUIT_POWER.smartDescription": "The next [blue]{Amount}[/blue] {Amount:plural:card|cards} you play cost 1E less.",
+  "THESCALED-PURSUIT_POWER.title": "Pursuit",
+  "THESCALED-ANCIENT_FORM_POWER.description": "At the start of each turn, choose {Cards} {Amount:plural:card|cards} from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] to put into your [gold]Hand[/gold].",
+  "THESCALED-ANCIENT_FORM_POWER.selectionScreenPrompt": "Choose {Amount:plural:a card|{} cards} to add into your Hand.",
+  "THESCALED-ANCIENT_FORM_POWER.smartDescription": "At the start of each turn, choose {Amount} {Amount:plural:card|cards} from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] to put into your [gold]Hand[/gold].",
+  "THESCALED-ANCIENT_FORM_POWER.title": "Ancient Form",
 
   "THESCALED-MARSHAL_POWER.description": "Gain [gold]Block[/gold] at the start of your turn.",
   "THESCALED-MARSHAL_POWER.smartDescription": "Gain [blue]{Block}[/blue] [gold]Block[/gold] at the start of your turn.",

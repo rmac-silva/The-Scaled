@@ -103,6 +103,8 @@
   "THESCALED-RIPTIDE.title": "Riptide",
   "THESCALED-DREAD.description": "Apply {FrailPower:diff()} [gold]Frail[/gold].",
   "THESCALED-DREAD.title": "Dread",
+  "THESCALED-PURSUIT.description": "The next {PursuitPower:diff()} {PursuitPower:plural:card|cards} you play cost {Energy:energyIcons()} less.\nPut this card on top of your [gold]Draw Pile[/gold].",
+  "THESCALED-PURSUIT.title": "Pursuit",
 
 
   "THESCALED-BRUMATION.description": "ALL enemies lose {Ambush:diff()} [gold]Ambush[/gold].\nGain {PlatingPower:diff()} Plating.",
@@ -133,6 +135,15 @@
   "THESCALED-SEETHE.title": "Seethe",
     "THESCALED-MAELSTROM.description": "Apply 2X random [gold]Setups[/gold].\nNext turn, [gold]Ambush[/gold] 3X.",
   "THESCALED-MAELSTROM.title": "Maelstrom",
+
+  "THESCALED-ANCIENT_FORM.description": "At the start of each turn, choose 1 card each from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] to put into your [gold]Hand[/gold].",
+  "THESCALED-ANCIENT_FORM.title": "Ancient Form",
+  "THESCALED-WATERLOG.description": "Gain {SlipperyPower:diff()} [gold]Slippery[/gold].",
+  "THESCALED-WATERLOG.title": "Waterlog",
+  
+
+  "THESCALED-TOOTH.description": "Deal {Damage:diff()} damage.\nDraw {Cards:diff()} {Cards:plural:card|cards}.",
+  "THESCALED-TOOTH.title": "Tooth",
   
 
 
