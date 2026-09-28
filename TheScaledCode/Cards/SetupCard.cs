@@ -1,10 +1,7 @@
-
-
-using System.Text.RegularExpressions;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models.Events;
 using TheScaled.TheScaledCode.Helpers;
 using TheScaled.TheScaledCode.Powers;
 namespace TheScaled.TheScaledCode.Cards;
@@ -22,6 +19,7 @@ public abstract class SetupCard : TheScaledCard
 
     protected abstract SetupCardType CardSetupType { get;}
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat([AmbushHoverTip]);
+    public virtual Dictionary<string,decimal> SetupData => new Dictionary<string, decimal>();
     protected SetupCard(int cost, CardType type, CardRarity rarity, TargetType target) : base(cost, type, rarity, target)
     {
     }
@@ -82,7 +80,7 @@ public abstract class SetupCard : TheScaledCard
                 entry = new AmbushEntry(AmbushEffect,this, data);
             }
         
-            await ambush.AddAmbushEffect(entry, GetHovertip(cardPlay));
+            await ambush.AddAmbushEffect(entry, GetHovertip(cardPlay.Target));
         }
     }
 
@@ -111,27 +109,32 @@ public abstract class SetupCard : TheScaledCard
 
             if (ambush is not null)
             {
-                await ambush.AddAmbushEffect(entry, GetHovertip(cardPlay));
+                await ambush.AddAmbushEffect(entry, GetHovertip(enemy));
             }
         }
     }
 
-    public HoverTip GetHovertip(CardPlay? cardPlay)
+    public HoverTip GetHovertip(Creature target)
     {
-        var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand, cardPlay?.Target));
+        var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand, target));
 
         /*ModLog.Info(this, $"Setup Card Description: {description}");*/
         return TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType);
     }
 
-    public HoverTip GetHovertip(CardPlay? cardPlay, string descriptionOverride)
+    /// <summary>
+    /// Specific override to replace the description manually, when we need to inject specific variables that won't be present on the card itself.
+    /// </summary>
+    /// <param name="descriptionOverride"></param>
+    /// <returns></returns>
+    public HoverTip GetHovertip(string descriptionOverride)
     {
         /*ModLog.Info(this, $"Setup Card Description: {description}");*/
         return TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", descriptionOverride, CardSetupType);
     }
 
 
-    protected abstract Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
+    public abstract Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
 
     protected IHoverTip AmbushHoverTip => HoverTipFactory.FromPower<SetupPower>();
 }

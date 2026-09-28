@@ -1,5 +1,4 @@
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -7,7 +6,6 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
-using TheScaled.TheScaledCode.Ancients;
 
 namespace TheScaled.TheScaledCode.Powers;
 
@@ -238,7 +236,11 @@ public class Ambush : TheScaledPower
     public async Task CopyAndApplyRandomAmbushEffect(IRunState runState)
     {
         //Fetch existing effects
-        var effects = EffectsForOwner;
+        if (!_queuedEffects.TryGetValue(base.Owner, out var effects)
+        || effects.Count == 0)
+        {
+            return;
+        }
 
         //Pick a random one
         var chosenEffect = runState.Rng.Niche.NextItem(effects);

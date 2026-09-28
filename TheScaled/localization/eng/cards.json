@@ -124,6 +124,15 @@
   "THESCALED-HUNTERS_MARK.title": "Hunter's Mark",
   "THESCALED-FROM_THE_DEPTHS.description": "Deal {Damage:diff()} damage.\nApply {DrownedPower:diff()} [gold]Drown[/gold] to ALL enemies.",
   "THESCALED-FROM_THE_DEPTHS.title": "From the Depths",
+
+  "THESCALED-M_A_D.description": "Gain {Energy:energyIcons} energy.\nDraw {Cards:diff()} cards.\nApply {DrownedPower:diff()} [gold]Drown[/gold] to yourself.",
+  "THESCALED-M_A_D.title": "M.A.D.",
+  "THESCALED-SURFACE_TENSION.description": "Gain {Block:diff()} block.\nEach time you are hit this turn, apply 1 [gold]Drown[/gold] to the attacker.",
+  "THESCALED-SURFACE_TENSION.title": "Surface Tension",
+  "THESCALED-SEETHE.description": "Choose a card in your [gold]Draw Pile[/gold]. That card gains [gold]Replay[/gold] equal to the amount of [gold]Muddied[/gold] cards in your [gold]Discard Pile[/gold].\n{InCombat:(Replay {ReplayAmount:diff()})|}",
+  "THESCALED-SEETHE.title": "Seethe",
+    "THESCALED-MAELSTROM.description": "Apply 2X random [gold]Setups[/gold].\nNext turn, [gold]Ambush[/gold] 3X.",
+  "THESCALED-MAELSTROM.title": "Maelstrom",
   
 
 

@@ -48,7 +48,7 @@ public class PreemptiveStrike : SetupCard
     {
         base.DynamicVars.Damage.UpgradeValueBy(2);
     }
-    protected override Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
+    public override Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
     {
         throw new NotImplementedException();
     }

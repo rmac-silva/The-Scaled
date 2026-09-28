@@ -5,7 +5,6 @@ using TheScaled.TheScaledCode.Character;
 using TheScaled.TheScaledCode.Extensions;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using Godot;
-using MegaCrit.Sts2.Core.Modding;
 
 namespace TheScaled.TheScaledCode.Cards;
 

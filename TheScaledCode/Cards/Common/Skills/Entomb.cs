@@ -40,7 +40,7 @@ public class Entomb : SetupCard
         base.DynamicVars.Damage.UpgradeValueBy(1);
     }
 
-    protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
+    public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
     {
         if(info.applier is null )
         {

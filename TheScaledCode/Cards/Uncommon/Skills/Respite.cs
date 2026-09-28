@@ -45,7 +45,7 @@ namespace TheScaled.TheScaledCode.Cards
             base.DynamicVars.Block.UpgradeValueBy(4);
         }
 
-        protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
+        public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
         {
 
             if(info.choiceContext == null)

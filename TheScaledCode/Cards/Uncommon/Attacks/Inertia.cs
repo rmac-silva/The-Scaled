@@ -19,6 +19,10 @@ public class Inertia : SetupCard
 
     protected override SetupCardType CardSetupType => SetupCardType.Offensive;
 
+    public override Dictionary<string, decimal> SetupData => new Dictionary<string, decimal>(1)
+    {
+        { "damage", base.DynamicVars.Damage.BaseValue }
+    };
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -31,15 +35,12 @@ public class Inertia : SetupCard
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
-        var data = new Dictionary<string, decimal>(1)
-        {
-            { "damage", base.DynamicVars.Damage.BaseValue }
-        };
-        await AddSetup(choiceContext,cardPlay,data);
+        
+        await AddSetup(choiceContext,cardPlay,SetupData);
 
     }
 
-    protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> data)
+    public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> data)
     {
         if (info.applier is null)
         {
@@ -72,7 +73,7 @@ public class Inertia : SetupCard
 
                 var tt = dummy_tooltip.Replace("{0}",((int)newData["damage"]).ToString());
 
-                await ambushPower.AddAmbushEffect(newEntry, GetHovertip(null,tt));
+                await ambushPower.AddAmbushEffect(newEntry, GetHovertip(tt));
             }
         }
         else

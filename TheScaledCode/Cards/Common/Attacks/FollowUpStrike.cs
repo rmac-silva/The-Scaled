@@ -41,7 +41,7 @@ public class FollowUpStrike : SetupCard
         base.DynamicVars["AmbushEffect"].UpgradeValueBy(3);
     }
 
-    protected override Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
+    public override Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
     {
         if(info.target == null)
         {

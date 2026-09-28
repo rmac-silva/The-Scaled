@@ -38,7 +38,7 @@ public class Concussion : SetupCard
         base.DynamicVars["FrailPower"].UpgradeValueBy(1);
     }
 
-    protected override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
+    public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
     {
         if(info.target is null)
         {

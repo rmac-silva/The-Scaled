@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Combat.History;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
-using TheScaled.TheScaledCode.Extensions;
 
 namespace TheScaled.TheScaledCode.Extensions;
 

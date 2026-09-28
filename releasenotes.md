@@ -1,4 +1,9 @@
-**Bugfixes**:
-- Fixed missing card arts, will default to Stick.png if not found
-- Removed exhaust from Retaliate
-- Changed Drowned Tooltip + Added a delay when displaying the damage
+**Added Cards:**
+- M.A.D.
+- Surface Tension
+- Seethe
+- Maelstrom
+
+**Bug Fixes:**
+- Fixed Bathe being stuck in the middle of the screen
+- Fixed Snap Jaw not being able to be played when the enemy has no setups?
