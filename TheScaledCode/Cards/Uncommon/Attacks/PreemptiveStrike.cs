@@ -41,7 +41,7 @@ public class PreemptiveStrike : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await base.AddSetupToAllEnemies(choiceContext, cardPlay);
+        await AddSetupToAllEnemies(choiceContext, cardPlay);
     }
 
     protected override void OnUpgrade()
@@ -50,6 +50,7 @@ public class PreemptiveStrike : SetupCard
     }
     public override Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
     {
-        throw new NotImplementedException();
+            CreatureCmd.Damage(info.choiceContext,info.target,base.DynamicVars["AmbushEffect"].IntValue,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,info.applier ?? Owner.Creature);
+            return Task.CompletedTask;
     }
 }

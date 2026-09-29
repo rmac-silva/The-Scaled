@@ -1,9 +1,10 @@
-**Added Cards:**
-- M.A.D.
-- Surface Tension
-- Seethe
-- Maelstrom
+**Added Cards**:
+- Advantage
 
-**Bug Fixes:**
-- Fixed Bathe being stuck in the middle of the screen
-- Fixed Snap Jaw not being able to be played when the enemy has no setups?
+**Changed Cards**:
+- Concussion now costs 1
+
+**Bugfixes**
+TODO: - Fixed Pursuit not working properly due to incorrect variables.
+TODO: - Maelstrom now no longer picks cards without CanBeGeneratedInCombat
+- Fixed a bug where preemptive strike did not work properly, as it was unfinished.

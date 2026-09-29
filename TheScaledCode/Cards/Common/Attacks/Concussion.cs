@@ -16,7 +16,7 @@ public class Concussion : SetupCard
 
     protected override SetupCardType CardSetupType => SetupCardType.Debuff;
 
-    public Concussion() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+    public Concussion() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 

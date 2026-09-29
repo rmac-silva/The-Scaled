@@ -28,6 +28,9 @@
   "THESCALED-AMBUSH_NEXT_TURN.description": "Adds [gold]Ambush[/gold] at the start of your next turn.",
   "THESCALED-AMBUSH_NEXT_TURN.smartDescription": "Adds [blue]{Amount}[/blue] [gold]Ambush[/gold] at the start of your next turn.",
   "THESCALED-AMBUSH_NEXT_TURN.title": "Ambush Next Turn",
+  "THESCALED-ADVANTAGE_POWER.description": "The first Setup you apply each turn is applied an additional time.",
+  "THESCALED-ADVANTAGE_POWER.smartDescription": "The first Setup you apply each turn is applied an additional time.",
+  "THESCALED-ADVANTAGE_POWER.title": "Advantage",
 
   "THESCALED-MARSHAL_POWER.description": "Gain [gold]Block[/gold] at the start of your turn.",
   "THESCALED-MARSHAL_POWER.smartDescription": "Gain [blue]{Block}[/blue] [gold]Block[/gold] at the start of your turn.",
