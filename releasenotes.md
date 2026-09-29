@@ -1,12 +1,10 @@
-**Added Cards:**
-- Ancient Form
-- Waterlogged
-- Tooth
-- Pursuit
+**Added Cards**:
+- Advantage
 
-**Changed Cards:**
-- Thrill of the Fight now exhausts.
+**Changed Cards**:
+- Concussion now costs 1
 
-**Bug Fixes:**
-- Fixed Maelstrom not being able to play and its card preview.
-- Fixed Maelstrom ambush next turn not working properly.
+**Bugfixes**
+TODO: - Fixed Pursuit not working properly due to incorrect variables.
+TODO: - Maelstrom now no longer picks cards without CanBeGeneratedInCombat
+- Fixed a bug where preemptive strike did not work properly, as it was unfinished.

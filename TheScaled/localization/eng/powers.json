@@ -35,6 +35,9 @@
   "THESCALED-ANCIENT_FORM_POWER.selectionScreenPrompt": "Choose {Amount:plural:a card|{} cards} to add into your Hand.",
   "THESCALED-ANCIENT_FORM_POWER.smartDescription": "At the start of each turn, choose {Amount} {Amount:plural:card|cards} from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] to put into your [gold]Hand[/gold].",
   "THESCALED-ANCIENT_FORM_POWER.title": "Ancient Form",
+  "THESCALED-ADVANTAGE_POWER.description": "The first Setup you apply each turn is applied an additional time.",
+  "THESCALED-ADVANTAGE_POWER.smartDescription": "The first Setup you apply each turn is applied an additional time.",
+  "THESCALED-ADVANTAGE_POWER.title": "Advantage",
 
   "THESCALED-MARSHAL_POWER.description": "Gain [gold]Block[/gold] at the start of your turn.",
   "THESCALED-MARSHAL_POWER.smartDescription": "Gain [blue]{Block}[/blue] [gold]Block[/gold] at the start of your turn.",

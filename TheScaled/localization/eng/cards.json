@@ -115,6 +115,8 @@
   "THESCALED-PRISMATIC_SCALES.title": "Prismatic Scales",
   "THESCALED-DWELLING.description": "At the end of your turn, gain [gold]Block[/gold] equal to [gold]Ambush[/gold] on ALL enemies.",
   "THESCALED-DWELLING.title": "Dwelling",
+  "THESCALED-ADVANTAGE.description": "The first [gold]Setup[/gold] you apply each turn is applied an additional time.",
+  "THESCALED-ADVANTAGE.title": "Advantage",
 
   "THESCALED-SUFFOCATE.description": "Deal {CalculationBase:diff()} damage.\nReduce this card’s cost by 1 and increase its damage by 7 for each [gold]Setup[/gold] on ALL enemies.\nTrigger [gold]Ambush[/gold].\n{InCombat:(Deal {CalculatedDamage:diff()} damage)|}",
   "THESCALED-SUFFOCATE.title": "Suffocate",
