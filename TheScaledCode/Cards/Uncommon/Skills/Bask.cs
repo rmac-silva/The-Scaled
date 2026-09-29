@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Cards
@@ -25,7 +26,6 @@ namespace TheScaled.TheScaledCode.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
             ArgumentNullException.ThrowIfNull(
                 base.Owner.Creature.CombatState,
                 "Owner.Creature.CombatState"
@@ -37,7 +37,7 @@ namespace TheScaled.TheScaledCode.Cards
             List<CardModel> list = new List<CardModel>();
             for (int i = 0; i < base.DynamicVars["BurnAmount"].IntValue; i++)
             {
-                CardModel card = base.Owner.Creature.CombatState.CreateCard<Mud>(base.Owner);
+                CardModel card = base.Owner.Creature.CombatState.CreateCard<Burn>(base.Owner);
                 list.Add(card);
             }
             //Add the cards to the discard pile

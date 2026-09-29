@@ -23,7 +23,6 @@ public class MudBath : TheScaledCard
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
-                new CardsVar(4),
                 new DynamicVar("AfflictedCards",2)
             ];
 

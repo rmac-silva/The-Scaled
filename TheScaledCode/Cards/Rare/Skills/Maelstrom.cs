@@ -42,7 +42,7 @@ public class Maelstrom : TheScaledCard
                     .GetUnlockedCards(
                         base.Owner.UnlockState,
                         base.Owner.RunState.CardMultiplayerConstraint)
-                    .OfType<SetupCard>();
+                    .OfType<SetupCard>().Where( (SetupCard c) => c.CanBeGeneratedInCombat);
 
             var cardModels = CardFactory.GetForCombat(
                 base.Owner,

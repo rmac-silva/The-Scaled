@@ -15,7 +15,7 @@ public class Pursuit : TheScaledCard
         : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.None) { }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<PursuitPower>(2)];
+        [new PowerVar<PursuitPower>(2), new EnergyVar(1)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
@@ -23,7 +23,6 @@ public class Pursuit : TheScaledCard
             HoverTipFactory.FromKeyword(CardKeyword.Ethereal),
         ];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -44,6 +43,6 @@ public class Pursuit : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars["AfflictedCards"].UpgradeValueBy(1);
+        
     }
 }

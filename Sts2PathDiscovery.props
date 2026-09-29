@@ -25,8 +25,8 @@
 		
 
         <ModsPath>$(Sts2Path)/mods/</ModsPath>
-        <!-- Default  <Sts2DataDir>$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>-->
-		<Sts2DataDir>C:\Users\ricardo.silva\PS\StS2DLL</Sts2DataDir>
+        <Sts2DataDir>$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+		<!-- <Sts2DataDir>C:\Users\ricardo.silva\PS\StS2DLL</Sts2DataDir> -->
     </PropertyGroup>
 
     <!-- Linux -->
