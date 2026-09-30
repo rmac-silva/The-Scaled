@@ -37,7 +37,7 @@ namespace TheScaled.TheScaledCode.Cards
                 base.Owner.Creature,
                 this
             );
-            await base.AddSetup(choiceContext, cardPlay);
+            await base.AddSetup(cardPlay);
         }
 
         protected override void OnUpgrade()

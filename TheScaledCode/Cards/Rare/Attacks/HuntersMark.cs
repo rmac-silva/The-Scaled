@@ -40,7 +40,7 @@ public class HuntersMark : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await base.AddSetup(choiceContext,cardPlay);
+        await base.AddSetup(cardPlay);
     }
 
     protected override void OnUpgrade()

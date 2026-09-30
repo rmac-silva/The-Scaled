@@ -28,7 +28,7 @@ public class DragUnder : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await base.AddSetup(choiceContext, cardPlay);
+        await base.AddSetup(cardPlay);
         
     }
 

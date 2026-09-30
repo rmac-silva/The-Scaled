@@ -9,8 +9,9 @@ namespace TheScaled.TheScaledCode.Powers;
 public class SetupPower : TheScaledPower
 {
     public override PowerType Type => PowerType.Debuff;
+    public override bool AllowNegative => false;
 
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
     public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier; //One per player, stacking
     public int AmbushThresholdIncrease => _extraHoverTips.TryGetValue(base.Owner, out var tips) ? tips.Count() : 0;
     private IEnumerable<HoverTip> HoverTipsForOwner => _extraHoverTips.TryGetValue(base.Owner, out var tips) ? tips : Enumerable.Empty<HoverTip>();
@@ -51,6 +52,14 @@ public class SetupPower : TheScaledPower
         }
         
     }
+
+    public override int DisplayAmount
+	{
+		get
+		{
+			return HoverTipsForOwner.Count();
+		}
+	}
 
     protected Dictionary<Creature, IEnumerable<HoverTip>> _extraHoverTips = new Dictionary<Creature, IEnumerable<HoverTip>>();
 

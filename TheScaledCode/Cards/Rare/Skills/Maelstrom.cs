@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using TheScaled.TheScaledCode.Powers;
 using TheScaled.TheScaledCode.Powers.Cards;
 
@@ -67,7 +68,8 @@ public class Maelstrom : TheScaledCard
                     await ambPwr.AddAmbushEffect(ambEntry,setupCard.GetHovertip(cardPlay.Target));
                 }
             }
-                    CardCmd.Preview(cardModels.ToList(),1f);
+
+            CardCmd.Preview(cardModels.ToList().AsReadOnly(), 1f, CardPreviewStyle.MessyLayout);
 
             await PowerCmd.Apply<AmbushNextTurn>(choiceContext,cardPlay.Target,base.DynamicVars["Ambush"].IntValue * num,base.Owner.Creature,this);
 
@@ -77,7 +79,7 @@ public class Maelstrom : TheScaledCard
 
         protected override void OnUpgrade()
         {
-            base.Keywords.AddItem(CardKeyword.Retain);
+            base.AddKeyword(CardKeyword.Retain);
         }
     }
 }

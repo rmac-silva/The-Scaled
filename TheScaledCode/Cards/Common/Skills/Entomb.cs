@@ -32,7 +32,7 @@ public class Entomb : SetupCard
         await Mud.AddMudCard(PileType.Discard, base.DynamicVars["MudAmount"].IntValue, base.Owner);
 
         //Call setup
-        await base.AddSetup(choiceContext, cardPlay);
+        await base.AddSetup(cardPlay);
     }
 
     protected override void OnUpgrade()

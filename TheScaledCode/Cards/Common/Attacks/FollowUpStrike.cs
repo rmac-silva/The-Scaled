@@ -32,7 +32,7 @@ public class FollowUpStrike : SetupCard
 
         await PowerCmd.Apply<Ambush>(choiceContext,cardPlay.Target,base.DynamicVars["Ambush"].IntValue,base.Owner.Creature,this);
         
-        await AddSetup(choiceContext, cardPlay);
+        await AddSetup(cardPlay);
         
     }
 

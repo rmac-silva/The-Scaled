@@ -54,17 +54,20 @@ public class Ambush : TheScaledPower
 {
     public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    public override bool AllowNegative => false;
     protected override bool IsVisibleInternal => true; //Not visible on enemies in the future.
     public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier; //One per player, stacking
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("AmbushThreshold", 0m), new DynamicVar("AmbushThresholdBase", 5m)];
+    
     private List<AmbushEntry> EffectsForOwner =>
         _queuedEffects.TryGetValue(base.Owner, out var effects)
             ? effects
             : (_queuedEffects[base.Owner] = []);
 
     private readonly Dictionary<Creature, List<AmbushEntry>> _queuedEffects = [];
+    
+    
+
     public int NumSetupsForCreature
     {
         get
@@ -111,10 +114,7 @@ public class Ambush : TheScaledPower
         {
             return;
         }
-        ModLog.Info(
-            this,
-            $"Ambush has been changed to {base.Amount} | {amount} | Threshold: {base.DynamicVars["AmbushThreshold"].IntValue}"
-        );
+       
         if (base.Amount >= base.DynamicVars["AmbushThreshold"].IntValue)
         {
             await TriggerAmbush(
@@ -191,9 +191,6 @@ public class Ambush : TheScaledPower
             );
         }
 
-        //Increase the threshold by one, representing the added setup effect
-        base.DynamicVars["AmbushThreshold"].BaseValue++;
-
         setupPower?.AddHovertip(hoverTip);
 
         EffectsForOwner.Add(effect);
@@ -218,10 +215,12 @@ public class Ambush : TheScaledPower
             );
         }
 
-        //Increase the threshold by one, representing the added setup effect
-        base.DynamicVars["AmbushThreshold"].BaseValue++;
+        if(setupPower == null || setupPower.Owner == null)
+        {
+            ModLog.Error(this,$"Failed to apply SetupPower to {base.Owner}. Either the Setup or the Owner is null. (Artifact?)",new NullReferenceException());
+            return;
+        }
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
         var hoverTip = setupPower.GetHoverTip($"Setup ({effect.source.Title})");
 
         setupPower.AddHovertip(hoverTip);
@@ -266,11 +265,6 @@ public class Ambush : TheScaledPower
     private void ResetAmbushThreshold()
     {
         base.DynamicVars["AmbushThreshold"].BaseValue =
-            base.DynamicVars["AmbushThresholdBase"].BaseValue + GetNumSetups();
-    }
-
-    private int GetNumSetups()
-    {
-        return base.Owner.GetPower<SetupPower>()?.AmbushThresholdIncrease ?? 0;
+            base.DynamicVars["AmbushThresholdBase"].BaseValue;
     }
 }

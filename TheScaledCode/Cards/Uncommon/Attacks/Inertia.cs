@@ -36,7 +36,7 @@ public class Inertia : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         
-        await AddSetup(choiceContext,cardPlay,SetupData);
+        await AddSetup(cardPlay,SetupData);
 
     }
 

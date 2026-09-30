@@ -29,7 +29,7 @@ public class Stalk : SetupCard
         {
             await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
 
-            await base.AddSetup(choiceContext, cardPlay);
+            await base.AddSetup(cardPlay);
         }
 
         protected override void OnUpgrade()

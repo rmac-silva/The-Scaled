@@ -30,12 +30,12 @@ public class AncientForm : TheScaledCard
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
            //Apply Ancient Form Power
-           await PowerCmd.Apply<AncientFormPower>(choiceContext,base.Owner.Creature,1,base.Owner.Creature,this);
+           await PowerCmd.Apply<AncientFormPower>(choiceContext,base.Owner.Creature,2,base.Owner.Creature,this);
         }
 
         protected override void OnUpgrade()
         {
-            base.Keywords.AddItem(CardKeyword.Innate);
+            base.AddKeyword(CardKeyword.Innate);
         }
     }
 }

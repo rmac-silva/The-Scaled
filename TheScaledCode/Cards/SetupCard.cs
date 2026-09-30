@@ -38,7 +38,12 @@ public abstract class SetupCard : TheScaledCard
         //Setup finding
         int setupIndex = input.IndexOf("[gold]Setup[/gold]:", StringComparison.OrdinalIgnoreCase);
 
-        if (setupIndex != -1)
+        if (setupIndex == -1) //Look for ALL enemies version
+        {
+            setupIndex = input.IndexOf("[gold]Setup[/gold] ALL enemies:", StringComparison.OrdinalIgnoreCase);
+        }
+
+        if(setupIndex != -1)
         {
             var textWithoutSetup = input.Substring(setupIndex + "[gold]Setup[/gold]:".Length);
             int positionOfNewLine = textWithoutSetup.IndexOf("\n");
@@ -59,7 +64,7 @@ public abstract class SetupCard : TheScaledCard
     /// <param name="choiceContext"></param>
     /// <param name="cardPlay"></param>
     /// <returns></returns>
-    protected async Task AddSetup(PlayerChoiceContext choiceContext, CardPlay cardPlay, Dictionary<string,decimal>? data = null)
+    protected async Task AddSetup( CardPlay cardPlay, Dictionary<string,decimal>? data = null)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
@@ -68,8 +73,6 @@ public abstract class SetupCard : TheScaledCard
         if (ambush is not null)
         {
             
-            
-
             AmbushEntry entry;
 
             if(data is null)
@@ -86,7 +89,7 @@ public abstract class SetupCard : TheScaledCard
 
 
 
-    protected async Task AddSetupToAllEnemies(PlayerChoiceContext choiceContext, CardPlay cardPlay, Dictionary<string, decimal>? data = null)
+    protected async Task AddSetupToAllEnemies( Dictionary<string, decimal>? data = null )
     {
         ArgumentNullException.ThrowIfNull(base.CombatState, "wner.Creature.CombatState");
 

@@ -41,7 +41,7 @@ public class PreemptiveStrike : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await AddSetupToAllEnemies(choiceContext, cardPlay);
+        await AddSetupToAllEnemies();
     }
 
     protected override void OnUpgrade()

@@ -18,7 +18,6 @@ public class AncientFormPower : TheScaledPower
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
     
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
@@ -38,7 +37,7 @@ public class AncientFormPower : TheScaledPower
 
             var mergedCards = drawPileCards.Concat(discardPileCards).ToList().AsReadOnly();
 
-            await CardPileCmd.Add(await CardSelectCmd.FromSimpleGrid(choiceContext, mergedCards, base.Owner.Player, new CardSelectorPrefs(base.SelectionScreenPrompt, base.Amount * base.DynamicVars.Cards.IntValue)), PileType.Hand);
+            await CardPileCmd.Add(await CardSelectCmd.FromSimpleGrid(choiceContext, mergedCards, base.Owner.Player, new CardSelectorPrefs(base.SelectionScreenPrompt, base.Amount)), PileType.Hand);
         }
 
     }
