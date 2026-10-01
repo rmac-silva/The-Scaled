@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using TheScaled.TheScaledCode.Afflictions;
 
 
@@ -15,8 +16,8 @@ public class ViciousStrike : TheScaledCard
 {
     protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First()];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<ViciousPower>(1m)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ViciousPower>()];
     public ViciousStrike() : base(0, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)
     {
     }
@@ -27,6 +28,8 @@ public class ViciousStrike : TheScaledCard
 		await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).FromCard(this,cardPlay).Targeting(cardPlay.Target)
 			.WithHitFx("vfx/vfx_attack_slash")
 			.Execute(choiceContext);
+
+        await PowerCmd.Apply<ViciousPower>(choiceContext, base.Owner.Creature, base.DynamicVars["StrikeDamageIncrease"].BaseValue, base.Owner.Creature, this);
     }
 
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
@@ -47,6 +50,7 @@ public class ViciousStrike : TheScaledCard
     protected override void OnUpgrade()
 	{
         base.DynamicVars.Damage.UpgradeValueBy(2);
+        base.DynamicVars["ViciousPower"].UpgradeValueBy(1);
 	}
 
     

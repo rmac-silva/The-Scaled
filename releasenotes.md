@@ -1,6 +1,12 @@
 **Added Cards**:
 
 **Changed Cards**:
+- Chomp, costs 1 ~~2~~, deals 8(11) ~~11(14)~~
+- Lurk, costs 2 ~~1~~, gain 11(14) ~~4~~ Block
+- Follow-up Strike
+- Incapacitate
+- Snare
+- Vicious Strike
 
 **Functionality**:
 - Setups are now per-player. Meaning they should no longer interact and trigger each other's ambushes (?)

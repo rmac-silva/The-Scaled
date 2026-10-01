@@ -9,12 +9,12 @@ namespace TheScaled.TheScaledCode.Cards;
 
 public class Lurk : TheScaledCard
 {
-    public Lurk() : base(1, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy)
+    public Lurk() : base(2, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy)
     {
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered), new DynamicVar("EnemyAmbushGain", 3m)];
+        [new BlockVar(11m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered), new DynamicVar("EnemyAmbushGain", 3m)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -26,6 +26,6 @@ public class Lurk : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.EnergyCost.UpgradeBy(-1);
+        base.DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

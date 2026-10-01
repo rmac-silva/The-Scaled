@@ -12,7 +12,7 @@ public class FollowUpStrike : SetupCard
 {
     protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7m,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("AmbushEffect",6), new PowerVar<Ambush>(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7m,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("AmbushEffect",7)];
 
     protected override SetupCardType CardSetupType => SetupCardType.Offensive;
 
@@ -30,7 +30,6 @@ public class FollowUpStrike : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<Ambush>(choiceContext,cardPlay.Target,base.DynamicVars["Ambush"].IntValue,base.Owner.Creature,this);
         
         await AddSetup(cardPlay);
         
@@ -55,7 +54,7 @@ public class FollowUpStrike : SetupCard
             return Task.CompletedTask;
         }
 
-        CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), info.target,base.DynamicVars["AmbushEffect"].IntValue,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,info.applier);
+        CreatureCmd.Damage(info.choiceContext, info.target, base.DynamicVars["AmbushEffect"].IntValue, MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered, info.applier);
         return Task.CompletedTask;
     }
 }
