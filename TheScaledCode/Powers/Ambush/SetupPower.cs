@@ -1,7 +1,13 @@
+using BaseLib.Patches.UI;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Platform;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using TheScaled.TheScaledCode.Helpers;
 
 namespace TheScaled.TheScaledCode.Powers;
@@ -14,16 +20,12 @@ public class SetupPower : TheScaledPower
     public override PowerStackType StackType => PowerStackType.Counter;
     public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier; //One per player, stacking
     private IEnumerable<HoverTip> HoverTipsForOwner => _extraHoverTips;
+
+    public override LocString Title => getFormattedTitle();
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips {
         get {
-            ModLog.Info(this,
-                $"ExtraHoverTips requested. SetupHash={GetHashCode()}, Owner={base.Owner}, Applier={base.Applier}, StoredCount={_extraHoverTips.Count}");
-
-            foreach (var tip in _extraHoverTips)
-            {
-                ModLog.Info(this,
-                    $"Stored tooltip. SetupHash={GetHashCode()}, Title={tip.Title}, Id={tip.Id}, Description={tip.Description}");
-            }
+            
 
             var creatureHovertips = HoverTipsForOwner;
             
@@ -60,13 +62,11 @@ public class SetupPower : TheScaledPower
 	{
 		get
 		{
-            ModLog.Info(this,
-                $"DisplayAmount requested: {_extraHoverTips.Count}. SetupHash={GetHashCode()}, Owner={base.Owner}, Applier={base.Applier}");
 			return HoverTipsForOwner.Count();
 		}
 	}
 
-    private readonly List<HoverTip> _extraHoverTips = [];
+    private List<HoverTip> _extraHoverTips = [];
 
     /// <summary>
     /// Removes the setup power from the creature, including any extra hover tips that were added.
@@ -83,6 +83,7 @@ public class SetupPower : TheScaledPower
 
     public void AddHovertip(HoverTip hoverTip)
     {
+        
         _extraHoverTips.Add(hoverTip);
 
         InvokeDisplayAmountChanged();
@@ -100,4 +101,13 @@ public class SetupPower : TheScaledPower
         RemoveSetup();
         return Task.CompletedTask;
     }
+
+    protected override void AfterCloned()
+    {
+        base.AfterCloned();
+        _extraHoverTips = [];
+    }
+
+    
+
 }

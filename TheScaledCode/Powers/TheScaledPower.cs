@@ -2,6 +2,9 @@
 using BaseLib.Extensions;
 using TheScaled.TheScaledCode.Extensions;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Platform;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace TheScaled.TheScaledCode.Powers;
 
@@ -28,4 +31,21 @@ public abstract class TheScaledPower : CustomPowerModel
     /// Single, but you're suggested to use Single as it is more explicit about how it will work.
     /// </summary>
     public abstract override PowerStackType StackType { get; }
+
+    protected LocString getFormattedTitle() {
+        var title = new LocString("powers", base.Id.Entry + ".title");
+
+        if (base.Applier?.Player is null)
+        {
+            title.Add("PlayerName", "Unknown player");
+            return title;
+        }
+
+        string playerName = PlatformUtil.GetPlayerName(
+            RunManager.Instance.NetService.Platform,
+            base.Applier.Player.NetId
+        );
+        title.Add("PlayerName", playerName);
+        return title;
+    }
 }

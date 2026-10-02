@@ -147,4 +147,5 @@ public abstract class SetupCard : TheScaledCard
             .OfType<Ambush>()
             .FirstOrDefault(power => power.Applier == owner);
     }
+
 }

@@ -3,8 +3,10 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Platform;
 using MegaCrit.Sts2.Core.Runs;
 
 namespace TheScaled.TheScaledCode.Powers;
@@ -52,6 +54,7 @@ public delegate Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, deci
 
 public class Ambush : TheScaledPower
 {
+    public override LocString Title => getFormattedTitle();
     public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Counter;
     protected override bool IsVisibleInternal => true; //Not visible on enemies in the future.
@@ -59,12 +62,9 @@ public class Ambush : TheScaledPower
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("AmbushThreshold", 0m), new DynamicVar("AmbushThresholdBase", 5m)];
     
-    private List<AmbushEntry> EffectsForOwner =>
-        _queuedEffects.TryGetValue(base.Owner, out var effects)
-            ? effects
-            : (_queuedEffects[base.Owner] = []);
+    private List<AmbushEntry> EffectsForOwner => _queuedEffects;
 
-    private readonly Dictionary<Creature, List<AmbushEntry>> _queuedEffects = [];
+    private List<AmbushEntry> _queuedEffects = [];
     
     
 
@@ -72,11 +72,7 @@ public class Ambush : TheScaledPower
     {
         get
         {
-            if (_queuedEffects.TryGetValue(base.Owner, out var effects))
-            {
-                return effects.Count;
-            }
-            return 0;
+            return _queuedEffects.Count;
         }
     }
 
@@ -240,14 +236,13 @@ public class Ambush : TheScaledPower
     public async Task CopyAndApplyRandomAmbushEffect(IRunState runState)
     {
         //Fetch existing effects
-        if (!_queuedEffects.TryGetValue(base.Owner, out var effects)
-        || effects.Count == 0)
+        if (_queuedEffects.Count == 0)
         {
             return;
         }
 
         //Pick a random one
-        var chosenEffect = runState.Rng.Niche.NextItem(effects);
+        var chosenEffect = runState.Rng.Niche.NextItem(_queuedEffects);
 
         await AddExistingAmbushEffect(chosenEffect);
 
@@ -292,4 +287,11 @@ public class Ambush : TheScaledPower
             .OfType<SetupPower>()
             .FirstOrDefault(power => power.Applier == base.Applier);
     }
+
+    protected override void AfterCloned()
+    {
+        base.AfterCloned();
+        _queuedEffects = [];
+    }
+
 }
