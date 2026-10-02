@@ -30,7 +30,7 @@ public class ThrillOfTheFight : TheScaledCard
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            var ambPwr = cardPlay.Target.GetPower<Ambush>();
+            var ambPwr = SetupCard.GetAmbushPowerForApplier(base.Owner.Creature,cardPlay.Target);
 
             if(ambPwr is null)
             {

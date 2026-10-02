@@ -28,7 +28,7 @@ public class SnapJaw : TheScaledCard
             .Execute(choiceContext);
 
         
-        var ambushPower = cardPlay.Target.GetPower<Ambush>();
+        var ambushPower = SetupCard.GetAmbushPowerForApplier(base.Owner.Creature,cardPlay.Target);
         if(ambushPower != null)
         {
             await ambushPower.CopyAndApplyRandomAmbushEffect(base.Owner.RunState);

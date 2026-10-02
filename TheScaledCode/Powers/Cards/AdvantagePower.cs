@@ -42,7 +42,7 @@ public class AdvantagePower : TheScaledPower
             return;
         }
 
-        var ambPwr = cardPlay.Target.GetPower<Ambush>();
+        var ambPwr = SetupCard.GetAmbushPowerForApplier(base.Owner,cardPlay.Target);
 
         if(ambPwr != null)
         {

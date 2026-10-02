@@ -60,7 +60,8 @@ public class Maelstrom : TheScaledCard
                     continue;
                 }
 
-                var ambPwr = cardPlay.Target.GetPower<Ambush>();
+                var ambPwr = SetupCard.GetAmbushPowerForApplier(base.Owner.Creature,cardPlay.Target);
+
 
                 if(ambPwr != null && c is SetupCard)
                 {

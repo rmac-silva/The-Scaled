@@ -59,7 +59,7 @@ public class HuntersMark : SetupCard
         await CreatureCmd.Damage(info.choiceContext,info.target,base.DynamicVars["AmbushEffect"].IntValue,ValueProp.Move,info.applier);
         
         // Add a new setup effect with increased damage
-        var ambushPower = info.target.GetPower<Ambush>();
+        var ambushPower = GetAmbushPowerForApplier(base.Owner.Creature,info.target);
 
         if (ambushPower != null)
         {

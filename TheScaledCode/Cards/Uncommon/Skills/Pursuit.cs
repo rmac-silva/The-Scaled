@@ -17,6 +17,8 @@ public class Pursuit : TheScaledCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<PursuitPower>(2), new EnergyVar(1)];
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [
             HoverTipFactory.FromPower<PursuitPower>(),

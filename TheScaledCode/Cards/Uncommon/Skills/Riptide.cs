@@ -35,6 +35,11 @@ public class Riptide : TheScaledCard
 
             int num = ResolveEnergyXValue();
 
+            if(base.IsUpgraded)
+            {
+                num++;
+            }
+
             for (int i = 0; i < num; i++)
             {
                 var enemy = base.RunState.Rng.CombatTargets.NextItem(base.CombatState.Enemies);
@@ -42,11 +47,6 @@ public class Riptide : TheScaledCard
                 if(enemy is null) {continue;}
                 await PowerCmd.Apply<DrownedPower>(choiceContext,enemy,base.DynamicVars["DrownedPower"].IntValue,base.Owner.Creature,this);
             }
-        }
-
-        protected override void OnUpgrade()
-        {
-            base.EnergyCost.UpgradeBy(-1);
         }
     }
 }

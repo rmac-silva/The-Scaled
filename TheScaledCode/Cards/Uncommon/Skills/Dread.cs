@@ -15,12 +15,12 @@ namespace TheScaled.TheScaledCode.Cards
             ];
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<FrailPower>()];
+            [HoverTipFactory.FromPower<FrailPower>(),HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
 
         public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
         public Dread()
-            : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+            : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {

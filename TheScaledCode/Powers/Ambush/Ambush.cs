@@ -144,7 +144,7 @@ public class Ambush : TheScaledPower
 
         effects.Clear();
 
-        base.Owner.GetPower<SetupPower>()?.RemoveSetup();
+        GetSetupPowerForApplier()?.RemoveSetup();
         base.SetAmount(0);
         ResetAmbushThreshold();
 
@@ -178,7 +178,7 @@ public class Ambush : TheScaledPower
     /// <param name="effect"></param>
     public async Task AddAmbushEffect(AmbushEntry effect, HoverTip hoverTip)
     {
-        var setupPower = base.Owner.GetPower<SetupPower>();
+        var setupPower = GetSetupPowerForApplier();
 
         if (setupPower is null)
         {
@@ -186,12 +186,17 @@ public class Ambush : TheScaledPower
                 new ThrowingPlayerChoiceContext(),
                 base.Owner,
                 1,
-                null,
+                base.Applier,
                 null
             );
         }
 
-        setupPower?.AddHovertip(hoverTip);
+        if(setupPower is null || setupPower.Owner is null)
+        {
+            return;
+        }
+
+        setupPower.AddHovertip(hoverTip);
 
         EffectsForOwner.Add(effect);
     }
@@ -202,7 +207,7 @@ public class Ambush : TheScaledPower
     /// <param name="effect"></param>
     public async Task AddExistingAmbushEffect(AmbushEntry effect)
     {
-        var setupPower = base.Owner.GetPower<SetupPower>();
+        var setupPower = GetSetupPowerForApplier();
 
         if (setupPower is null)
         {
@@ -210,7 +215,7 @@ public class Ambush : TheScaledPower
                 new ThrowingPlayerChoiceContext(),
                 base.Owner,
                 1,
-                null,
+                base.Applier,
                 null
             );
         }
@@ -266,5 +271,25 @@ public class Ambush : TheScaledPower
     {
         base.DynamicVars["AmbushThreshold"].BaseValue =
             base.DynamicVars["AmbushThresholdBase"].BaseValue;
+    }
+
+    /// <summary>
+    /// Fetches the Setup power for this enemy, applied by our player
+    /// </summary>
+    /// <returns></returns>
+    private SetupPower? GetSetupPowerForApplier()
+    {
+        ModLog.Info(this,
+        $"Ambush {GetHashCode()} owner={base.Owner} applier={base.Applier}");
+
+        foreach (var power in base.Owner.Powers.OfType<SetupPower>())
+        {
+            ModLog.Info(this,
+                $"Setup {power.GetHashCode()} applier={power.Applier} amount={power.DisplayAmount}");
+        }
+
+        return base.Owner.Powers
+            .OfType<SetupPower>()
+            .FirstOrDefault(power => power.Applier == base.Applier);
     }
 }

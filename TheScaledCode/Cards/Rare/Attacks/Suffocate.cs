@@ -19,9 +19,7 @@ public class Suffocate : TheScaledCard
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(57),
-        new ExtraDamageVar(7),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) => card.CombatState?.Enemies.Where((Creature c) => c.IsAlive).Sum((Creature c) => c.GetPower<Ambush>()?.NumSetupsForCreature) ?? 0),
+        new DamageVar(44,ValueProp.Move),
         new EnergyVar(1)
         ];
 
@@ -38,7 +36,7 @@ public class Suffocate : TheScaledCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        var a = cardPlay.Target.GetPower<Ambush>();
+        var a = SetupCard.GetAmbushPowerForApplier(base.Owner.Creature,cardPlay.Target);
 
         if(a is not null)
         {
@@ -55,12 +53,22 @@ public class Suffocate : TheScaledCard
             var totalSetups = base.Owner.Creature.CombatState.Enemies.Sum((Creature c) => c.GetPower<Ambush>()?.NumSetupsForCreature ?? 0);
             SetCost(totalSetups);
         }
+
+        if(cardPlay.Card.EnergyCost.GetWithModifiers(CostModifiers.All) == 0)
+        {
+            return Task.CompletedTask;
+        }
             return Task.CompletedTask;
     }
 
     public override  Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
         if(card != this)
+        {
+            return Task.CompletedTask;
+        }
+
+        if(card.EnergyCost.GetWithModifiers(CostModifiers.All) == 0)
         {
             return Task.CompletedTask;
         }
@@ -79,6 +87,11 @@ public class Suffocate : TheScaledCard
 			return Task.CompletedTask;
 		}
 
+        if(card.EnergyCost.GetWithModifiers(CostModifiers.All) == 0)
+        {
+            return Task.CompletedTask;
+        }
+
         ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState);
 
         var totalSetups = base.Owner.Creature.CombatState.Enemies.Sum((Creature c) => c.GetPower<Ambush>()?.NumSetupsForCreature ?? 0);
@@ -88,7 +101,7 @@ public class Suffocate : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.CalculationBase.UpgradeValueBy(12);
+        base.DynamicVars.CalculationBase.UpgradeValueBy(8);
     }
 
     private void SetCost(int setups)

@@ -1,9 +1,12 @@
+using System.IO.Pipes;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using TheScaled.TheScaledCode.Powers;
 
@@ -18,9 +21,8 @@ public class Impede : TheScaledCard
         protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
             new DamageVar(8m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
-            new DynamicVar("StrengthLoss",5),
+            new CardsVar(1)
         ];  
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<StrengthPower>()];
 
 
         public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -37,13 +39,17 @@ public class Impede : TheScaledCard
             .Execute(choiceContext);
 
             
-            await PowerCmd.Apply<ImpedePower>(choiceContext, cardPlay.Target, base.DynamicVars["StrengthLoss"].BaseValue, base.Owner.Creature, this);
-            
+            //Choose card in draw pile to move to discard pile
+            CardModel? cardModel = (await CardSelectCmd.FromCombatPile(prefs: new CardSelectorPrefs(base.SelectionScreenPrompt, 1), context: choiceContext, pile: PileType.Draw.GetPile(base.Owner), player: base.Owner)).FirstOrDefault();
+            if (cardModel != null)
+            {
+                await CardPileCmd.Add(cardModel, PileType.Discard);
+            }
         }
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars["StrengthLoss"].UpgradeValueBy(2);
+            base.RemoveKeyword(CardKeyword.Exhaust);
         }
     }
 }

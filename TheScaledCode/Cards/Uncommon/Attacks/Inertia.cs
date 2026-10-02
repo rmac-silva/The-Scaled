@@ -60,7 +60,7 @@ public class Inertia : SetupCard
             );
 
             // Add a new setup effect with increased damage
-            var ambushPower = info.target.GetPower<Ambush>();
+            var ambushPower = GetAmbushPowerForApplier(base.Owner.Creature,info.target);
 
             if (ambushPower != null)
             {

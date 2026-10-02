@@ -68,7 +68,7 @@ public abstract class SetupCard : TheScaledCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        var ambush = cardPlay.Target.GetPower<Ambush>();
+        var ambush = GetAmbushPowerForApplier(base.Owner.Creature, cardPlay.Target);
 
         if (ambush is not null)
         {
@@ -97,7 +97,7 @@ public abstract class SetupCard : TheScaledCard
 
         foreach (var enemy in listOfEnemies)
         {
-            var ambush = enemy.GetPower<Ambush>();
+            var ambush = GetAmbushPowerForApplier(base.Owner.Creature, enemy);
 
             AmbushEntry entry;
 
@@ -140,4 +140,11 @@ public abstract class SetupCard : TheScaledCard
     public abstract Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
 
     protected IHoverTip AmbushHoverTip => HoverTipFactory.FromPower<SetupPower>();
+
+    public static Ambush? GetAmbushPowerForApplier(Creature owner, Creature c)
+    {
+        return c.Powers
+            .OfType<Ambush>()
+            .FirstOrDefault(power => power.Applier == owner);
+    }
 }

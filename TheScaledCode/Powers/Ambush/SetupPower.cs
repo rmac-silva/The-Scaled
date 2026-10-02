@@ -13,14 +13,16 @@ public class SetupPower : TheScaledPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
     public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier; //One per player, stacking
-    public int AmbushThresholdIncrease => _extraHoverTips.TryGetValue(base.Owner, out var tips) ? tips.Count() : 0;
-    private IEnumerable<HoverTip> HoverTipsForOwner => _extraHoverTips.TryGetValue(base.Owner, out var tips) ? tips : Enumerable.Empty<HoverTip>();
+    private IEnumerable<HoverTip> HoverTipsForOwner => _extraHoverTips;
     protected override IEnumerable<IHoverTip> ExtraHoverTips {
         get {
-            var index = 0;
-            foreach(var tip in _extraHoverTips)
+            ModLog.Info(this,
+                $"ExtraHoverTips requested. SetupHash={GetHashCode()}, Owner={base.Owner}, Applier={base.Applier}, StoredCount={_extraHoverTips.Count}");
+
+            foreach (var tip in _extraHoverTips)
             {
-                ModLog.Info(this,$"Extra hover tip {index++} for {base.Owner}: {tip}");
+                ModLog.Info(this,
+                    $"Stored tooltip. SetupHash={GetHashCode()}, Title={tip.Title}, Id={tip.Id}, Description={tip.Description}");
             }
 
             var creatureHovertips = HoverTipsForOwner;
@@ -46,7 +48,8 @@ public class SetupPower : TheScaledPower
                 return (IHoverTip)TooltipHelper.CreateHoverTooltip(displayTitle, first.Description, true, first.Icon);
             }).ToList();
 
-            
+            ModLog.Info(this,
+                $"ExtraHoverTips returning {processedExtraTips.Count()} entries. SetupHash={GetHashCode()}, Owner={base.Owner}, Applier={base.Applier}");
             
             return processedExtraTips;
         }
@@ -57,11 +60,13 @@ public class SetupPower : TheScaledPower
 	{
 		get
 		{
+            ModLog.Info(this,
+                $"DisplayAmount requested: {_extraHoverTips.Count}. SetupHash={GetHashCode()}, Owner={base.Owner}, Applier={base.Applier}");
 			return HoverTipsForOwner.Count();
 		}
 	}
 
-    protected Dictionary<Creature, IEnumerable<HoverTip>> _extraHoverTips = new Dictionary<Creature, IEnumerable<HoverTip>>();
+    private readonly List<HoverTip> _extraHoverTips = [];
 
     /// <summary>
     /// Removes the setup power from the creature, including any extra hover tips that were added.
@@ -70,7 +75,7 @@ public class SetupPower : TheScaledPower
     public void RemoveSetup()
     {
         
-        _extraHoverTips.Remove(base.Owner);
+        _extraHoverTips.Clear();
         base.RemoveInternal();
 
     }
@@ -78,22 +83,15 @@ public class SetupPower : TheScaledPower
 
     public void AddHovertip(HoverTip hoverTip)
     {
-        ModLog.Info(this,$"Adding hover tip {hoverTip} to {base.Owner}");
-        _extraHoverTips[base.Owner] = _extraHoverTips.TryGetValue(base.Owner, out var existingTips) 
-            ? existingTips.Append(hoverTip) 
-            : new List<HoverTip> { hoverTip };
+        _extraHoverTips.Add(hoverTip);
+
+        InvokeDisplayAmountChanged();
     }
 
     public HoverTip GetHoverTip(string Title)
     {
-        ModLog.Info(this,$"Fetching hover tip from: {HoverTipsForOwner} | {Title}.\nList:");
-        foreach (var item in HoverTipsForOwner)
-        {
-            ModLog.Info(this,$"{item}");
-        }
 
-        var res = HoverTipsForOwner.FirstOrDefault( (HoverTip h) => h.Title == Title);
-        ModLog.Info(this,$"Fetched {res}");
+        var res = HoverTipsForOwner.First( (HoverTip h) => h.Title == Title);
         return res;
     }
 

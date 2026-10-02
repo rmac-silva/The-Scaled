@@ -45,13 +45,6 @@ public class Ravage : TheScaledCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        var a = cardPlay.Target.GetPower<Ambush>();
-        
-        if(a is not null)
-        {
-            await a.TriggerAmbushExternal();
-        }
-
     }
 
     protected override void OnUpgrade()

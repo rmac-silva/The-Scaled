@@ -9,7 +9,7 @@ using TheScaled.TheScaledCode.Powers.ReusablePowers;
 namespace TheScaled.TheScaledCode.Cards;
 public class DragUnder : SetupCard
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(9,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),new DynamicVar("AmbushEffect",6), new DynamicVar("AmbushAmount",3)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(9,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),new DynamicVar("AmbushEffect",4)];
     
     public DragUnder() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {

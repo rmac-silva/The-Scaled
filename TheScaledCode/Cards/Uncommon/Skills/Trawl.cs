@@ -34,7 +34,8 @@ public class Trawl : TheScaledCard
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
                 new PowerVar<DrownedPower>(5),
-                new PowerVar<FrailPower>(1)
+                new PowerVar<FrailPower>(1),
+                new PowerVar<WeakPower>(1)
             ];
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -66,6 +67,7 @@ public class Trawl : TheScaledCard
                 }
 
                 await PowerCmd.Apply<FrailPower>(choiceContext,enemy,base.DynamicVars["FrailPower"].IntValue,base.Owner.Creature,this);
+                await PowerCmd.Apply<WeakPower>(choiceContext,enemy,base.DynamicVars["WeakPower"].IntValue,base.Owner.Creature,this);
                 reduction++;            
             }
         }
