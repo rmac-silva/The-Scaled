@@ -1,22 +1,17 @@
-**Added Cards**:
+**Misc**:
+- Added MP color
+- Added text-bubble color
 
 **Changed Cards**:
-- Chomp, costs 1 ~~2~~, deals 8(11) ~~11(14)~~
-- Lurk, costs 2 ~~1~~, gain 11(14) ~~4~~ Block
-- Follow-up Strike
-- Incapacitate
-- Snare
-- Vicious Strike
+- Perfect Camouflage now correctly has retain not innate.
 
 **Functionality**:
-- Setups are now per-player. Meaning they should no longer interact and trigger each other's ambushes (?)
-- Ambush threshold no longer increases per setup applied. Remaining at the cap of 5.
+- When playing a setup on an enemy without Ambush it should re-apply ambush to the enemy.
 
 **Bugfixes**
-- Fixed Ancient Form not upgrading correctly (?)
-- Fixed Ancient Form: Smart tooltip doesn't show the correct amount. (?)
-- Fixed Maelstrom not upgrading correctly (?)
-- Fixed Maelstrom not displaying the cards picked (?)
-- Fixed Advantage: Advantage doesn't apply a setup twice, it plays the card twice. (?)
-- Preemptive Strike has no Setup tooltip because it has Setup ALL enemies: instead of the common Setup: prefix. (?)
+- Vicious Strike had incorrect behavior.
+- Rugged Scales now correctly applies the setup.
+- Suffocate now calculates its energy cost a bit more consistently.
+- Maelstrom now triggers ambush correctly
+
     

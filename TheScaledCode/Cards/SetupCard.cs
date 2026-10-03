@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -70,6 +71,11 @@ public abstract class SetupCard : TheScaledCard
 
         var ambush = GetAmbushPowerForApplier(base.Owner.Creature, cardPlay.Target);
 
+        if(ambush is null)
+        {
+            ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(),cardPlay.Target,0,base.Owner.Creature,this);
+        }
+
         if (ambush is not null)
         {
             
@@ -98,6 +104,11 @@ public abstract class SetupCard : TheScaledCard
         foreach (var enemy in listOfEnemies)
         {
             var ambush = GetAmbushPowerForApplier(base.Owner.Creature, enemy);
+
+            if(ambush is null)
+            {
+                ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(),enemy,0,base.Owner.Creature,this);
+            }
 
             AmbushEntry entry;
 

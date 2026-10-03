@@ -74,8 +74,6 @@ public class Maelstrom : TheScaledCard
 
             await PowerCmd.Apply<AmbushNextTurn>(choiceContext,cardPlay.Target,base.DynamicVars["Ambush"].IntValue * num,base.Owner.Creature,this);
 
-
-            
         }
 
         protected override void OnUpgrade()

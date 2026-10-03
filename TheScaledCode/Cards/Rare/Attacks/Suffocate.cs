@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -30,7 +31,7 @@ public class Suffocate : TheScaledCard
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
         await DamageCmd
-            .Attack(base.DynamicVars.CalculatedDamage)
+            .Attack(base.DynamicVars.Damage.IntValue)
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
@@ -47,28 +48,19 @@ public class Suffocate : TheScaledCard
 
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if(cardPlay.Card != this)
+        if(cardPlay.Card == this)
         {
             ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState);
             var totalSetups = base.Owner.Creature.CombatState.Enemies.Sum((Creature c) => c.GetPower<Ambush>()?.NumSetupsForCreature ?? 0);
             SetCost(totalSetups);
         }
 
-        if(cardPlay.Card.EnergyCost.GetWithModifiers(CostModifiers.All) == 0)
-        {
-            return Task.CompletedTask;
-        }
             return Task.CompletedTask;
     }
 
     public override  Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
         if(card != this)
-        {
-            return Task.CompletedTask;
-        }
-
-        if(card.EnergyCost.GetWithModifiers(CostModifiers.All) == 0)
         {
             return Task.CompletedTask;
         }
@@ -94,14 +86,28 @@ public class Suffocate : TheScaledCard
 
         ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState);
 
-        var totalSetups = base.Owner.Creature.CombatState.Enemies.Sum((Creature c) => c.GetPower<Ambush>()?.NumSetupsForCreature ?? 0);
+        var totalSetups = base.Owner.Creature.CombatState.Enemies.Sum((Creature c) => SetupCard.GetAmbushPowerForApplier(base.Owner.Creature,c)?.NumSetupsForCreature ?? 0);
+        SetCost(totalSetups);
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if(side != CombatSide.Player)
+        {
+            return Task.CompletedTask;
+        }
+
+        ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState);
+
+        var totalSetups = base.Owner.Creature.CombatState.Enemies.Sum((Creature c) => SetupCard.GetAmbushPowerForApplier(base.Owner.Creature,c)?.NumSetupsForCreature ?? 0);
         SetCost(totalSetups);
         return Task.CompletedTask;
     }
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.CalculationBase.UpgradeValueBy(8);
+        base.DynamicVars.Damage.UpgradeValueBy(8);
     }
 
     private void SetCost(int setups)

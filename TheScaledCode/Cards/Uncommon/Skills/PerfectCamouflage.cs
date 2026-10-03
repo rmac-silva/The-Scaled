@@ -19,7 +19,7 @@ public class PerfectCamouflage : TheScaledCard
                 new BlockVar(14, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
                 new PowerVar<Ambush>(8),
             ];
-        public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate,CardKeyword.Exhaust];
+        public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain,CardKeyword.Exhaust];
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             [HoverTipFactory.FromPower<Ambush>()];
 

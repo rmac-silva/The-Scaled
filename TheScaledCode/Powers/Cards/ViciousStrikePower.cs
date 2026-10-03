@@ -10,7 +10,7 @@ namespace TheScaled.TheScaledCode.Powers;
 
 
   
-public class ViciousPower : TheScaledPower
+public class ViciousStrikePower : TheScaledPower
 {
     public override PowerType Type => PowerType.Buff;
 

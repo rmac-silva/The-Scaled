@@ -55,13 +55,12 @@ public delegate Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, deci
 public class Ambush : TheScaledPower
 {
     public override LocString Title => getFormattedTitle();
-    public override PowerType Type => PowerType.Debuff;
+    public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     protected override bool IsVisibleInternal => true; //Not visible on enemies in the future.
     public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier; //One per player, stacking
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("AmbushThreshold", 0m), new DynamicVar("AmbushThresholdBase", 5m)];
-    
     private List<AmbushEntry> EffectsForOwner => _queuedEffects;
 
     private List<AmbushEntry> _queuedEffects = [];

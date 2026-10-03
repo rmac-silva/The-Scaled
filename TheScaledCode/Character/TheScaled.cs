@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Models;
 using TheScaled.TheScaledCode.Cards;
 using TheScaled.TheScaledCode.Relics;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 
 namespace TheScaled.TheScaledCode.Character;
 
@@ -23,7 +24,10 @@ public class TheScaled : PlaceholderCharacterModel
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Neutral;
-    public override int StartingHp => 70;
+    public override int StartingHp => 85;
+    public override Color MapDrawingColor => new("2E2A4B");
+    public override VfxColor SpeechBubbleColor => VfxColor.Swamp;
+
 
     public override bool HideFromVanillaCharacterSelect => false;
 
