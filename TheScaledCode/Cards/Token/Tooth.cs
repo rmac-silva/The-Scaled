@@ -1,11 +1,16 @@
+using BaseLib.Abstracts;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace TheScaled.TheScaledCode.Cards;
   
-public class Tooth : TheScaledCard
+[Pool(typeof(TokenCardPool))]
+public class Tooth : CustomCardModel
 {
     public Tooth() : base(0, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
     {

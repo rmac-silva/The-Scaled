@@ -25,8 +25,7 @@ public class Maelstrom : TheScaledCard
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
-                new PowerVar<SetupPower>(2),
-                new PowerVar<Ambush>(3)
+                new PowerVar<SetupPower>(2)
             ];
         protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
 
@@ -62,6 +61,14 @@ public class Maelstrom : TheScaledCard
 
                 var ambPwr = SetupCard.GetAmbushPowerForApplier(base.Owner.Creature,cardPlay.Target);
 
+                if(ambPwr is null)
+                {
+                    ambPwr = await PowerCmd.Apply<Ambush>(choiceContext,cardPlay.Target,1,base.Owner.Creature,this);
+                    if(ambPwr != null)
+                    {
+                        ambPwr.SetAmount(0);
+                    }
+                }
 
                 if(ambPwr != null && c is SetupCard)
                 {
@@ -72,7 +79,7 @@ public class Maelstrom : TheScaledCard
 
             CardCmd.Preview(cardModels.ToList().AsReadOnly(), 1f, CardPreviewStyle.MessyLayout);
 
-            await PowerCmd.Apply<AmbushNextTurn>(choiceContext,cardPlay.Target,base.DynamicVars["Ambush"].IntValue * num,base.Owner.Creature,this);
+            await PowerCmd.Apply<TriggerAmbushNextTurn>(choiceContext,cardPlay.Target,1,base.Owner.Creature,this);
 
         }
 

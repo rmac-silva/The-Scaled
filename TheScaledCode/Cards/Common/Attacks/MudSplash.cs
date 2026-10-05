@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using TheScaled.TheScaledCode.Afflictions;
 
 namespace TheScaled.TheScaledCode.Cards;
 
@@ -15,7 +16,7 @@ public class MudSplash : TheScaledCard
             new DynamicVar("MudAmount", 2m),
         ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Mud>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Mud>(),HoverTipFactory.FromAffliction<Muddied>().First()];
 
     public MudSplash()
         : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) { }

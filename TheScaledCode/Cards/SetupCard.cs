@@ -34,7 +34,6 @@ public abstract class SetupCard : TheScaledCard
     public static string GetCleanSetupText(string input)
     {
         //Strip out all BBCode style tags
-        ModLog.Info(null,$"[SetupCard.cs] Input for Setup Text Cleaning: {input}");
 
         //Setup finding
         int setupIndex = input.IndexOf("[gold]Setup[/gold]:", StringComparison.OrdinalIgnoreCase);
@@ -73,7 +72,15 @@ public abstract class SetupCard : TheScaledCard
 
         if(ambush is null)
         {
-            ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(),cardPlay.Target,0,base.Owner.Creature,this);
+            ModLog.Info(this,$"Applying Ambush at 0 for enemy {cardPlay.Target.Name}");
+            ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(),cardPlay.Target,1,base.Owner.Creature,this);
+            if(ambush != null)
+            {
+                ambush.SetAmount(0);
+            } else
+            {
+                return;
+            }
         }
 
         if (ambush is not null)
@@ -107,7 +114,15 @@ public abstract class SetupCard : TheScaledCard
 
             if(ambush is null)
             {
-                ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(),enemy,0,base.Owner.Creature,this);
+                ModLog.Info(this,$"Applying Ambush at 0 for enemy {enemy.Name}");
+            ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(),enemy,1,base.Owner.Creature,this);
+            if(ambush != null)
+            {
+                ambush.SetAmount(0);
+            } else
+            {
+                return;
+            }
             }
 
             AmbushEntry entry;
@@ -132,7 +147,6 @@ public abstract class SetupCard : TheScaledCard
     {
         var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand, target));
 
-        /*ModLog.Info(this, $"Setup Card Description: {description}");*/
         return TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType);
     }
 
@@ -143,7 +157,6 @@ public abstract class SetupCard : TheScaledCard
     /// <returns></returns>
     public HoverTip GetHovertip(string descriptionOverride)
     {
-        /*ModLog.Info(this, $"Setup Card Description: {description}");*/
         return TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", descriptionOverride, CardSetupType);
     }
 
@@ -154,9 +167,17 @@ public abstract class SetupCard : TheScaledCard
 
     public static Ambush? GetAmbushPowerForApplier(Creature owner, Creature c)
     {
-        return c.Powers
+        try
+        {
+            return c.Powers
             .OfType<Ambush>()
             .FirstOrDefault(power => power.Applier == owner);
+        }
+        catch (Exception)
+        {
+            
+            return null;
+        }   
     }
 
 }

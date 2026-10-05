@@ -73,7 +73,6 @@ public class AceOfCups : CustomRelicModel
 
     public override async Task AfterCardDiscarded(PlayerChoiceContext choiceContext, CardModel card)
     {
-        ModLog.Info(this,$"Discarding {card}");
 
         if (card.Owner != base.Owner)
 		{

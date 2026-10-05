@@ -14,7 +14,7 @@
   "THESCALED-CALCULATED_STRIKE.title": "Calculated Strike",
   "THESCALED-SNARE.description": "Deal {Damage:diff()} damage.\nIf the enemy intends to attack, apply {DrownAmount:diff()} [gold]Drown[/gold].",
   "THESCALED-SNARE.title": "Snare",
-  "THESCALED-VICIOUS_STRIKE.description": "Deal {Damage:diff()} damage.\n Increase the damage of all cards containing “Strike” by {ViciousPower:diff()}.",
+  "THESCALED-VICIOUS_STRIKE.description": "Deal {Damage:diff()} damage.\n Increase the damage of all cards containing “Strike” by {ViciousStrikePower:diff()}.",
   "THESCALED-VICIOUS_STRIKE.title": "Vicious Strike",
   "THESCALED-MUD.description": "At the end of your turn, apply [gold]Muddied[/gold] to a random card in your [gold]Hand[/gold].",
   "THESCALED-MUD.title": "Mud",
@@ -71,7 +71,7 @@
   "THESCALED-VYING_LUNGE.title": "Vying Lunge",
   "THESCALED-ENGULF.description": "Deal {CalculatedDamage:diff()} damage.\nDeal an additional {ExtraDamage:diff()} damage for each Muddied card in your deck.",
   "THESCALED-ENGULF.title": "Engulf",
-  "THESCALED-HEADLONG_CHARGE.description": "Deal {Damage:diff()} damage to a random enemy {Repeat:diff()} {Repeat:plural:times|time}.",
+  "THESCALED-HEADLONG_CHARGE.description": "Deal {Damage:diff()} damage to a random enemy {Repeat:diff()} {Repeat:plural:time|times}.",
   "THESCALED-HEADLONG_CHARGE.title": "Headlong Charge",
   "THESCALED-CREEP_UP.description": "Deal {Damage:diff()} damage.\nThe next [gold]Afflicted[/gold] card you play costs 0 {energyPrefix:energyIcons(1)}.",
   "THESCALED-CREEP_UP.title": "Creep Up",
@@ -92,8 +92,8 @@
   "THESCALED-EXERTION.title": "Exertion",
   "THESCALED-BATHE.description": "Apply {DrownedPower:diff()} Drown to ALL enemies.\nExhaust 1 card from your [gold]Discard Pile[/gold].",
   "THESCALED-BATHE.title": "Bathe",
-  "THESCALED-TRAWL.description": "Enemy loses up to {DrownedPower:diff()} [gold]Drown[/gold].\nApply {FrailPower:diff()} [gold]Frail[/gold] and [gold]Weak[/gold]to a random enemy for each [gold]Drown[/gold] lost.",
-  "THESCALED-TRAWL.title": "Gasping Recess",
+  "THESCALED-TRAWL.description": "Enemy loses up to {DrownedPower:diff()} [gold]Drown[/gold].\nApply {FrailPower:diff()} [gold]Frail[/gold] and [gold]Weak[/gold] to a random enemy for each [gold]Drown[/gold] lost.",
+  "THESCALED-TRAWL.title": "Trawl",
   "THESCALED-RINSE.description": "Remove up to {Cards:diff()} random [gold]Afflictions[/gold] from cards in your [gold]Draw Pile[/gold].\nGain {Block:diff()} [gold]Block[/gold].",
   "THESCALED-RINSE.title": "Rinse",
   "THESCALED-MUD_BATH.description": "Afflict {AfflictedCards:diff()} random cards in your [gold]Draw Pile[/gold] with [gold]Muddied[/gold] then draw them.",
@@ -132,7 +132,7 @@
 
   "THESCALED-M_A_D.description": "Gain {Energy:energyIcons} energy.\nDraw {Cards:diff()} cards.\nApply {DrownedPower:diff()} [gold]Drown[/gold] to yourself.",
   "THESCALED-M_A_D.title": "M.A.D.",
-  "THESCALED-SURFACE_TENSION.description": "Gain {Block:diff()} block.\nEach time you are hit this turn, apply 1 [gold]Drown[/gold] to the attacker.",
+  "THESCALED-SURFACE_TENSION.description": "Gain {Block:diff()} [gold]Block[/gold].\nEach time you are hit this turn, apply 1 [gold]Drown[/gold] to the attacker.",
   "THESCALED-SURFACE_TENSION.title": "Surface Tension",
   "THESCALED-SEETHE.description": "Choose a card in your [gold]Draw Pile[/gold]. That card gains [gold]Replay[/gold] equal to the amount of [gold]Muddied[/gold] cards in your [gold]Discard Pile[/gold].{InCombat:\n(Replay {ReplayAmount:diff()})|}",
   "THESCALED-SEETHE.title": "Seethe",
@@ -147,6 +147,8 @@
 
   "THESCALED-TOOTH.description": "Deal {Damage:diff()} damage.\nDraw {Cards:diff()} {Cards:plural:card|cards}.",
   "THESCALED-TOOTH.title": "Tooth",
+  "THESCALED-SCALED_ANCIENT.description": "Does nothing...",
+  "THESCALED-SCALED_ANCIENT.title": "Scaled Ancient",
   
 
 
@@ -164,6 +166,7 @@
   "THESCALED-HARROW.title": "Harrow",
   "THESCALED-EXCEPCION.description": "Deal {Damage:diff()} damage.\n[gold]Retain[/gold] your [gold]Hand[/gold] this turn.\nNext turn, reduce the cost of all retained cards by {Energy:energyIcons()}.",
   "THESCALED-EXCEPCION.title": "Excepcion",
+
 
   "THESCALED-PULSING_LATTICE.description": "Choose a card in your [gold]Draw Pile[/gold] without [gold]Replay[/gold].\nIt gains Replay {Replay:diff()} and costs an additional {Energy:energyIcons()}.",
   "THESCALED-PULSING_LATTICE.title": "Pulsing Lattice",

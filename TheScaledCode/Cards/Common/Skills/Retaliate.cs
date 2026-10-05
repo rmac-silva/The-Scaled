@@ -41,7 +41,6 @@ public class Retaliate : TheScaledCard
 
             if(cardPlay.Target.Monster.IntendsToAttack)
             {
-                ModLog.Info(this, $"Applying Retaliate: {DynamicVars["StrengthLoss"].BaseValue}");
                 await PowerCmd.Apply<RetaliatePower>(choiceContext, cardPlay.Target, DynamicVars["StrengthLoss"].BaseValue, base.Owner.Creature, cardPlay.Card);
             }
         }

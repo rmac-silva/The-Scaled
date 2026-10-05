@@ -18,7 +18,6 @@ public static class MaxEnergyResetPatch
         {
             return;
         }
-        ModLog.Info(__instance,$"Creating new energy gained entry: {__instance.MaxEnergy}");
         CombatManager.Instance.History.EnergyGained(combatState, __instance.MaxEnergy, player.Creature);
     }
 }
@@ -37,7 +36,6 @@ public static class MaxEnergyIncrementPatch
         {
             return;
         }
-        ModLog.Info(__instance,$"Creating new energy gained entry: {__instance.MaxEnergy}");
         CombatManager.Instance.History.EnergyGained(combatState, __instance.MaxEnergy, player.Creature);
     }
 }
@@ -61,7 +59,6 @@ public static class GainEnergyFromOtherSourcesPatch
         {
             return;
         }
-        ModLog.Info(__instance,$"Creating new energy gained entry: {amount}");
         CombatManager.Instance.History.EnergyGained(combatState, (int)amount, player.Creature);
     }
 }

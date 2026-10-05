@@ -16,9 +16,9 @@ public class RuggedScales : SetupCard
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(6, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("AmbushEffect", 9)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ThornsPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip];
 
-    protected override SetupCardType CardSetupType => throw new NotImplementedException();
+    protected override SetupCardType CardSetupType => SetupCardType.Buff;
 
     public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> data)
     {

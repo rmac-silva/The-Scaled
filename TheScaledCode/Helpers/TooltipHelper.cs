@@ -47,7 +47,6 @@ public static class TooltipHelper
         newTooltip = traverse.GetValue<HoverTip>();
         newTooltip.IsDebuff = isDebuff;
         newTooltip.Id = $"CardTracker_CustomTip_{title.GetHashCode()}";
-        ModLog.Info(null, $"Recreated new hover tip: {newTooltip}.\nWith Icon: {icon?.ResourcePath ?? "null"}");
         return newTooltip;
     }
 
@@ -80,7 +79,6 @@ public static class TooltipHelper
         newTooltip = traverse.GetValue<HoverTip>();
         newTooltip.IsDebuff = isDebuff;
         newTooltip.Id = $"CardTracker_CustomTip_{title.GetHashCode()}";
-        ModLog.Info(null, $"Created new hover tip: {newTooltip}.\nWith Icon: {newTooltip.Icon?.ResourcePath ?? "null"}");
         return newTooltip;
     }
 

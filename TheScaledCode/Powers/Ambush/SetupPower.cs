@@ -14,7 +14,7 @@ namespace TheScaled.TheScaledCode.Powers;
 
 public class SetupPower : TheScaledPower
 {
-    public override PowerType Type => PowerType.Debuff;
+    public override PowerType Type => PowerType.None;
     public override bool AllowNegative => false;
 
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -50,8 +50,6 @@ public class SetupPower : TheScaledPower
                 return (IHoverTip)TooltipHelper.CreateHoverTooltip(displayTitle, first.Description, true, first.Icon);
             }).ToList();
 
-            ModLog.Info(this,
-                $"ExtraHoverTips returning {processedExtraTips.Count()} entries. SetupHash={GetHashCode()}, Owner={base.Owner}, Applier={base.Applier}");
             
             return processedExtraTips;
         }

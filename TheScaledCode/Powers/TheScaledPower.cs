@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Platform;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Entities.Players;
 
 namespace TheScaled.TheScaledCode.Powers;
 
@@ -34,10 +35,11 @@ public abstract class TheScaledPower : CustomPowerModel
 
     protected LocString getFormattedTitle() {
         var title = new LocString("powers", base.Id.Entry + ".title");
+        var isSP = RunManager.Instance.IsSingleplayerOrFakeMultiplayer;
 
-        if (base.Applier?.Player is null)
+        if (base.Applier?.Player is null || isSP)
         {
-            title.Add("PlayerName", "Unknown player");
+            title.Add("PlayerName", "");
             return title;
         }
 
@@ -45,7 +47,7 @@ public abstract class TheScaledPower : CustomPowerModel
             RunManager.Instance.NetService.Platform,
             base.Applier.Player.NetId
         );
-        title.Add("PlayerName", playerName);
+        title.Add("PlayerName", $"[{playerName}] ");
         return title;
     }
 }

@@ -15,13 +15,13 @@ public class Inertia : SetupCard
     private string dummy_tooltip = "[gold]Setup[/gold]: Deal {0} damage, then reapply this [gold]Setup[/gold] with 50% additional damage.";
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("AmbushEffect", 4)];
 
     protected override SetupCardType CardSetupType => SetupCardType.Offensive;
 
     public override Dictionary<string, decimal> SetupData => new Dictionary<string, decimal>(1)
     {
-        { "damage", base.DynamicVars.Damage.BaseValue }
+        { "damage", base.DynamicVars["AmbushEffect"].BaseValue }
     };
 
 

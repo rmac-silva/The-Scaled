@@ -58,7 +58,6 @@ public class SeaUrchin : CustomRelicModel
         if(_exhaustedCard is not null)
         {
             Flash();
-            ModLog.Info(this,$"Finished combat. Looking for {_exhaustedCard.Id} ({_exhaustedCard.CanonicalInstance}) in player deck!");
             var c = PileType.Deck.GetPile(base.Owner).Cards.First((CardModel c) => c == _exhaustedCard);
 
             CardCmd.Upgrade(c);

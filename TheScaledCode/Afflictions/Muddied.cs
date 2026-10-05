@@ -37,21 +37,28 @@ namespace TheScaled.TheScaledCode.Afflictions
 		{
 			return false;
 		}
+
 		if (card.Keywords.Contains(CardKeyword.Unplayable) && !CanAfflictUnplayableCards)
 		{
 			return false;
 		}
-		if (card.Affliction != null && card.Affliction.GetType() != GetType())
+        //Can't muddy muddied cards
+		if (card.Affliction != null && card.Affliction.GetType() == GetType())
 		{
 			return false;
 		}
-        
+
+        if(card.Affliction != null)
+        {
+            //Override the affliction with Muddied
+            card.ClearAfflictionInternal();
+        }
+
 		return true;
 	}
 
         public override async Task OnPlay(PlayerChoiceContext choiceContext, Creature? target)
         {
-            ModLog.Info(this,$"Muddied Resource Exists: {HasOverlay} | Checked Path: {OverlayPath}. | Backup: {ResourceLoader.Exists(OverlayPath)}");
             //Pick a random card from the draw pile
             var pile = CardPile.Get(PileType.Draw, base.Card.Owner);
 

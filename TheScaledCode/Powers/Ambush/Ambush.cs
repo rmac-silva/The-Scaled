@@ -55,7 +55,7 @@ public delegate Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, deci
 public class Ambush : TheScaledPower
 {
     public override LocString Title => getFormattedTitle();
-    public override PowerType Type => PowerType.Buff;
+    public override PowerType Type => PowerType.None;
     public override PowerStackType StackType => PowerStackType.Counter;
     protected override bool IsVisibleInternal => true; //Not visible on enemies in the future.
     public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier; //One per player, stacking
@@ -83,7 +83,6 @@ public class Ambush : TheScaledPower
     /// <returns></returns>
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
-        ModLog.Info(this, $"Ambush has been applied to {base.Owner}");
         ResetAmbushThreshold();
         return Task.CompletedTask;
     }
@@ -173,6 +172,15 @@ public class Ambush : TheScaledPower
     /// <param name="effect"></param>
     public async Task AddAmbushEffect(AmbushEntry effect, HoverTip hoverTip)
     {
+        if (base.Owner is null || base.Applier is null)
+        {
+            ModLog.Warning(
+                this,
+                $"Cannot add ambush effect for {effect.source.Title}: owner or applier is null. Owner={base.Owner}, Applier={base.Applier}"
+            );
+            return;
+        }
+
         var setupPower = GetSetupPowerForApplier();
 
         if (setupPower is null)
@@ -202,6 +210,15 @@ public class Ambush : TheScaledPower
     /// <param name="effect"></param>
     public async Task AddExistingAmbushEffect(AmbushEntry effect)
     {
+        if (base.Owner is null || base.Applier is null)
+        {
+            ModLog.Warning(
+                this,
+                $"Cannot add existing ambush effect for {effect.source.Title}: owner or applier is null. Owner={base.Owner}, Applier={base.Applier}"
+            );
+            return;
+        }
+
         var setupPower = GetSetupPowerForApplier();
 
         if (setupPower is null)
@@ -273,18 +290,16 @@ public class Ambush : TheScaledPower
     /// <returns></returns>
     private SetupPower? GetSetupPowerForApplier()
     {
-        ModLog.Info(this,
-        $"Ambush {GetHashCode()} owner={base.Owner} applier={base.Applier}");
-
-        foreach (var power in base.Owner.Powers.OfType<SetupPower>())
+        try
         {
-            ModLog.Info(this,
-                $"Setup {power.GetHashCode()} applier={power.Applier} amount={power.DisplayAmount}");
+            return Owner.Powers
+                .OfType<SetupPower>()
+                .FirstOrDefault(power => power.Applier == base.Applier);
         }
-
-        return base.Owner.Powers
-            .OfType<SetupPower>()
-            .FirstOrDefault(power => power.Applier == base.Applier);
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     protected override void AfterCloned()

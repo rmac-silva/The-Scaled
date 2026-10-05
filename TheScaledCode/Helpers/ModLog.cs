@@ -1,4 +1,3 @@
-// RelicTracker.ModLog - Mod Logger borrowed from BetterSpire2
 using Godot;
 
 public static class ModLog
