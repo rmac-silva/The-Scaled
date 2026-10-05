@@ -22,11 +22,14 @@ public class PredatoryInstinct : TheScaledRelic
 
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
+        ArgumentNullException.ThrowIfNull(base.Owner.PlayerCombatState);
+
         if (!participants.Contains(base.Owner.Creature) || base.Owner.PlayerCombatState.TurnNumber > 1)
 		{
 			return;
 		}
 
+        ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState);
         foreach (Creature hittableEnemy2 in base.Owner.Creature.CombatState.HittableEnemies)
 		{
 			await PowerCmd.Apply<Ambush>(choiceContext, hittableEnemy2, base.DynamicVars["EnemyAmbushGain"].IntValue, base.Owner.Creature, null);
