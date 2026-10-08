@@ -19,7 +19,7 @@ namespace TheScaled.TheScaledCode.Cards
             ];
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<Ambush>()];
+            [HoverTipFactory.FromCard(ModelDb.Card<Burn>())];
 
         public Bask()
             : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.None) { }

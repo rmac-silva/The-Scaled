@@ -19,7 +19,7 @@ public class ViciousStrike : TheScaledCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<ViciousStrikePower>(1m)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<ViciousStrikePower>()];
-    public ViciousStrike() : base(0, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)
+    public ViciousStrike() : base(1, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)
     {
     }
 

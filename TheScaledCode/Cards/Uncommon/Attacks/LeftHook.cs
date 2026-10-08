@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using TheScaled.TheScaledCode.Powers;
@@ -23,6 +24,7 @@ public class LeftHook : SetupCard
     {
         await CardPileCmd.Add(this,PileType.Hand);
         return;
+
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -38,6 +40,15 @@ public class LeftHook : SetupCard
         
         await base.AddSetup(cardPlay);
     }
+
+    protected override void OnSetupPlayed(Player p)
+    {
+        if(p == Owner)
+        {
+            CardPileCmd.Add(this, PileType.Hand);
+        }
+    }
+
 
     
 

@@ -17,7 +17,8 @@ public class LeviathanAncient : CustomAncientModel
     //Only valid on act 3
     public override bool IsValidForAct(ActModel act)
     {
-        return act.ActNumber() == 3;
+        return false;
+        //return act.ActNumber() == 3;
     }
     protected override OptionPools MakeOptionPools => CreateOptionPools();
 

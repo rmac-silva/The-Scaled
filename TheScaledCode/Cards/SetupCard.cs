@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using TheScaled.TheScaledCode.Helpers;
@@ -19,43 +20,12 @@ public abstract class SetupCard : TheScaledCard
     }
 
     protected abstract SetupCardType CardSetupType { get;}
+    protected IHoverTip AmbushHoverTip => HoverTipFactory.FromPower<SetupPower>();
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat([AmbushHoverTip]);
     public virtual Dictionary<string,decimal> SetupData => new Dictionary<string, decimal>();
     protected SetupCard(int cost, CardType type, CardRarity rarity, TargetType target) : base(cost, type, rarity, target)
     {
-    }
-
-    
-    /// <summary>
-    /// Strips BBcode tags
-    /// </summary>
-    /// <param name="input"></param>
-    /// <returns></returns>
-    public static string GetCleanSetupText(string input)
-    {
-        //Strip out all BBCode style tags
-
-        //Setup finding
-        int setupIndex = input.IndexOf("[gold]Setup[/gold]:", StringComparison.OrdinalIgnoreCase);
-
-        if (setupIndex == -1) //Look for ALL enemies version
-        {
-            setupIndex = input.IndexOf("[gold]Setup[/gold] ALL enemies:", StringComparison.OrdinalIgnoreCase);
-        }
-
-        if(setupIndex != -1)
-        {
-            var textWithoutSetup = input.Substring(setupIndex + "[gold]Setup[/gold]:".Length);
-            int positionOfNewLine = textWithoutSetup.IndexOf("\n");
-            if (positionOfNewLine == -1)
-            {
-                positionOfNewLine = textWithoutSetup.Length;
-            }
-
-            return textWithoutSetup.Substring(0, positionOfNewLine).Trim();
-        }
-
-        return string.Empty; // Return empty string if "Setup:" is not found
+        EventManager.OnSetupAdded += OnSetupPlayed;
     }
 
     /// <summary>
@@ -100,8 +70,6 @@ public abstract class SetupCard : TheScaledCard
         }
     }
 
-
-
     protected async Task AddSetupToAllEnemies( Dictionary<string, decimal>? data = null )
     {
         ArgumentNullException.ThrowIfNull(base.CombatState, "wner.Creature.CombatState");
@@ -143,6 +111,13 @@ public abstract class SetupCard : TheScaledCard
         }
     }
 
+    protected virtual void OnSetupPlayed(Player p)
+    {
+        return;
+    }
+
+    public abstract Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
+
     public HoverTip GetHovertip(Creature target)
     {
         var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand, target));
@@ -161,9 +136,38 @@ public abstract class SetupCard : TheScaledCard
     }
 
 
-    public abstract Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
 
-    protected IHoverTip AmbushHoverTip => HoverTipFactory.FromPower<SetupPower>();
+    /// <summary>
+    /// Strips BBcode tags
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public static string GetCleanSetupText(string input)
+    {
+        //Strip out all BBCode style tags
+
+        //Setup finding
+        int setupIndex = input.IndexOf("[gold]Setup[/gold]:", StringComparison.OrdinalIgnoreCase);
+
+        if (setupIndex == -1) //Look for ALL enemies version
+        {
+            setupIndex = input.IndexOf("[gold]Setup[/gold] ALL enemies:", StringComparison.OrdinalIgnoreCase);
+        }
+
+        if(setupIndex != -1)
+        {
+            var textWithoutSetup = input.Substring(setupIndex + "[gold]Setup[/gold]:".Length);
+            int positionOfNewLine = textWithoutSetup.IndexOf("\n");
+            if (positionOfNewLine == -1)
+            {
+                positionOfNewLine = textWithoutSetup.Length;
+            }
+
+            return textWithoutSetup.Substring(0, positionOfNewLine).Trim();
+        }
+
+        return string.Empty; // Return empty string if "Setup:" is not found
+    }
 
     public static Ambush? GetAmbushPowerForApplier(Creature owner, Creature c)
     {

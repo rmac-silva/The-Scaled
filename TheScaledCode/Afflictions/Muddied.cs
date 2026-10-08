@@ -67,7 +67,9 @@ namespace TheScaled.TheScaledCode.Afflictions
                 return;
             }
 
-            CardModel? cardModel = Card.Owner.RunState.Rng.CombatCardSelection.NextItem(pile.Cards);
+            var possibleCards = pile.Cards.Where(c => CanAfflict(c)).ToList();
+
+            CardModel? cardModel = Card.Owner.RunState.Rng.CombatCardSelection.NextItem(possibleCards);
             if (cardModel != null)
             {
                 await CardCmd.Afflict<Muddied>(cardModel, 1);

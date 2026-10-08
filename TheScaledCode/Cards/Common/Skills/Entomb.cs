@@ -11,7 +11,7 @@ namespace TheScaled.TheScaledCode.Cards;
 
 public class Entomb : SetupCard
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WeakPower>(1), new DynamicVar("MudAmount", 1),new DamageVar(2,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<WeakPower>(1), new DynamicVar("MudAmount", 1),new DamageVar(2,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<WeakPower>(),HoverTipFactory.FromCard<Mud>()];
 
     protected override SetupCardType CardSetupType => SetupCardType.Offensive;

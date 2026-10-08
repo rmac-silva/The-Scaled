@@ -36,7 +36,7 @@ public class Submerge : TheScaledCard
 			
 			await PowerCmd.Apply<WeakPower>(choiceContext, enemy, base.DynamicVars.Weak.BaseValue, base.Owner.Creature, this);
 			await PowerCmd.Apply<DrownedPower>(choiceContext, enemy, base.DynamicVars["DrownedPower"].IntValue, base.Owner.Creature, this);
-            await Cmd.Wait(0.5f);
+            await Cmd.Wait(0.15f);
         }
     }
 

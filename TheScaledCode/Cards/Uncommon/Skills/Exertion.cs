@@ -27,6 +27,7 @@ public class Exertion : SetupCard
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             await CardPileCmd.Draw(choiceContext,base.DynamicVars.Cards.IntValue,base.Owner);
+            await base.AddSetup(cardPlay);
         }
 
         protected override void OnUpgrade()

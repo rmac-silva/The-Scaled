@@ -194,7 +194,7 @@ public class Ambush : TheScaledPower
             );
         }
 
-        if(setupPower is null || setupPower.Owner is null)
+        if(setupPower is null || setupPower.Owner is null) //Artifact
         {
             return;
         }
@@ -210,15 +210,6 @@ public class Ambush : TheScaledPower
     /// <param name="effect"></param>
     public async Task AddExistingAmbushEffect(AmbushEntry effect)
     {
-        if (base.Owner is null || base.Applier is null)
-        {
-            ModLog.Warning(
-                this,
-                $"Cannot add existing ambush effect for {effect.source.Title}: owner or applier is null. Owner={base.Owner}, Applier={base.Applier}"
-            );
-            return;
-        }
-
         var setupPower = GetSetupPowerForApplier();
 
         if (setupPower is null)
@@ -232,17 +223,14 @@ public class Ambush : TheScaledPower
             );
         }
 
-        if(setupPower == null || setupPower.Owner == null)
+        if(setupPower is null || setupPower.Owner is null)//Artifact
         {
-            ModLog.Error(this,$"Failed to apply SetupPower to {base.Owner}. Either the Setup or the Owner is null. (Artifact?)",new NullReferenceException());
             return;
         }
 
         var hoverTip = setupPower.GetHoverTip($"Setup ({effect.source.Title})");
 
-        setupPower.AddHovertip(hoverTip);
-
-        EffectsForOwner.Add(effect);
+        AddAmbushEffect(effect,hoverTip);
     }
 
     /// <summary>

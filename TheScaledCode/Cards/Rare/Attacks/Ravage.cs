@@ -29,12 +29,6 @@ public class Ravage : TheScaledCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        
-        foreach(EnergyGainedEntry ent in CombatManager.Instance.History.Entries.OfType<EnergyGainedEntry>())
-        {
-            ModLog.Info(this,$"Energy gained entry: {ent}");
-        }
-
         ArgumentNullException.ThrowIfNull(this.CombatState, "this.CombatState");
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 

@@ -8,6 +8,7 @@ using TheScaled.TheScaledCode.Cards;
 using TheScaled.TheScaledCode.Relics;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using BaseLib.Patches.UI;
 
 namespace TheScaled.TheScaledCode.Character;
 
@@ -75,6 +76,11 @@ public class TheScaled : PlaceholderCharacterModel
 
     public override string CustomIconTexturePath => "character_icon_char_name.png".CharacterUiPath();
     public override string? CustomIconOutlineTexturePath => "character_icon_char_name_ouline.png".CharacterUiPath();
+    public override RelicIconData? CustomYummyCookie => new RelicIconData(Cookie_BigIconPath, Cookie_PackedIconPath, Cookie_PackedIconPath);
+
+    private string Cookie_PackedIconPath => "cookie.png".RelicImagePath();
+    private string Cookie_PackedIconOutlinePath => "cookie_outline.png".RelicImagePath();
+    private string Cookie_BigIconPath => "cookie.png".BigRelicImagePath();
 
     public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();

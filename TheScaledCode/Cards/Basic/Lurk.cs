@@ -14,7 +14,7 @@ public class Lurk : TheScaledCard
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(11m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered), new DynamicVar("EnemyAmbushGain", 3m)];
+        [new BlockVar(11m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("EnemyAmbushGain", 3m)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

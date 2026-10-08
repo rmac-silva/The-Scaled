@@ -48,7 +48,7 @@ public class Suffocate : TheScaledCard
 
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if(cardPlay.Card == this)
+        if(cardPlay.Card != this)
         {
             ArgumentNullException.ThrowIfNull(base.Owner.Creature.CombatState);
             var totalSetups = base.Owner.Creature.CombatState.Enemies.Sum((Creature c) => c.GetPower<Ambush>()?.NumSetupsForCreature ?? 0);

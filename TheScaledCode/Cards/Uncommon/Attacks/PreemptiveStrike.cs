@@ -11,10 +11,10 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class PreemptiveStrike : SetupCard
 {
-    public PreemptiveStrike() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
+    public PreemptiveStrike() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
     {
     }
-
+    protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
     protected override SetupCardType CardSetupType => SetupCardType.Offensive;
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(14m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("AmbushEffect", 8)];
     protected override bool ShouldGlowGoldInternal
