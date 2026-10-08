@@ -2,6 +2,13 @@
 - Apex Instincts (Ancient version of Predatory Instincts)
 - Added Yummy Cookie
 
+**Card Art**:
+- Exertion
+- Gut Strike
+- Headlong Charge
+- Inertia
+- Mud
+
 **Functionality**:
 - Submerge, reduced delay to 0.2f
 - Muddied now only affects and targets non-muddied cards. Meaning that when you have Muddied your whole deck, you no longer have a "downside".
