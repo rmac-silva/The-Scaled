@@ -14,6 +14,7 @@
 - Muddied now only affects and targets non-muddied cards. Meaning that when you have Muddied your whole deck, you no longer have a "downside".
 
 **Bugfixes**
+- Maelstrom no longer desyncs in MP
 - Exertion now correctly gives energy when triggering the ambush
 - Added Strike prop to the cards that needed it
 - Bask has Ambush tooltips
