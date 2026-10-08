@@ -74,10 +74,11 @@ public class Maelstrom : TheScaledCard
                 {
                     var ambEntry = new AmbushEntry(setupCard.AmbushEffect,setupCard,setupCard.SetupData);
                     await ambPwr.AddAmbushEffect(ambEntry,setupCard.GetHovertip(cardPlay.Target));
+                    await CardPileCmd.Add(c,PileType.Play);
                 }
             }
 
-            CardCmd.Preview(cardModels.ToList().AsReadOnly(), 1f, CardPreviewStyle.MessyLayout);
+            CardCmd.Preview(cardModels.ToList().AsReadOnly(), 1.5f, CardPreviewStyle.GridLayout);
 
             await PowerCmd.Apply<TriggerAmbushNextTurn>(choiceContext,cardPlay.Target,1,base.Owner.Creature,this);
 
