@@ -47,6 +47,7 @@ public class Mud : CustomCardModel
     /// Applies the Muddied affliction to the provided list of cards. If the list is null or empty, logs an error and returns.
     /// </summary>
     /// <param name="cards"></param>
+    /// <param name="skipVisuals"></param>
     public static async Task<IEnumerable<Muddied>> MuddyCards(
         List<CardModel> cards)
     {
@@ -56,7 +57,36 @@ public class Mud : CustomCardModel
             return Enumerable.Empty<Muddied>();
         }
 
-        return await CardCmd.AfflictAndPreview<Muddied>(cards, 1);        
+        
+            return await CardCmd.AfflictAndPreview<Muddied>(cards, 1);
+        
+    }
+
+    /// <summary>
+    /// Applies the Muddied affliction to the provided list of cards without showing any visual effects. If the list is null or empty, logs an error and returns.
+    /// </summary>
+    /// <param name="cards"></param>
+    /// <returns></returns>
+    public static async Task<List<CardModel>> MuddyCardsNoVisuals(
+        List<CardModel> cards)
+    {
+        if(cards == null || cards.Count == 0)
+        {
+            ModLog.Error(null, "No cards provided to muddy.", new ArgumentNullException());
+            return new List<CardModel>();
+        }
+
+        
+            foreach (var card in cards)
+            {
+                if (Muddied.CanAfflictMuddied(card))
+                {
+                    await CardCmd.Afflict<Muddied>(card, 1);
+                }
+            }
+
+            return cards;
+        
     }
 
     /// <summary>
@@ -65,8 +95,9 @@ public class Mud : CustomCardModel
     /// <param name="pile"></param>
     /// <param name="amount"></param>
     /// <param name="owner"></param>
+    /// <param name="skipVisuals"></param>
     /// <returns></returns>
-    public static async Task AddMudCard(PileType pile, int amount, Player owner)
+    public static async Task AddMudCard(PileType pile, int amount, Player owner, bool skipVisuals = false)
     {
         ArgumentNullException.ThrowIfNull(owner.Creature.CombatState, "owner.Creature.CombatState");
 
@@ -78,6 +109,12 @@ public class Mud : CustomCardModel
         }
         //Add the cards to the discard pile
         await CardPileCmd.AddGeneratedCardsToCombat(list, pile, owner);
-        CardCmd.Preview(list, 0.4f);
+
+        if (!skipVisuals)
+        {
+            CardCmd.Preview(list, 0.4f);
+        }
+        
+        CardPile.Get(PileType.Draw,owner)?.InvokeContentsChanged();
     }
 }

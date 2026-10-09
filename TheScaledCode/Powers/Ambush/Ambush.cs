@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Platform;
 using MegaCrit.Sts2.Core.Runs;
+using TheScaled.TheScaledCode.Powers.Cards;
 
 namespace TheScaled.TheScaledCode.Powers;
 
@@ -136,9 +137,12 @@ public class Ambush : TheScaledPower
         var effects = EffectsForOwner;
         var savedListOfEffects = effects.ToArray();
 
-        effects.Clear();
+        if(ShouldResetEffects())
+        {
+            effects.Clear();
+            GetSetupPowerForApplier()?.RemoveSetup();
+        }
 
-        GetSetupPowerForApplier()?.RemoveSetup();
         base.SetAmount(0);
         ResetAmbushThreshold();
 
@@ -230,7 +234,7 @@ public class Ambush : TheScaledPower
 
         var hoverTip = setupPower.GetHoverTip($"Setup ({effect.source.Title})");
 
-        AddAmbushEffect(effect,hoverTip);
+        await AddAmbushEffect(effect,hoverTip);
     }
 
     /// <summary>
@@ -288,6 +292,12 @@ public class Ambush : TheScaledPower
         {
             return null;
         }
+    }
+
+    private bool ShouldResetEffects()
+    {
+        var ignoreRefreshPower = Owner.Powers.FirstOrDefault(p => p is KeepSetupsPower && p.Applier == base.Applier);
+        return ignoreRefreshPower is null;
     }
 
     protected override void AfterCloned()

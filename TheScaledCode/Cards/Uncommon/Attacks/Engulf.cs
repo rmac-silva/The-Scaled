@@ -19,8 +19,8 @@ public class Engulf : TheScaledCard
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(7m),
-		new ExtraDamageVar(5m),
+        new CalculationBaseVar(6m),
+		new ExtraDamageVar(3m),
 		new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) => card.Owner.PlayerCombatState?.AllCards.Count((CardModel c) => c.Affliction is Muddied) ?? 0)
     ];
     
@@ -34,6 +34,6 @@ public class Engulf : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.ExtraDamage.UpgradeValueBy(2);
+        base.DynamicVars.ExtraDamage.UpgradeValueBy(1);
     }
 }

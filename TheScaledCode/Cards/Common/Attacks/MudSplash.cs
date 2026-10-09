@@ -35,7 +35,7 @@ public class MudSplash : TheScaledCard
 
         var cards = await CardSelectCmd.FromHand(choiceContext, Owner, new CardSelectorPrefs(base.SelectionScreenPrompt, 0, base.DynamicVars.Cards.IntValue), Muddied.CanAfflictMuddied,this);
 
-        await Mud.MuddyCards(cards.ToList());
+        await Mud.MuddyCardsNoVisuals(cards.ToList());
     }
 
     protected override void OnUpgrade()

@@ -24,18 +24,17 @@ public class Submerge : TheScaledCard
     public Submerge()
         : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
-        AfflictInternal(ModelDb.Affliction<Muddied>(), 1);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        
+        ArgumentNullException.ThrowIfNull(base.CombatState);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block,cardPlay);
 
-        await CardPileCmd.AddGeneratedCardToCombat(ModelDb.Card<Submerge>(), PileType.Draw, Owner);
-        
+        CardModel cardModel = base.CombatState.CreateCard<Emerge>(base.Owner);
+        await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner); 
     }
+
 
     protected override void OnUpgrade()
     {

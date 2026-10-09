@@ -3,6 +3,7 @@ using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -23,6 +24,7 @@ public class Emerge : CustomCardModel
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Submerge>()];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override string CustomPortraitPath => "res://TheScaled/images/card_portraits/big/emerge.png";
 
     public Emerge()
         : base(0, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
@@ -32,6 +34,7 @@ public class Emerge : CustomCardModel
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        ArgumentNullException.ThrowIfNull(base.CombatState);
         
         await DamageCmd
             .Attack(DynamicVars.Damage.BaseValue)
@@ -40,14 +43,15 @@ public class Emerge : CustomCardModel
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await CardPileCmd.AddGeneratedCardToCombat(ModelDb.Card<Submerge>(), PileType.Draw, Owner);
+        CardModel cardModel = base.CombatState.CreateCard<Submerge>(base.Owner);
+        await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner);
     }
 
-    public override Task AfterCardEnteredCombat(CardModel card)
+    public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
     {
         if(card == this)
         {
-            AfflictInternal(ModelDb.Affliction<Muddied>(), 1);
+            CardCmd.Afflict<Muddied>(this, 1);
         }
 
         return Task.CompletedTask;
