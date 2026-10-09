@@ -11,9 +11,9 @@ namespace TheScaled.TheScaledCode.Cards;
 
   
   
-public class Submerge : TheScaledCard
+public class SplashAround : TheScaledCard
 {
-    public Submerge() : base(1, CardType.Skill, CardRarity.Common, TargetType.None)
+    public SplashAround() : base(1, CardType.Skill, CardRarity.Common, TargetType.None)
     {
     }
 

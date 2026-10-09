@@ -46,7 +46,7 @@ public static class ModLog
         catch { }
     }
 
-    public static void Error(this object caller, string context, Exception ex)
+    public static void Error(this object? caller, string context, Exception ex)
     {
         try
         {

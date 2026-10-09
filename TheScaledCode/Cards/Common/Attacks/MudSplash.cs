@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -12,14 +13,14 @@ public class MudSplash : TheScaledCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DamageVar(7m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
-            new DynamicVar("MudAmount", 2m),
+            new DamageVar(9m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
+            new CardsVar(1),
         ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Mud>(),HoverTipFactory.FromAffliction<Muddied>().First()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First()];
 
     public MudSplash()
-        : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) { }
+        : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -32,11 +33,13 @@ public class MudSplash : TheScaledCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await Mud.AddMudCard(PileType.Hand, base.DynamicVars["MudAmount"].IntValue, base.Owner);
+        var cards = await CardSelectCmd.FromHand(choiceContext, Owner, new CardSelectorPrefs(base.SelectionScreenPrompt, 0, base.DynamicVars.Cards.IntValue), Muddied.CanAfflictMuddied,this);
+
+        await Mud.MuddyCards(cards.ToList());
     }
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars.Damage.UpgradeValueBy(3);
     }
 }

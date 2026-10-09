@@ -17,70 +17,46 @@ public class Mud : CustomCardModel
 {
     public override string CustomPortraitPath =>
         "res://TheScaled/images/card_portraits/big/mud.png";
-    public override int MaxUpgradeLevel => 0;
-    public override bool HasTurnEndInHandEffect => true;
+    public override int MaxUpgradeLevel => 1;
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Exhaust, CardKeyword.Ethereal];
+        [CardKeyword.Exhaust];
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         HoverTipFactory.FromAffliction<Muddied>();
 
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("DexterityLoss", 1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new CardsVar(1)
+    ];
+
 
     public Mud()
         : base(1, CardType.Status, CardRarity.Status, TargetType.None) { }
 
-    protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return Task.CompletedTask;
+        var cards = await CardPileCmd.Draw(choiceContext, base.DynamicVars.Cards.IntValue, Owner);
+        await MuddyCards(cards.ToList());
     }
 
-    protected override async Task OnTurnEndInHand(PlayerChoiceContext choiceContext)
+    protected override void OnUpgrade()
     {
-        var pile = PileType.Hand.GetPile(base.Owner);
-
-        await MuddyCards(pile, 1, base.Owner);
+        base.EnergyCost.UpgradeBy(-1);
     }
+
 
     /// <summary>
-    /// Applies the Muddied enchantment to a number of cards in the specified pile, up to the specified amount.
-    /// If not enough cards are available, it will apply the enchantment to as many as possible.
+    /// Applies the Muddied affliction to the provided list of cards. If the list is null or empty, logs an error and returns.
     /// </summary>
-    /// <param name="pile"></param>
-    /// <param name="amount"></param>
-    /// <param name="owner"></param>
-    /// <returns></returns>
-    public static async Task<IEnumerable<CardModel>> MuddyCards(
-        CardPile pile,
-        int amount,
-        Player owner,
-        bool skipVisuals = false
-    )
+    /// <param name="cards"></param>
+    public static async Task<IEnumerable<Muddied>> MuddyCards(
+        List<CardModel> cards)
     {
-        AfflictionModel muddied = ModelDb.Affliction<Muddied>();
-        var cardsAffected = new List<CardModel>();
-        for (int i = 0; i < amount; i++)
+        if(cards == null || cards.Count == 0)
         {
-            CardModel? cardModel = owner.RunState.Rng.CombatCardSelection.NextItem(
-                pile.Cards.Where(muddied.CanAfflict)
-            );
-
-            if (cardModel != null)
-            {
-                cardsAffected.Add(cardModel);
-                if (skipVisuals)
-                {
-                    await CardCmd.Afflict<Muddied>(cardModel, 1);
-                }
-            }
+            ModLog.Error(null, "No cards provided to muddy.", new ArgumentNullException());
+            return Enumerable.Empty<Muddied>();
         }
 
-        if (!skipVisuals)
-        {
-            await CardCmd.AfflictAndPreview<Muddied>(cardsAffected, 1);
-        }
-
-        return cardsAffected;
+        return await CardCmd.AfflictAndPreview<Muddied>(cards, 1);        
     }
 
     /// <summary>

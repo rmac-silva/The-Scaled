@@ -1,3 +1,10 @@
+**Card Changes**:
+- Temporarily Removed Gut Strike
+- Temporarily Removed Ancient Form
+- Changed 'Mud' to `Mud ( 1(0)E Status): Draw 1(2) card and Afflict it with muddied. Exhaust.`
+- Changed 'Mud Splash' to `Deal 9(12) damage, afflict 1(2) cards in your hand with Muddied`
+- Added Emerge / Submerge
+
 **Relics**:
 - Apex Instincts (Ancient version of Predatory Instincts)
 - Added Yummy Cookie
@@ -11,7 +18,8 @@
 
 **Functionality**:
 - Submerge, reduced delay to 0.2f
-- Muddied now only affects and targets non-muddied cards. Meaning that when you have Muddied your whole deck, you no longer have a "downside".
+- Muddied now adds two 'Mud' into your Draw Pile.
+
 
 **Bugfixes**
 - Maelstrom no longer desyncs in MP

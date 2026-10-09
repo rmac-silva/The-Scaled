@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using TheScaled.TheScaledCode.Cards;
 
 namespace TheScaled.TheScaledCode.Afflictions
 {
@@ -14,69 +15,44 @@ namespace TheScaled.TheScaledCode.Afflictions
         public override bool IsStackable => true;
         public override bool CanAfflictUnplayableCards => false;
         public override bool HasExtraCardText => true;
-        private bool CanEnchantCardType(CardType cardType)
-        {
-            return cardType == CardType.Attack
-                || cardType == CardType.Skill
-                || cardType == CardType.Power;
-        }
+
+        private const int MUD_CARDS = 2;
+        
 
         public override bool CanAfflictCardType(CardType card)
         {
-            // Check card type validation
-            if (!CanEnchantCardType(card))
-            {
-                return false;
-            }
             return true;
         }
 
         public override bool CanAfflict(CardModel card)
-	{
-		if (!CanAfflictCardType(card.Type))
-		{
-			return false;
-		}
-
-		if (card.Keywords.Contains(CardKeyword.Unplayable) && !CanAfflictUnplayableCards)
-		{
-			return false;
-		}
-        //Can't muddy muddied cards
-		if (card.Affliction != null && card.Affliction.GetType() == GetType())
-		{
-			return false;
-		}
-
-        if(card.Affliction != null)
         {
-            //Override the affliction with Muddied
-            card.ClearAfflictionInternal();
+            return CanAfflictMuddied(card);
         }
-
-		return true;
-	}
 
         public override async Task OnPlay(PlayerChoiceContext choiceContext, Creature? target)
         {
-            //Pick a random card from the draw pile
-            var pile = CardPile.Get(PileType.Draw, base.Card.Owner);
+            await Mud.AddMudCard(PileType.Draw,MUD_CARDS, Card.Owner);
+        }
 
-            if(pile == null || pile.Cards.Count == 0)
+        public static bool CanAfflictMuddied(CardModel card)
+        {
+            if (card.Keywords.Contains(CardKeyword.Unplayable))
             {
-                return;
+                return false;
+            }
+            //Can't muddy muddied cards
+            if (card.Affliction != null && card.Affliction is Muddied)
+            {
+                return false;
             }
 
-            var possibleCards = pile.Cards.Where(c => CanAfflict(c)).ToList();
-
-            CardModel? cardModel = Card.Owner.RunState.Rng.CombatCardSelection.NextItem(possibleCards);
-            if (cardModel != null)
+            if(card.Affliction != null)
             {
-                await CardCmd.Afflict<Muddied>(cardModel, 1);
-                await CardPileCmd.Add(cardModel, PileType.Discard, CardPilePosition.Top);
-                CardCmd.Preview(cardModel,0.8f);
-
+                //Override the affliction with Muddied
+                card.ClearAfflictionInternal();
             }
+
+            return true;
         }
     }
 }
