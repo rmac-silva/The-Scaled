@@ -55,6 +55,8 @@
   "THESCALED-RUGGED_SCALES.title": "Rugged Scales",
   "THESCALED-SPLASH_AROUND.description": "Apply {WeakPower:diff()} [gold]Weak[/gold] and {DrownedPower:diff()} [gold]Drown[/gold] to a random enemy {Repeat:diff()} times.",
   "THESCALED-SPLASH_AROUND.title": "Splash Around",
+  "THESCALED-BLIND.description": "Apply {VulnerablePower:diff()} [gold]Vulnerable[/gold].\nShuffle {Cards:diff()} [gold]Mud[/gold] into your [gold]Draw Pile[/gold].",
+  "THESCALED-BLIND.title": "Blind",
 
   "THESCALED-TAKEDOWN.description": "Deal {Damage:diff()} damage.\nIf the enemy is [gold]Drowning[/gold], hits twice.",
   "THESCALED-TAKEDOWN.title": "Takedown",
