@@ -38,7 +38,7 @@ public class Submerge : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4);
+        DynamicVars.Block.UpgradeValueBy(4);
     }
 
     

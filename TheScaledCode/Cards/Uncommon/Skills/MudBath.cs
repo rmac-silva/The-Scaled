@@ -48,7 +48,7 @@ public class MudBath : TheScaledCard
                     return;
                 } else
                 {
-                    c.AfflictInternal(ModelDb.Affliction<Muddied>(),1);
+                    await CardCmd.Afflict<Muddied>(c,1);
                     await CardPileCmd.Add(c,PileType.Hand);
                 }
 
