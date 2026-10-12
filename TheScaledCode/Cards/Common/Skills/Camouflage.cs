@@ -58,7 +58,7 @@ namespace TheScaled.TheScaledCode.Cards
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Block.UpgradeValueBy(1);
+            base.DynamicVars.CalculationExtra.UpgradeValueBy(1);
         }
     }
 }

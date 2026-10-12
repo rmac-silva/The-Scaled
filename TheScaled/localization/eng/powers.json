@@ -1,7 +1,10 @@
 {
-  "THESCALED-DROWNED_POWER.description": "Deals additional damage when taking unblocked damage, based on the stacks of [gold]Drown[/gold]. Ticks down by [blue]1[/blue] when hit.",
-  "THESCALED-DROWNED_POWER.smartDescription": "Whenever you deal unblocked damage to this enemy, they take [blue]{Amount}[/blue] damage. Ticks down by [blue]1[/blue] when hit.",
+  "THESCALED-DROWNED_POWER.description": "Whenever you deal damage they take damage equal to the stacks of [gold]Drown[/gold]. Ticks down by [blue]1[/blue] when hit. Resets at the start of your turn.",
+  "THESCALED-DROWNED_POWER.smartDescription": "Whenever you deal damage they take [blue]{Amount}[/blue] damage. Ticks down by [blue]1[/blue] when hit. Resets at the start of your turn.",
   "THESCALED-DROWNED_POWER.title": "Drowning",
+  "THESCALED-PERSIST_DROWNED_POWER.description": "[gold]Drown[/gold] will not be removed at the end of the turn.",
+  "THESCALED-PERSIST_DROWNED_POWER.smartDescription": "[gold]Drown[/gold] will not be removed at the end of the turn.",
+  "THESCALED-PERSIST_DROWNED_POWER.title": "Negative Buoyancy",
   "THESCALED-TRIGGER_AMBUSH_NEXT_TURN.description": "Triggers the [gold]Ambush[/gold] next turn.",
   "THESCALED-TRIGGER_AMBUSH_NEXT_TURN.smartDescription": "Triggers the [gold]Ambush[/gold] next turn.",
   "THESCALED-TRIGGER_AMBUSH_NEXT_TURN.title": "Trigger Ambush",
