@@ -28,26 +28,27 @@ public class Takedown : TheScaledCard
     }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>()];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(8m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<DrownedPower>(5)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        var nrHits = cardPlay.Target.HasPower<DrownedPower>() ? 2 : 1;
 
         await DamageCmd
             .Attack(base.DynamicVars.Damage.BaseValue)
             .FromCard(this,cardPlay)
-            .WithHitCount(nrHits)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+
+        await PowerCmd.Apply<DrownedPower>(choiceContext, cardPlay.Target, base.DynamicVars["DrownedPower"].BaseValue, Owner.Creature,this);
     }
 
     protected override void OnUpgrade()
     {
         base.DynamicVars.Damage.UpgradeValueBy(2);
+        base.DynamicVars["DrownedPower"].UpgradeValueBy(1);
     }
 
 }
