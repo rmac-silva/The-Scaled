@@ -36,7 +36,7 @@ public class Whirlpool : TheScaledCard
             .Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this,cardPlay)
             .TargetingAllOpponents(CombatState)
-            .WithHitCount(hitCount)
+            .WithHitCount(hitCount + 1)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
@@ -44,6 +44,6 @@ public class Whirlpool : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars["DrownedPower"].UpgradeValueBy(2);
+        base.DynamicVars.Damage.UpgradeValueBy(2);
     }
 }

@@ -1,6 +1,6 @@
 {
-  "THESCALED-DROWNED_POWER.description": "Whenever you deal damage they take damage equal to the stacks of [gold]Drown[/gold]. Ticks down by [blue]1[/blue] when hit. Resets at the start of your turn.",
-  "THESCALED-DROWNED_POWER.smartDescription": "Whenever you deal damage they take [blue]{Amount}[/blue] damage. Ticks down by [blue]1[/blue] when hit. Resets at the start of your turn.",
+  "THESCALED-DROWNED_POWER.description": "Enemy takes additional damage when hit based on [gold]Drown[/gold] stacks, then reduce [gold]Drown[/gold] by 1. Resets at the start of your turn.",
+  "THESCALED-DROWNED_POWER.smartDescription": "Enemy takes an additional [blue]{Amount}[/blue] damage when hit, then reduce [gold]Drown[/gold] by 1. Resets at the start of your turn.",
   "THESCALED-DROWNED_POWER.title": "Drowning",
   "THESCALED-PERSIST_DROWNED_POWER.description": "[gold]Drown[/gold] will not be removed at the end of the turn.",
   "THESCALED-PERSIST_DROWNED_POWER.smartDescription": "[gold]Drown[/gold] will not be removed at the end of the turn.",
@@ -35,9 +35,6 @@
   "THESCALED-SMOTHERING_PRESENCE_POWER.description": "Apply [gold]Vulnerable[/gold] when hitting [gold]Drowning[/gold] enemies, at the cost of consuming additional [gold]Drown[/gold] when hit.",
   "THESCALED-SMOTHERING_PRESENCE_POWER.smartDescription": "Apply [blue]{Amount}[/blue] [gold]Vulnerable[/gold] when you hit a [gold]Drowning[/gold] enemy. Consume an additional [blue]{DrownConsumed:diff()}[/blue] [gold]Drown[/gold] stacks per hit.",
   "THESCALED-SMOTHERING_PRESENCE_POWER.title": "Smothering Presence",
-  "THESCALED-PRISMATIC_SCALES_POWER.description": "Whenever you gain [gold]Block[/gold], apply [gold]Drown[/gold] to ALL enemies.",
-  "THESCALED-PRISMATIC_SCALES_POWER.smartDescription": "Whenever you gain [gold]Block[/gold], apply [blue]{Amount}[/blue] [gold]Drown[/gold] to ALL enemies.",
-  "THESCALED-PRISMATIC_SCALES_POWER.title": "Prismatic Scales",
   "THESCALED-DWELLING_POWER.description": "At the end of your turn, gain [gold]Block[/gold] equal to [gold]Ambush[/gold] on ALL enemies.",
   "THESCALED-DWELLING_POWER.smartDescription": "At the end of your turn, gain [gold]Block[/gold] equal to [gold]Ambush[/gold] on ALL enemies.",
   "THESCALED-DWELLING_POWER.title": "Dwelling",

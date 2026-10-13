@@ -27,6 +27,6 @@ public class NaturalHabitat : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.AddKeyword(CardKeyword.Innate);
+        AddKeyword(CardKeyword.Innate);
     }
 }

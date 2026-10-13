@@ -41,5 +41,6 @@ public class MudSplash : TheScaledCard
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars.Cards.UpgradeValueBy(1);
     }
 }

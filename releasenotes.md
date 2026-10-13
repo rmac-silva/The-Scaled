@@ -30,6 +30,7 @@
 - Prismatic Scales
 - Vanish
 - Whirpool
+- +more... (I lost track)
 
 **Functionality**
 - Changed Drowned tooltips, Drowned now resets at the end of your turn.

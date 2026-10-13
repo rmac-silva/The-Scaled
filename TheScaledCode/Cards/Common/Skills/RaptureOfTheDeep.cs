@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Cards
@@ -22,7 +21,7 @@ public class RaptureOfTheDeep : TheScaledCard
             [HoverTipFactory.FromPower<DrownedPower>()];
 
         public RaptureOfTheDeep()
-            : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
+            : base(1, CardType.Skill, CardRarity.Common, TargetType.None) { }
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {

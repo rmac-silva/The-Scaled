@@ -24,7 +24,7 @@ public class DrownedPower : TheScaledPower
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
         //Took 0 damage, don't trigger the power
-        if(result.UnblockedDamage <= 0 || result.Props.HasFlag(ValueProp.Unpowered) )
+        if(result.Props.HasFlag(ValueProp.Unpowered) )
         {
             return;
         } else

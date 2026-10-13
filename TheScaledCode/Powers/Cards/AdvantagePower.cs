@@ -10,9 +10,6 @@ using TheScaled.TheScaledCode.Cards;
 
 namespace TheScaled.TheScaledCode.Powers;
 
-
-
-  
 public class AdvantagePower : TheScaledPower
 {
     private bool _hasTriggeredThisTurn = false;

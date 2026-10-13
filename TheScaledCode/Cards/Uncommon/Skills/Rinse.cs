@@ -28,7 +28,7 @@ public class Rinse : TheScaledCard
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromAffliction<Muddied>().First()];
+        [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

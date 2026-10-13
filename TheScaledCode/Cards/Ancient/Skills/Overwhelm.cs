@@ -48,7 +48,7 @@ public class Overwhelm : AncientCard
 
 	protected override void OnUpgrade()
 	{
-		base.AddKeyword(CardKeyword.Retain);
+		AddKeyword(CardKeyword.Retain);
 	}
 
 	

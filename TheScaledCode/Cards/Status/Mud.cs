@@ -24,7 +24,7 @@ public class Mud : CustomCardModel
         HoverTipFactory.FromAffliction<Muddied>();
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CardsVar(1)
+        new CardsVar(2)
     ];
 
 
@@ -34,7 +34,7 @@ public class Mud : CustomCardModel
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var cards = await CardPileCmd.Draw(choiceContext, base.DynamicVars.Cards.IntValue, Owner);
-        await MuddyCards(cards.ToList());
+        await MuddyCardsNoVisuals(cards.ToList());
     }
 
     protected override void OnUpgrade()
@@ -49,6 +49,7 @@ public class Mud : CustomCardModel
     /// </summary>
     /// <param name="cards"></param>
     /// <param name="skipVisuals"></param>
+    /// <returns></returns>
     public static async Task<IEnumerable<Muddied>> MuddyCards(
         List<CardModel> cards)
     {

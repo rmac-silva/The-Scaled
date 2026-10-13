@@ -25,6 +25,6 @@ public class LeadBoots : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        Keywords.AddItem(CardKeyword.Innate);
+        AddKeyword(CardKeyword.Innate);
     }
 }

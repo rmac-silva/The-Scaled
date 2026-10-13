@@ -81,7 +81,7 @@ public class Maelstrom : TheScaledCard
 
         protected override void OnUpgrade()
         {
-            base.AddKeyword(CardKeyword.Retain);
+            AddKeyword(CardKeyword.Retain);
         }
     }
 }

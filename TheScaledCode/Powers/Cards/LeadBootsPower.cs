@@ -3,13 +3,12 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Nodes.CommonUi;
-using TheScaled.TheScaledCode.Cards;
 using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Powers;
@@ -27,31 +26,43 @@ public class LeadBootsPower : TheScaledPower
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DrownedPower>(0)];
 
 
-    public override Task BeforeApplied(Creature target, decimal amount, Creature? applier, CardModel? cardSource)
+    
+
+    public override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
-        if(target == base.Owner && amount > 0)
+        if(power == this && amount > 0)
         {
-            base.DynamicVars["DrownedPower"].BaseValue += 3*amount;
+            base.DynamicVars["DrownedPower"].BaseValue = Amount * 3;
         }
         return Task.CompletedTask;
     }
 
-    public override async Task AfterSideTurnStartLate(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    
+
+    public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext choiceContext, Player player)
     {
-        if(side == CombatSide.Player && Owner.IsPlayer)
+        if(player != Owner.Player)
         {
-            await PowerCmd.Apply<DrownedPower>(new ThrowingPlayerChoiceContext(), base.Owner,DynamicVars["DrownedPower"].IntValue * Amount, base.Owner, null);
+            return;
+        }
+
+        await PowerCmd.Apply<DrownedPower>(choiceContext, base.Owner, Amount * 3, base.Owner, null);
         
-            IEnumerable<CardModel> cards = await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(base.SelectionScreenPrompt, Amount), context: new ThrowingPlayerChoiceContext(), player: base.Owner.Player!, filter: (CardModel c) => !c.Keywords.Contains(CardKeyword.Retain), source: this);
-            if (cards != null)
+        CardSelectorPrefs prefs = new CardSelectorPrefs(base.SelectionScreenPrompt, Amount);
+		List<CardModel> cards = (await CardSelectCmd.FromHand(choiceContext, player, prefs, NoRetain, this)).ToList();
+        if (cards != null)
+        {
+            foreach (CardModel card in cards)
             {
-                foreach (CardModel card in cards)
-                {
-                    CardCmd.ApplyKeyword(card, CardKeyword.Retain);
-                }
+                CardCmd.ApplyKeyword(card, CardKeyword.Retain);
             }
         }
-        return;
     }
+
+    private bool NoRetain(CardModel card)
+    {
+        return !card.Keywords.Contains(CardKeyword.Retain);
+    }
+
 
 }

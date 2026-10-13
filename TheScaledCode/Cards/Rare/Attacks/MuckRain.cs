@@ -27,11 +27,10 @@ public class MuckRain : TheScaledCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 		await DamageCmd
             .Attack(base.DynamicVars.CalculatedDamage)
             .FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target)
+            .TargetingAllOpponents(base.CombatState!)
 			.Execute(choiceContext);
     }
 

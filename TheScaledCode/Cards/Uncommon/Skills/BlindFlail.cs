@@ -25,16 +25,13 @@ public class BlindFlail : TheScaledCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var cards = CardPile.Get(PileType.Draw,Owner)?.Cards.Where((c) => c is Mud && c.IsUpgradable).ToList();
-        if (cards is null ||cards.Count == 0)
+        var card = CardPile.Get(PileType.Draw,Owner)?.Cards.Where((c) => c.Affliction != null && c.Affliction is Muddied).FirstOrDefault();
+        if (card is null)
         {
             return;
         } else
         {
-            foreach( CardModel c in cards)
-            {
-                await CardCmd.AutoPlay(choiceContext, c, null);
-            }
+            await CardCmd.AutoPlay(choiceContext, card, null);
         }
     }
 

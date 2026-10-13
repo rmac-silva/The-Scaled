@@ -150,6 +150,7 @@ public class Ambush : TheScaledPower
             await entry.effect(info, entry.data);
         }
 
+        ClearResetEffects();
     }
 
     /// <summary>
@@ -296,6 +297,11 @@ public class Ambush : TheScaledPower
     {
         var ignoreRefreshPower = Owner.Powers.FirstOrDefault(p => p is KeepSetupsPower && p.Applier == base.Applier);
         return ignoreRefreshPower is null;
+    }
+
+    private void ClearResetEffects()
+    {
+        PowerCmd.Remove<KeepSetupsPower>(Owner);
     }
 
     protected override void AfterCloned()

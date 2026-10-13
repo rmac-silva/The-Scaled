@@ -14,27 +14,35 @@ public class Soak : TheScaledCard
     {
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
-                new CardsVar(1)
+                new EnergyVar(1)
             ];
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             [HoverTipFactory.FromAffliction<Muddied>().First()];
+        public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+
 
         public Soak()
             : base(0, CardType.Skill, CardRarity.Common, TargetType.None) { }
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            var cards = await CardSelectCmd.FromHand(choiceContext, Owner, new CardSelectorPrefs(base.SelectionScreenPrompt, 0, base.DynamicVars.Cards.IntValue), Muddied.CanAfflictMuddied,this);
+            await PlayerCmd.GainEnergy(base.DynamicVars.Energy.IntValue, Owner);
+            var cards = CardPile.Get(PileType.Hand, Owner)!.Cards.Where(Muddied.CanAfflictMuddied);
+
+            if(cards == null || cards.Count() == 0)
+            {
+                return;
+            }
 
             await Mud.MuddyCardsNoVisuals(cards.ToList());
-
             await CardCmd.Discard(choiceContext, cards);
         }
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Cards.UpgradeValueBy(1);
+            base.DynamicVars.Energy.UpgradeValueBy(1);
         }
     }
 }

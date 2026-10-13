@@ -24,11 +24,6 @@ public abstract class TheScaledCard(int cost, CardType type, CardRarity rarity, 
         return ResourceLoader.Exists(path);
     }
 
-    internal void AddKeyword(object innate)
-    {
-        throw new NotImplementedException();
-    }
-
     //Image size:
     //Normal art: 1000x760 (Using 500x380 should also work, it will simply be scaled.)
     //Full art: 606x852

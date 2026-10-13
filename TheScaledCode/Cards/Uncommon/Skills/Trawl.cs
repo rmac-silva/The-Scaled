@@ -1,80 +1,80 @@
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
-using TheScaled.TheScaledCode.Powers.ReusablePowers;
+// using MegaCrit.Sts2.Core.Commands;
+// using MegaCrit.Sts2.Core.Entities.Cards;
+// using MegaCrit.Sts2.Core.Entities.Creatures;
+// using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+// using MegaCrit.Sts2.Core.HoverTips;
+// using MegaCrit.Sts2.Core.Localization.DynamicVars;
+// using MegaCrit.Sts2.Core.Models.Powers;
+// using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
-namespace TheScaled.TheScaledCode.Cards
-{
+// namespace TheScaled.TheScaledCode.Cards
+// {
 
   
   
   
-public class Trawl : TheScaledCard
-    {
-        public Trawl() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
-        {
-        }
+// public class Trawl : TheScaledCard
+//     {
+//         public Trawl() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+//         {
+//         }
 
-        protected override bool ShouldGlowGoldInternal
-        {
-        get
-        {
-            if (base.CombatState == null)
-            {
-                return false;
-            }
-            return base.CombatState.HittableEnemies.Any((Creature e) => e.HasPower<DrownedPower>());
-        }
-    }
+//         protected override bool ShouldGlowGoldInternal
+//         {
+//         get
+//         {
+//             if (base.CombatState == null)
+//             {
+//                 return false;
+//             }
+//             return base.CombatState.HittableEnemies.Any((Creature e) => e.HasPower<DrownedPower>());
+//         }
+//     }
 
-        protected override IEnumerable<DynamicVar> CanonicalVars =>
-            [
-                new PowerVar<DrownedPower>(5),
-                new PowerVar<FrailPower>(1),
-                new PowerVar<WeakPower>(1)
-            ];
+//         protected override IEnumerable<DynamicVar> CanonicalVars =>
+//             [
+//                 new PowerVar<DrownedPower>(5),
+//                 new PowerVar<FrailPower>(1),
+//                 new PowerVar<WeakPower>(1)
+//             ];
 
-        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<DrownedPower>(), HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
+//         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+//             [HoverTipFactory.FromPower<DrownedPower>(), HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
 
 
 
-        protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-        {
-            ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-            ArgumentNullException.ThrowIfNull(base.CombatState, "base.CombatState");
+//         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+//         {
+//             ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
+//             ArgumentNullException.ThrowIfNull(base.CombatState, "base.CombatState");
             
-            var drownedPower = cardPlay.Target.GetPower<DrownedPower>();
+//             var drownedPower = cardPlay.Target.GetPower<DrownedPower>();
 
-            if(drownedPower is null)
-            {
-                return;
-            }
+//             if(drownedPower is null)
+//             {
+//                 return;
+//             }
 
-            int reduction = 0;
+//             int reduction = 0;
 
-            while(reduction < base.DynamicVars["DrownedPower"].IntValue && drownedPower.Amount > 0)
-            {
-                Creature? enemy = base.Owner.RunState.Rng.CombatTargets.NextItem(base.CombatState.HittableEnemies);
+//             while(reduction < base.DynamicVars["DrownedPower"].IntValue && drownedPower.Amount > 0)
+//             {
+//                 Creature? enemy = base.Owner.RunState.Rng.CombatTargets.NextItem(base.CombatState.HittableEnemies);
 
-                if(enemy is null)
-                {
-                    return;
-                }
+//                 if(enemy is null)
+//                 {
+//                     return;
+//                 }
 
-                await PowerCmd.Apply<FrailPower>(choiceContext,enemy,base.DynamicVars["FrailPower"].IntValue,base.Owner.Creature,this);
-                await PowerCmd.Apply<WeakPower>(choiceContext,enemy,base.DynamicVars["WeakPower"].IntValue,base.Owner.Creature,this);
-                reduction++;            
-            }
-        }
+//                 await PowerCmd.Apply<FrailPower>(choiceContext,enemy,base.DynamicVars["FrailPower"].IntValue,base.Owner.Creature,this);
+//                 await PowerCmd.Apply<WeakPower>(choiceContext,enemy,base.DynamicVars["WeakPower"].IntValue,base.Owner.Creature,this);
+//                 reduction++;            
+//             }
+//         }
 
-        protected override void OnUpgrade()
-        {
-            base.DynamicVars["FrailPower"].UpgradeValueBy(1);
-        }
-    }
-}
+//         protected override void OnUpgrade()
+//         {
+//             base.DynamicVars["FrailPower"].UpgradeValueBy(1);
+//         }
+//     }
+// }

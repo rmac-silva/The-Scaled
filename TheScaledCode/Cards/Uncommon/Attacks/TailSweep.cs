@@ -30,7 +30,7 @@ public class TailSweep : TheScaledCard
         
         ArgumentNullException.ThrowIfNull(CombatState, "CombatState");
 
-        int hitCount = base.Affliction != null && base.Affliction is Muddied ? 2 : 1;
+        int hitCount = base.Affliction != null && base.Affliction is Muddied ? 3 : 1;
 
         await DamageCmd
             .Attack(DynamicVars.Damage.BaseValue)
@@ -44,6 +44,6 @@ public class TailSweep : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.Damage.UpgradeValueBy(3);
+        base.DynamicVars.Damage.UpgradeValueBy(2);
     }
 }

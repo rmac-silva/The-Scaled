@@ -15,7 +15,7 @@ namespace TheScaled.TheScaledCode.Afflictions
         public override bool CanAfflictUnplayableCards => false;
         public override bool HasExtraCardText => true;
 
-        private const int MUD_CARDS = 2;
+        private const int MUD_CARDS = 1;
         
 
         public override bool CanAfflictCardType(CardType card)
@@ -25,6 +25,7 @@ namespace TheScaled.TheScaledCode.Afflictions
 
         public override bool CanAfflict(CardModel card)
         {
+
             return CanAfflictMuddied(card);
         }
 
@@ -41,6 +42,11 @@ namespace TheScaled.TheScaledCode.Afflictions
             }
             //Can't muddy muddied cards
             if (card.Affliction != null && card.Affliction is Muddied)
+            {
+                return false;
+            }
+
+            if(card is Mud)
             {
                 return false;
             }

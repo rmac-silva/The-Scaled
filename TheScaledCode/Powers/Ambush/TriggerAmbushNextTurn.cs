@@ -7,11 +7,6 @@ using TheScaled.TheScaledCode.Cards;
 
 namespace TheScaled.TheScaledCode.Powers;
 
-
-
-  
-  
-  
 public class TriggerAmbushNextTurn : TheScaledPower
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

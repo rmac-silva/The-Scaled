@@ -7,12 +7,12 @@
 blend_mode = 1
 
 [sub_resource type="Curve" id="Curve_gusj6"]
-_data = [Vector2(0, 0.418), 0.0, 0.0, 0, 0, Vector2(0.503, 0.508), 0.0, 0.0, 0, 0, Vector2(1, 0.423), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.418), 0.0, 0.0, 0, 0, Vector2(0.503, 0.508), 0.0, 0.0, 0, 0, Vector2(1, 0.418), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_onaui"]
-offsets = PackedFloat32Array(0, 0.607, 0.9955556)
-colors = PackedColorArray(0.42745098, 0.42745098, 0.42745098, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.607, 1)
+colors = PackedColorArray(0.42745098, 0.42745098, 0.42745098, 1, 1, 1, 1, 1, 0.42745098, 0.42745098, 0.42745098, 1)
 
 [sub_resource type="Curve" id="Curve_l8mn6"]
 _limits = [0.0, 100.0, 0.0, 1.0]

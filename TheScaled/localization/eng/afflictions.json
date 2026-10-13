@@ -1,5 +1,5 @@
 {
-    "THESCALED-MUDDIED.description" : "When this card is played, shuffle two [gold]Mud[/gold] into your [gold]Draw Pile[/gold].",
+    "THESCALED-MUDDIED.description" : "When this card is played, shuffle a [gold]Mud[/gold] into your [gold]Draw Pile[/gold].",
     "THESCALED-MUDDIED.extraCardText" : "Muddied",
     "THESCALED-MUDDIED.title" : "Muddied"
 }

@@ -104,7 +104,7 @@ public class CreepUp : TheScaledCard
 
     private void SetCostAt(int amount)
 	{
-		base.EnergyCost.SetThisTurn(amount);
+		base.EnergyCost.SetThisTurnOrUntilPlayed(amount);
 	}
 
 
