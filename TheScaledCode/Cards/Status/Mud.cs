@@ -40,6 +40,7 @@ public class Mud : CustomCardModel
     protected override void OnUpgrade()
     {
         base.EnergyCost.UpgradeBy(-1);
+        base.DynamicVars.Cards.UpgradeValueBy(1);
     }
 
 
@@ -108,7 +109,7 @@ public class Mud : CustomCardModel
             list.Add(card);
         }
         //Add the cards to the discard pile
-        await CardPileCmd.AddGeneratedCardsToCombat(list, pile, owner);
+        await CardPileCmd.AddGeneratedCardsToCombat(list, pile, owner,CardPilePosition.Random);
 
         if (!skipVisuals)
         {
@@ -116,5 +117,10 @@ public class Mud : CustomCardModel
         }
         
         CardPile.Get(PileType.Draw,owner)?.InvokeContentsChanged();
+    }
+
+    public static bool HasMuddied(CardModel c)
+    {
+        return c.Affliction != null && c.Affliction is Muddied;
     }
 }

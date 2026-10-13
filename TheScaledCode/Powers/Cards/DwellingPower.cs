@@ -6,7 +6,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.ValueProps;
 
-namespace TheScaled.TheScaledCode.Powers.Cards;
+namespace TheScaled.TheScaledCode.Powers;
+
 
 
 public class DwellingPower : TheScaledPower

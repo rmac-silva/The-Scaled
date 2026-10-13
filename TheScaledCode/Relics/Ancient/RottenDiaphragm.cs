@@ -42,7 +42,7 @@ public class RottenDiaphragm : CustomRelicModel
             return;
         }
         
-        await CardPileCmd.Add(card,PileType.Discard);
+        await CardPileCmd.Add(card,PileType.Discard,CardPilePosition.Random);
 
 
         _triggeredThisTurn = true;

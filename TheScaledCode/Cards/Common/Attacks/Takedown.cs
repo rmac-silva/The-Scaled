@@ -11,7 +11,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class Takedown : TheScaledCard
 {
-    public Takedown() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public Takedown() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 

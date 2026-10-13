@@ -3,7 +3,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using TheScaled.TheScaledCode.Powers;
-using TheScaled.TheScaledCode.Powers.Cards;
 
 namespace TheScaled.TheScaledCode.Cards;
 

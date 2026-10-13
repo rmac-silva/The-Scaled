@@ -9,7 +9,8 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
-namespace TheScaled.TheScaledCode.Powers.Cards;
+namespace TheScaled.TheScaledCode.Powers;
+
 
 
 public class SmotheringPresencePower : TheScaledPower

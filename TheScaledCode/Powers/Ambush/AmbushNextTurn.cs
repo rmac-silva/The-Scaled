@@ -5,7 +5,8 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 
-namespace TheScaled.TheScaledCode.Powers.Cards;
+namespace TheScaled.TheScaledCode.Powers;
+
 
 
   
@@ -25,7 +26,7 @@ public class AmbushNextTurn : TheScaledPower
         if(side == CombatSide.Player)
         {
             await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(), base.Owner, base.Amount, base.Applier,null);
-            base.RemoveInternal();
+            await PowerCmd.Remove(this);
         }
 
         return;

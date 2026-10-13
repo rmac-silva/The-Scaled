@@ -1,5 +1,4 @@
 using BaseLib.Abstracts;
-using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -49,7 +48,7 @@ namespace TheScaled.TheScaledCode.Afflictions
             if(card.Affliction != null)
             {
                 //Override the affliction with Muddied
-                card.ClearAfflictionInternal();
+                CardCmd.ClearAffliction(card);
             }
 
             return true;

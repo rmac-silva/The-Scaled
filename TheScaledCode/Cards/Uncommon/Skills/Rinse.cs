@@ -20,7 +20,7 @@ public class Rinse : TheScaledCard
         {
             return CardPile
                     .Get(PileType.Hand, Owner)
-                    ?.Cards.Any((CardModel c) => c.Affliction != null && c.Affliction is Muddied)
+                    ?.Cards.Any(Mud.HasMuddied)
                 ?? false;
         }
     }
@@ -40,7 +40,7 @@ public class Rinse : TheScaledCard
                 0,
                 base.DynamicVars.Cards.IntValue
             ),
-            HasMuddied,
+            Mud.HasMuddied,
             this
         );
 
@@ -59,10 +59,5 @@ public class Rinse : TheScaledCard
     protected override void OnUpgrade()
     {
         base.DynamicVars.Cards.UpgradeValueBy(1);
-    }
-
-    private bool HasMuddied(CardModel c)
-    {
-        return c.Affliction != null && c.Affliction is Muddied;
     }
 }

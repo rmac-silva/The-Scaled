@@ -55,7 +55,7 @@ public class AbhorrentMass : CustomRelicModel
         for(int i = 0; i < base.DynamicVars["AbyssCards"].IntValue; i++)
         {
             var card = base.Owner.RunState.CreateCard<Abyss>(base.Owner);
-            addedCards.Add(await CardPileCmd.Add(card,PileType.Deck));
+            addedCards.Add(await CardPileCmd.Add(card,PileType.Deck,CardPilePosition.Random));
         }
 
         CardCmd.PreviewCardPileAdd(addedCards, 2f);

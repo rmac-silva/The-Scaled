@@ -1,5 +1,4 @@
 using BaseLib.Abstracts;
-using BaseLib.Extensions;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Models;
 using TheScaled.TheScaledCode.Relics.Ancient;

@@ -6,7 +6,8 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using TheScaled.TheScaledCode.Ancients;
 
-namespace TheScaled.TheScaledCode.Powers.Cards;
+namespace TheScaled.TheScaledCode.Powers;
+
 
 
 public class MarshalPower : TheScaledPower

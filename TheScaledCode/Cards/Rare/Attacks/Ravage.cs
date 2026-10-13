@@ -7,7 +7,6 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using TheScaled.TheScaledCode.Extensions;
-using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Cards;
 
@@ -29,7 +28,6 @@ public class Ravage : TheScaledCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(this.CombatState, "this.CombatState");
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
         await DamageCmd

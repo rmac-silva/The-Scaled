@@ -8,7 +8,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
-namespace TheScaled.TheScaledCode.Powers.Cards;
+namespace TheScaled.TheScaledCode.Powers;
+
 
 
 public class PrismaticScalesPower : TheScaledPower

@@ -1,6 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using TheScaled.TheScaledCode.Cards;
 
 namespace TheScaled.TheScaledCode.Cards;
 

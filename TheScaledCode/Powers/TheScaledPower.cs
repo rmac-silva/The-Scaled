@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Platform;
 using MegaCrit.Sts2.Core.Runs;
-using MegaCrit.Sts2.Core.Entities.Players;
 
 namespace TheScaled.TheScaledCode.Powers;
 

@@ -1,6 +1,5 @@
 using BaseLib.Abstracts;
 using BaseLib.Utils;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -44,7 +43,7 @@ public class Emerge : CustomCardModel
             .Execute(choiceContext);
 
         CardModel cardModel = base.CombatState.CreateCard<Submerge>(base.Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner);
+        await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner,CardPilePosition.Random);
     }
 
     public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
