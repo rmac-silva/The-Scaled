@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -41,6 +42,22 @@ public class DrownedPower : TheScaledPower
             }
         }
     }
+
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    {
+        if(participants.Contains(base.Applier))
+        {
+            if(base.Owner.HasPower<PersistDrownedPower>())
+            {
+                //Do nothing, the power is persistent
+            } else
+            {
+                await PowerCmd.Remove(this);
+            }
+        }
+    }
+
+
 
     
 
