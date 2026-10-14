@@ -22,9 +22,6 @@ public class LeftHook : SetupCard
 
     public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
     {
-        await CardPileCmd.Add(this,PileType.Hand);
-        return;
-
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -38,7 +35,6 @@ public class LeftHook : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
         
-        await base.AddSetup(cardPlay);
     }
 
     protected override void OnSetupPlayed(Player p)

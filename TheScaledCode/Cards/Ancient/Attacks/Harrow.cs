@@ -33,8 +33,8 @@ public class Harrow : AncientCard
 		ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
 		var hitCount = cardPlay.Target.Powers.Count(ShouldCountPower);
-
-		await DamageCmd.Attack(base.DynamicVars.CalculatedDamage).FromCard(this,cardPlay).Targeting(cardPlay.Target)
+		
+		await DamageCmd.Attack(DynamicVars.CalculatedDamage.Calculate(cardPlay.Target)).FromCard(this,cardPlay).Targeting(cardPlay.Target)
 			.WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3")
 			.WithHitCount(hitCount)
 			.Execute(choiceContext);

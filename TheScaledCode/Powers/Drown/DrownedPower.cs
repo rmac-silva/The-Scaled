@@ -50,8 +50,11 @@ public class DrownedPower : TheScaledPower
             if(base.Owner.HasPower<PersistDrownedPower>())
             {
                 //Do nothing, the power is persistent
-            } else
+            } else if(CombatState.Allies.Any( (Creature c) => c.HasPower<SmotheringPresencePower>()))
             {
+                SetAmount((int)Math.Floor(base.Amount / 2.0));
+            }
+            else {
                 await PowerCmd.Remove(this);
             }
         }

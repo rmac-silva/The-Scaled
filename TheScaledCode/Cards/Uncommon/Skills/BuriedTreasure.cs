@@ -63,12 +63,11 @@ public class BuriedTreasure : TheScaledCard
         {
             return;
         }
-
-        foreach (CardModel c in cards)
+        foreach (CardModel card in cards)
         {
-            await CardCmd.Exhaust(choiceContext, c);
-            await CardPileCmd.Draw(choiceContext, Owner);
+            await CardPileCmd.Add(card, PileType.Hand);
         }
+        
     }
 
     protected override void OnUpgrade()

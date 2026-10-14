@@ -40,7 +40,6 @@ public class Mud : CustomCardModel
     protected override void OnUpgrade()
     {
         base.EnergyCost.UpgradeBy(-1);
-        base.DynamicVars.Cards.UpgradeValueBy(1);
     }
 
 

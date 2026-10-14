@@ -24,6 +24,8 @@ public class Suffocate : TheScaledCard
         new EnergyVar(1)
         ];
 
+    private int previousCostReduction = 0;
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
@@ -112,7 +114,16 @@ public class Suffocate : TheScaledCard
 
     private void SetCost(int setups)
     {
-        base.EnergyCost.SetThisTurnOrUntilPlayed(9-setups);
+        if(previousCostReduction != 0)
+        {
+            CardCostHelper.RemoveRelativeCostReductions(this,previousCostReduction);
+        }
+
+
+        previousCostReduction = setups;
+        
+        if(setups == 0) { return; }
+        base.EnergyCost.AddThisTurnOrUntilPlayed(-setups);
     }
 
 
