@@ -11,6 +11,7 @@ namespace TheScaled.TheScaledCode.Cards
 {
     public class Camouflage : TheScaledCard
     {
+
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
                 new CalculationBaseVar(0),
@@ -20,6 +21,18 @@ namespace TheScaled.TheScaledCode.Cards
                 ),
             ];
 
+        protected override bool ShouldGlowGoldInternal
+        {
+            get
+            {
+                if (base.CombatState == null)
+                {
+                    return false;
+                }
+                return CardPile.Get(PileType.Hand, Owner)?.Cards.Any((CardModel c) => c.Affliction != null && c.Affliction is Muddied) ?? false;
+            }
+        }
+
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             [HoverTipFactory.FromAffliction<Muddied>().First()];
 
@@ -28,12 +41,8 @@ namespace TheScaled.TheScaledCode.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await CreatureCmd.GainBlock(
-                Owner.Creature,
-                base.DynamicVars.CalculatedBlock.IntValue,
-                MegaCrit.Sts2.Core.ValueProps.ValueProp.Move,
-                cardPlay
-            );
+            var count = GetNumMuddiedCardsInHand(Owner);
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.CalculatedBlock.Calculate(cardPlay.Target), DynamicVars.CalculatedBlock.Props, cardPlay);
         }
 
         private static int GetNumMuddiedCardsInHand(Player owner)
@@ -43,7 +52,7 @@ namespace TheScaled.TheScaledCode.Cards
                 ?.Cards.Where((CardModel c) => c.Affliction != null && c.Affliction is Muddied)
                 .ToList();
 
-            if (cards is not null)
+            if (cards != null && cards.Count > 0)
             {
                 return cards.Count;
             }

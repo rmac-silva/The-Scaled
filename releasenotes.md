@@ -6,6 +6,7 @@
 - Added Ravenous Thrash
 - Added Deep Dive
 - Added Smothering Presence
+
 **Card Art**:
 - Added Bog Beast PowerIcon
 - Added Tidal Shield PowerIcon
@@ -15,3 +16,6 @@
 - Fixed Buried Treasure misbehaving
 - Fixed LeftHook not returning to your hand
 - Fixed tooltips for Emerge, Submerge, Engulf
+- Fixed incorrect behaviors for Vanish
+- Fixed incorrect behaviors for Lead Boots
+- Fixed incorrect behaviors for Deep Dive

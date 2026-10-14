@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -13,6 +15,10 @@ public class Lacerate : TheScaledCard
     {
     }
 
+    protected override bool ShouldGlowGoldInternal => !HasBeenPlayedThisTurn;
+
+    private bool HasBeenPlayedThisTurn => CombatManager.Instance.History.CardPlaysFinished.Any((CardPlayFinishedEntry e) => e.CardPlay.Card == this && e.HappenedThisTurn(base.CombatState));
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(2,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.Static(StaticHoverTip.ReplayStatic)];
 
@@ -23,8 +29,10 @@ public class Lacerate : TheScaledCard
             .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
 			.Execute(choiceContext);
-
-        base.BaseReplayCount += IsUpgraded ? 2 : 1;
+        if(!HasBeenPlayedThisTurn)
+        {
+            base.BaseReplayCount += IsUpgraded ? 2 : 1;
+        }
     }
 
 

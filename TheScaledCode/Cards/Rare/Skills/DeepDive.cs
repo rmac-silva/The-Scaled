@@ -23,7 +23,7 @@ public class DeepDive : TheScaledCard
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new CalculationExtraVar(1),
-        new CalculatedBlockVar(ValueProp.Move).WithMultiplier( (_,_) => CombatManager.Instance.History.Entries.OfType<PowerReceivedEntry>().Sum( (PowerReceivedEntry e) => e.Power is DrownedPower ? e.Amount : 0 ) ),
+        new CalculatedBlockVar(ValueProp.Move).WithMultiplier( (_,_) => CombatManager.Instance.History.Entries.OfType<PowerReceivedEntry>().Sum( (PowerReceivedEntry e) => e.Power is DrownedPower  && e.Amount > 0 ? e.Amount : 0 ) ),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

@@ -15,17 +15,7 @@ public class Takedown : TheScaledCard
     {
     }
 
-    protected override bool ShouldGlowGoldInternal
-    {
-        get
-        {
-            if (base.CombatState == null)
-            {
-                return false;
-            }
-            return base.CombatState.HittableEnemies.Any((Creature e) => e.HasPower<DrownedPower>());
-        }
-    }
+    
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>()];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<DrownedPower>(5)];
