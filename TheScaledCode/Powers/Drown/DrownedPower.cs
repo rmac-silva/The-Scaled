@@ -44,19 +44,19 @@ public class DrownedPower : TheScaledPower
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
-    {
-        if(player != base.Owner.Player)
-        {
-            return;
-        }
-        
-        if(base.Owner.HasPower<PersistDrownedPower>())
+    {        
+        if(CombatState.Creatures.Any( (Creature c) => c.HasPower<PersistDrownedPower>()))
         {
             //Do nothing, the power is persistent
         } else if(CombatState.Allies.Any( (Creature c) => c.HasPower<SmotheringPresencePower>()))
         {
             SetAmount((int)Math.Floor(base.Amount / 2.0));
             InvokeDisplayAmountChanged();
+
+            if(Amount <= 0)
+            {
+                await PowerCmd.Remove(this);
+            }
         }
         else {
             await PowerCmd.Remove(this);

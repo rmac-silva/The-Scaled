@@ -23,6 +23,6 @@ public class Advantage : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        Keywords.AddItem(CardKeyword.Innate);
+        AddKeyword(CardKeyword.Innate);
     }
 }

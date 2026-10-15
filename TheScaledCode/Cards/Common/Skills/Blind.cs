@@ -29,7 +29,7 @@ public class Blind : TheScaledCard
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target,base.DynamicVars["VulnerablePower"].IntValue,Owner.Creature,this);
         
-            IEnumerable<CardModel> enumerable = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.IsUpgradable).TakeRandom(base.DynamicVars.Cards.IntValue, base.Owner.RunState.Rng.CombatCardSelection);
+            IEnumerable<CardModel> enumerable = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.Affliction is null).TakeRandom(base.DynamicVars.Cards.IntValue, base.Owner.RunState.Rng.CombatCardSelection);
             await Mud.MuddyCardsNoVisuals(enumerable.ToList());
         }
 

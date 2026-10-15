@@ -43,6 +43,10 @@ public class Emerge : CustomCardModel
             .Execute(choiceContext);
 
         CardModel cardModel = base.CombatState.CreateCard<Submerge>(base.Owner);
+        if(IsUpgraded)
+        {
+            CardCmd.Upgrade(cardModel);
+        }
         await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner,CardPilePosition.Random);
     }
 

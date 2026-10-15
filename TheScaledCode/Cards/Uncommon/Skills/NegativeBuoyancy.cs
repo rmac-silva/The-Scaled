@@ -14,7 +14,6 @@ public class NegativeBuoyancy : TheScaledCard
         : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     protected override bool ShouldGlowGoldInternal => base.CombatState?.HittableEnemies.Any((Creature e) => e.HasPower<DrownedPower>()) ?? false;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -27,7 +26,7 @@ public class NegativeBuoyancy : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        AddKeyword(CardKeyword.Retain);
     }
 
     

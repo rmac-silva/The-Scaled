@@ -13,6 +13,8 @@ public class CreepUp : TheScaledCard
     {
     }
 
+    private int previousCostReduction = 0;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(18,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new EnergyVar(1)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -41,7 +43,7 @@ public class CreepUp : TheScaledCard
 
         int amount = CardPile.Get(PileType.Hand,Owner)?.Cards.Count(c => c.Affliction != null && c.Affliction is Muddied) ?? 0;
 
-        SetCostAt(base.EnergyCost.Canonical - amount);
+        SetCost(amount);
 
         return Task.CompletedTask;
     }
@@ -62,7 +64,7 @@ public class CreepUp : TheScaledCard
         {
             int amount = CardPile.Get(PileType.Hand,Owner)?.Cards.Count(c => c.Affliction != null && c.Affliction is Muddied) ?? 0;
 
-            SetCostAt(base.EnergyCost.Canonical  - amount);
+            SetCost(amount);
         }
 
         return Task.CompletedTask;
@@ -77,7 +79,7 @@ public class CreepUp : TheScaledCard
 
         int amount = CardPile.Get(PileType.Hand,Owner)?.Cards.Count(c => c.Affliction != null && c.Affliction is Muddied) ?? 0;
 
-        SetCostAt(base.EnergyCost.Canonical  - amount);
+        SetCost(amount);
         
         return Task.CompletedTask;
 
@@ -92,7 +94,7 @@ public class CreepUp : TheScaledCard
 
         int amount = CardPile.Get(PileType.Hand,Owner)?.Cards.Count(c => c.Affliction != null && c.Affliction is Muddied) ?? 0;
 
-        SetCostAt(base.EnergyCost.Canonical - amount);
+        SetCost(amount);
 
         return Task.CompletedTask;
     }
@@ -102,10 +104,20 @@ public class CreepUp : TheScaledCard
         base.DynamicVars.Damage.UpgradeValueBy(6);
     }
 
-    private void SetCostAt(int amount)
-	{
-		base.EnergyCost.SetThisTurnOrUntilPlayed(amount);
-	}
+    private void SetCost(int setups)
+    {
+        
+        if(previousCostReduction != 0 )
+        {
+            CardCostHelper.RemoveRelativeCostReductions(this,previousCostReduction);
+        }
+
+
+        previousCostReduction = setups;
+        
+        if(setups == 0) { return; }
+        base.EnergyCost.AddThisTurnOrUntilPlayed(-setups);
+    }
 
 
 }

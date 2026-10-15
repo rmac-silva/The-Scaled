@@ -10,7 +10,7 @@ namespace TheScaled.TheScaledCode.Cards;
 public class CollapseLung : TheScaledCard
 {
     
-    public CollapseLung() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public CollapseLung() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
     protected override bool ShouldGlowGoldInternal => base.CombatState!.Enemies.Any(x => x.HasPower<DrownedPower>());
@@ -23,13 +23,12 @@ public class CollapseLung : TheScaledCard
         var drownPower = cardPlay.Target!.GetPower<DrownedPower>();
         if(drownPower is not null)
         {
-            await PowerCmd.Apply<DrownedPower>(choiceContext, cardPlay.Target, drownPower.Amount, Owner.Creature, this);
+            await PowerCmd.Apply<DrownedPower>(choiceContext, cardPlay.Target, IsUpgraded ? drownPower.Amount * 2 : drownPower.Amount, Owner.Creature, this);
         }
     }
 
     protected override void OnUpgrade()
     {
-        base.EnergyCost.UpgradeBy(-1);
     }
 
 }

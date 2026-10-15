@@ -10,7 +10,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class DragUnder : TheScaledCard
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DrownedPower>(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DrownedPower>(3)];
     
     public DragUnder() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
@@ -25,7 +25,7 @@ public class DragUnder : TheScaledCard
         var drownPower = Owner.Creature.GetPower<DrownedPower>();
         if(drownPower is not null)
         {
-            var amountToApply = IsUpgraded ? drownPower.Amount * 2 : drownPower.Amount;
+            var amountToApply =  drownPower.Amount * base.DynamicVars["DrownedPower"].IntValue;
             await PowerCmd.Remove<DrownedPower>(Owner.Creature);
             await PowerCmd.Apply<DrownedPower>(choiceContext,cardPlay.Target!,amountToApply,Owner.Creature,this);
         }
@@ -33,7 +33,7 @@ public class DragUnder : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars["DrownedPower"].UpgradeValueBy(1);
+        base.DynamicVars["DrownedPower"].UpgradeValueBy(2);
     }
 
 }

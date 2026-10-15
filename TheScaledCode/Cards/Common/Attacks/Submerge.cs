@@ -30,6 +30,10 @@ public class Submerge : TheScaledCard
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block,cardPlay);
 
         CardModel cardModel = base.CombatState.CreateCard<Emerge>(base.Owner);
+        if(IsUpgraded)
+        {
+            CardCmd.Upgrade(cardModel);
+        }
         await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner, CardPilePosition.Random); 
     }
 

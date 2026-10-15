@@ -25,7 +25,7 @@ public class Riptide : TheScaledCard
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             [HoverTipFactory.FromPower<DrownedPower>()];
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DrownedPower>(9)];
+        protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DrownedPower>(10)];
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
@@ -42,6 +42,7 @@ public class Riptide : TheScaledCard
         protected override void OnUpgrade()
         {
             base.EnergyCost.UpgradeBy(-1);
+            base.DynamicVars["DrownedPower"].UpgradeValueBy(5);
         }
     }
 }

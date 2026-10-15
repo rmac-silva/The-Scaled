@@ -3,7 +3,7 @@
   "name": "The Scaled",
   "author": "i<3alligators, nox, nostra, gilbio",
   "description": "Just an alligator climbing the Spire.",
-  "version": "v0.0.30",
+  "version": "v0.0.31",
   "min_game_version": "0.107.0",
   "has_pck": true,
   "has_dll": true,

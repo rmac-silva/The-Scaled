@@ -14,7 +14,6 @@ namespace TheScaled.TheScaledCode.Afflictions
         public override bool IsStackable => true;
         public override bool CanAfflictUnplayableCards => false;
         public override bool HasExtraCardText => true;
-
         private const int MUD_CARDS = 1;
         
 

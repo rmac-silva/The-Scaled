@@ -24,9 +24,7 @@ public class AbyssalPull : TheScaledCard
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        bool shouldTriggerFatal = cardPlay.Target!.Powers.All((PowerModel p) => p.ShouldOwnerDeathTriggerFatal());
-        
+    {   
         await PowerCmd.Apply<DrownedPower>(choiceContext,cardPlay.Target!,base.DynamicVars["DrownedPower"].IntValue,Owner.Creature,this);
 
         AttackCommand attackCommand = await DamageCmd
@@ -35,7 +33,7 @@ public class AbyssalPull : TheScaledCard
             .Targeting(cardPlay.Target!)
 			.Execute(choiceContext);
 
-        if (shouldTriggerFatal && attackCommand.Results.SelectMany( (List<DamageResult> r) => r).Any((DamageResult r) => r.WasTargetKilled))
+        if (attackCommand.Results.SelectMany( (List<DamageResult> r) => r).Any((DamageResult r) => r.WasTargetKilled))
 		{
 			await PowerCmd.Apply<DrownedPower>(choiceContext,CombatState!.Enemies,base.DynamicVars["DrownedPower"].IntValue,Owner.Creature,this);
 		}

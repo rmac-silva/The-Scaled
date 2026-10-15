@@ -18,7 +18,6 @@ public class DeathFromBelow : TheScaledCard
     }
 
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new RepeatVar(3)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>()];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -41,6 +40,6 @@ public class DeathFromBelow : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        base.RemoveKeyword(CardKeyword.Exhaust);
+        base.DynamicVars.Repeat.UpgradeValueBy(1);
     }
 }

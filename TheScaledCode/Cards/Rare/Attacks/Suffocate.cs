@@ -114,7 +114,8 @@ public class Suffocate : TheScaledCard
 
     private void SetCost(int setups)
     {
-        if(previousCostReduction != 0)
+        
+        if(previousCostReduction != 0 )
         {
             CardCostHelper.RemoveRelativeCostReductions(this,previousCostReduction);
         }

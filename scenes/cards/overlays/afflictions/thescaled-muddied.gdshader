@@ -1,25 +1,21 @@
 shader_type canvas_item;
 
-// Allows you to assign your mud texture in the Inspector
-uniform sampler2D mud_texture : repeat_enable;
+// Uniforms to customize the wobble behavior directly from the inspector
+uniform float speed : hint_range(0.0, 10.0) = 3.0;      // How fast the wobble oscillates
+uniform float frequency : hint_range(0.0, 50.0) = 15.0; // How many waves ripple down the image
+uniform float intensity : hint_range(0.0, 0.1) = 0.008; // How far left and right it shifts
 
-// Parameters to tweak the wobbling effect in the Inspector
-uniform float wave_speed : hint_range(0.1, 10.0) = 2.0;
-uniform float wave_frequency : hint_range(1.0, 50.0) = 10.0;
-uniform float wave_amplitude : hint_range(0.0, 0.1) = 0.01;
+// Parameterized color uniform with a color picker hint
+uniform vec4 tint_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 
 void fragment() {
-    // 1. Calculate an offset for the UV coordinates based on sine waves and TIME
-    vec2 wobbled_uv = UV;
-    wobbled_uv.x += sin(UV.y * wave_frequency + TIME * wave_speed) * wave_amplitude;
-    wobbled_uv.y += cos(UV.x * wave_frequency + TIME * wave_speed) * wave_amplitude;
-
-    // 2. Sample the mud texture using the displaced UVs
-    vec4 mud_color = texture(mud_texture, wobbled_uv);
-
-    // 3. Get the original card texture pixel
-    vec4 card_color = COLOR;
-
-    // 4. Blend the mud over the card using the mud's alpha channel
-    COLOR = mix(card_color, mud_color, mud_color.a);
+	// Create a horizontal wobble effect based on the vertical coordinate (UV.y) and TIME
+	vec2 wobbled_uv = UV;
+	wobbled_uv.x += sin(UV.y * frequency + TIME * speed) * intensity;
+	
+	// Sample the texture using the modified UV coordinates
+	vec4 tex_color = texture(TEXTURE, wobbled_uv);
+	
+	// Multiply the sampled texture color by your custom tint color
+	COLOR = tex_color * tint_color;
 }

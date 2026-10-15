@@ -17,7 +17,7 @@ public class TidalShieldPower : TheScaledPower
 
     public override Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if(dealer == Owner && result.UnblockedDamage > 0 && HasDrown(target))
+        if(dealer == Owner && result.UnblockedDamage > 0 && HasDrown(target) && props.IsPoweredAttack())
         {
             CreatureCmd.GainBlock(Owner,Amount,ValueProp.Unpowered,null);
         }

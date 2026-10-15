@@ -15,9 +15,9 @@ namespace TheScaled.TheScaledCode.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
                 new CalculationBaseVar(0),
-                new CalculationExtraVar(2),
+                new CalculationExtraVar(1),
                 new CalculatedBlockVar(MegaCrit.Sts2.Core.ValueProps.ValueProp.Move).WithMultiplier(
-                    (c, _) => GetNumMuddiedCardsInHand(c.Owner)
+                    (c, _) => GetNumMuddiedCardsInDeck(c.Owner)
                 ),
             ];
 
@@ -41,23 +41,25 @@ namespace TheScaled.TheScaledCode.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            var count = GetNumMuddiedCardsInHand(Owner);
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.CalculatedBlock.Calculate(cardPlay.Target), DynamicVars.CalculatedBlock.Props, cardPlay);
         }
 
-        private static int GetNumMuddiedCardsInHand(Player owner)
+        private static int GetNumMuddiedCardsInDeck(Player owner)
         {
-            List<CardModel>? cards = CardPile
+            List<CardModel>? handCards = CardPile
                 .Get(PileType.Hand, owner)
                 ?.Cards.Where((CardModel c) => c.Affliction != null && c.Affliction is Muddied)
                 .ToList();
+            List<CardModel>? drawCards = CardPile
+                .Get(PileType.Draw, owner)
+                ?.Cards.Where((CardModel c) => c.Affliction != null && c.Affliction is Muddied)
+                .ToList();
+            List<CardModel>? discardCards = CardPile
+                .Get(PileType.Discard, owner)
+                ?.Cards.Where((CardModel c) => c.Affliction != null && c.Affliction is Muddied)
+                .ToList();
 
-            if (cards != null && cards.Count > 0)
-            {
-                return cards.Count;
-            }
-
-            return 0;
+            return (handCards?.Count ?? 0) + (drawCards?.Count ?? 0) + (discardCards?.Count ?? 0);
         }
 
         protected override void OnUpgrade()

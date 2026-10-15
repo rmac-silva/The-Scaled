@@ -14,7 +14,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class DeepDive : TheScaledCard
 {
-    public DeepDive() : base(1, CardType.Skill, CardRarity.Rare, TargetType.None)
+    public DeepDive() : base(3, CardType.Skill, CardRarity.Rare, TargetType.None)
     {
     }
 
