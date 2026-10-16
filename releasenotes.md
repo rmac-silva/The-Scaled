@@ -9,10 +9,12 @@
 - Reworked Negative Buoyancy, (Retain) Drown will not be removed at the start of your next turn.
 - Reworked Riptide, Apply 10(15) drown to a random enemy.
 - Reworked Deep Dive, ~~1~~ 3 Energy.
+- Reworked Submerge, ~~8(12)~~ 8(11) Block
 
 **Card Art**:
 - Remade Muddied Overlay
 - Remade energy icon
+- Added Emerge / Submerge
 
 **Bugfixes**:
 - Fixed Emerge+ not adding a Submerge+ and vice versa.
@@ -21,3 +23,4 @@
 - Fixed Abyssal Pull applying Drown to all enemies even when not fatal.
 - Fixed Tidal Shield triggering on Unpowered attacks.
 - Fixed Advantage not upgrading.
+- Fixed Mud Splash dealing AoE

@@ -104,19 +104,14 @@ public class CreepUp : TheScaledCard
         base.DynamicVars.Damage.UpgradeValueBy(6);
     }
 
-    private void SetCost(int setups)
+    private void SetCost(int muddiedCards)
     {
-        
-        if(previousCostReduction != 0 )
-        {
-            CardCostHelper.RemoveRelativeCostReductions(this,previousCostReduction);
-        }
+        CardCostHelper.RemoveRelativeCostReductions(this,previousCostReduction);
 
-
-        previousCostReduction = setups;
+        previousCostReduction = muddiedCards;
         
-        if(setups == 0) { return; }
-        base.EnergyCost.AddThisTurnOrUntilPlayed(-setups);
+        if(muddiedCards == 0) { return; }
+        base.EnergyCost.AddThisTurnOrUntilPlayed(-muddiedCards);
     }
 
 

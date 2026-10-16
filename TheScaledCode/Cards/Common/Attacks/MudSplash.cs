@@ -29,7 +29,7 @@ public class MudSplash : TheScaledCard
         await DamageCmd
             .Attack(base.DynamicVars.Damage.BaseValue)
             .FromCard(this,cardPlay)
-            .TargetingAllOpponents(base.CombatState)
+            .Targeting(cardPlay.Target!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 

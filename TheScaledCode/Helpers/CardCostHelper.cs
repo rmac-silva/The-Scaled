@@ -6,10 +6,11 @@ public static class CardCostHelper
 {
     public static void RemoveRelativeCostReductions(CardModel card, int valueToRemove)
     {
-        if(card == null || valueToRemove <= 0)
+        if(card == null)
         {
             return;
         }
+
         List<LocalCostModifier>? modifiers = Traverse.Create(card)
             .Field("_localModifiers")
             .GetValue<List<LocalCostModifier>>();
