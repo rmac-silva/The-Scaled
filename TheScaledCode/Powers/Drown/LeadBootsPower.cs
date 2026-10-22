@@ -5,9 +5,12 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Powers;
@@ -44,7 +47,8 @@ public class LeadBootsPower : TheScaledPower
         {
             return;
         }
-
+        NDrownImpactVfx? child = NDrownImpactVfx.Create(base.Owner);
+        NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(child);
         await PowerCmd.Apply<DrownedPower>(choiceContext, base.Owner, Amount * 3, base.Owner, null);
         
         CardSelectorPrefs prefs = new CardSelectorPrefs(base.SelectionScreenPrompt, Amount);

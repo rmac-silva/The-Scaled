@@ -1,4 +1,5 @@
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -22,7 +23,7 @@ public class NaturalHabitatPower : TheScaledPower
 		return new Data();
 	}
 
-    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
 	{
 		modifiedCost = originalCost;
 		if (ShouldSkip(card))
@@ -42,6 +43,13 @@ public class NaturalHabitatPower : TheScaledPower
 		
 		return Task.CompletedTask;
 	}
+
+    public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    {
+        GetInternalData<Data>().mudPlayedThisTurn = 0;
+        return Task.CompletedTask;
+    }
+
 
     private bool ShouldSkip(CardModel card)
 	{

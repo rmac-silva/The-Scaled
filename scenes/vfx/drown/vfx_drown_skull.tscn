@@ -1,0 +1,82 @@
+[gd_scene load_steps=17 format=3 uid="uid://d0j3q6q5py8q7"]
+
+[ext_resource type="Shader" uid="uid://r6ofo4wanifi" path="res://TheScaled/shaders/vfx/vfx_poison_skull_shader.gdshader" id="1_gy7dx"]
+[ext_resource type="Texture2D" uid="uid://d2akxy0geb4oi" path="res://TheScaled/images/vfx/drown/poison_skull.png" id="2_r1510"]
+
+[sub_resource type="Curve" id="Curve_gy7dx"]
+_limits = [-0.15, 1.0, 0.0, 1.0]
+_data = [Vector2(0, -0.15), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_r1510"]
+curve = SubResource("Curve_gy7dx")
+
+[sub_resource type="Gradient" id="Gradient_2ygwk"]
+offsets = PackedFloat32Array(0, 0.51)
+colors = PackedColorArray(0.1254902, 0.14901961, 0.18431373, 1, 0.24790001, 0.40267006, 0.67, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t4kfk"]
+gradient = SubResource("Gradient_2ygwk")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ygwk"]
+shader = ExtResource("1_gy7dx")
+shader_parameter/lut = SubResource("GradientTexture1D_t4kfk")
+shader_parameter/distortion_panning_speed = Vector2(0, 0.375)
+shader_parameter/distortion_strength = 0.1
+shader_parameter/erosion_curve = SubResource("CurveTexture_r1510")
+shader_parameter/erosion_offset = 0.125
+
+[sub_resource type="Curve" id="Curve_5geno"]
+_data = [Vector2(0, 0), 0.0, 15.245632, 0, 0, Vector2(0.20365536, 1), 0.0, 0.0, 0, 0, Vector2(0.60313314, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_av4la"]
+curve = SubResource("Curve_5geno")
+
+[sub_resource type="Curve" id="Curve_3rtms"]
+
+[sub_resource type="Curve" id="Curve_dddgi"]
+_limits = [-1.0, 0.0, 0.0, 1.0]
+_data = [Vector2(0, -1), 0.0, 2.3736076, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_gxvfc"]
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_6ujvi"]
+curve_x = SubResource("Curve_3rtms")
+curve_y = SubResource("Curve_dddgi")
+curve_z = SubResource("Curve_gxvfc")
+
+[sub_resource type="Curve" id="Curve_6ujvi"]
+_data = [Vector2(0, 0.8043689), 0.0, 0.58791673, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5geno"]
+curve = SubResource("Curve_6ujvi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2gmb7"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+angle_min = -4.9999895
+angle_max = -4.9999895
+angular_velocity_min = -4.000016
+angular_velocity_max = -4.000016
+directional_velocity_min = 79.999985
+directional_velocity_max = 79.999985
+directional_velocity_curve = SubResource("CurveXYZTexture_6ujvi")
+scale_min = 0.65
+scale_max = 0.65
+scale_curve = SubResource("CurveTexture_5geno")
+alpha_curve = SubResource("CurveTexture_av4la")
+
+[node name="vfx_drown_skull" type="GPUParticles2D"]
+z_index = 2
+texture_repeat = 2
+material = SubResource("ShaderMaterial_2ygwk")
+emitting = false
+amount = 1
+texture = ExtResource("2_r1510")
+lifetime = 1.75
+one_shot = true
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_2gmb7")

@@ -1,7 +1,10 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Cards;
@@ -23,6 +26,8 @@ public class CollapseLung : TheScaledCard
         var drownPower = cardPlay.Target!.GetPower<DrownedPower>();
         if(drownPower is not null)
         {
+            NDrownImpactVfx? child = NDrownImpactVfx.Create(cardPlay.Target!);
+            NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(child);
             await PowerCmd.Apply<DrownedPower>(choiceContext, cardPlay.Target, IsUpgraded ? drownPower.Amount * 2 : drownPower.Amount, Owner.Creature, this);
         }
     }

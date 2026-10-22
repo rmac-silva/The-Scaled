@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Extensions;
@@ -6,6 +7,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using TheScaled.TheScaledCode.Afflictions;
 
 namespace TheScaled.TheScaledCode.Cards
 {
@@ -28,9 +30,16 @@ public class Blind : TheScaledCard
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target,base.DynamicVars["VulnerablePower"].IntValue,Owner.Creature,this);
-        
-            IEnumerable<CardModel> enumerable = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.Affliction is null).TakeRandom(base.DynamicVars.Cards.IntValue, base.Owner.RunState.Rng.CombatCardSelection);
-            await Mud.MuddyCardsNoVisuals(enumerable.ToList());
+
+            if(IsUpgraded)
+            {
+                var cards = await CardSelectCmd.FromHand(choiceContext, Owner, new CardSelectorPrefs(base.SelectionScreenPrompt, base.DynamicVars.Cards.IntValue, base.DynamicVars.Cards.IntValue), Muddied.CanAfflictMuddied,this);
+                await Mud.MuddyCardsNoVisuals(cards.ToList());
+            } else
+            {
+                IEnumerable<CardModel> enumerable = PileType.Hand.GetPile(base.Owner).Cards.Where((CardModel c) => c.Affliction is null && Muddied.CanAfflictMuddied(c)).TakeRandom(base.DynamicVars.Cards.IntValue, base.Owner.RunState.Rng.CombatCardSelection);
+                await Mud.MuddyCardsNoVisuals(enumerable.ToList());
+            }
         }
 
         protected override void OnUpgrade()

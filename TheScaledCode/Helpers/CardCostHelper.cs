@@ -26,4 +26,23 @@ public static class CardCostHelper
             modifiers.Remove(modToRemove);
         }
     }
+
+    public static bool HasBeenSetToFreeThisTurn(CardModel card)
+    {
+        if(card == null)
+        {
+            return false;
+        }
+
+        List<LocalCostModifier>? modifiers = Traverse.Create(card)
+            .Field("_localModifiers")
+            .GetValue<List<LocalCostModifier>>();
+
+        if (modifiers is null)
+        {
+            return false;
+        }
+
+        return modifiers.Any(m => m.Type == LocalCostType.Absolute && m.Amount == 0);
+    }
 }

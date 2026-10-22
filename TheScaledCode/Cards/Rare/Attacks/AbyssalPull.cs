@@ -25,7 +25,6 @@ public class AbyssalPull : TheScaledCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {   
-        await PowerCmd.Apply<DrownedPower>(choiceContext,cardPlay.Target!,base.DynamicVars["DrownedPower"].IntValue,Owner.Creature,this);
 
         AttackCommand attackCommand = await DamageCmd
             .Attack(DynamicVars.Damage.IntValue)

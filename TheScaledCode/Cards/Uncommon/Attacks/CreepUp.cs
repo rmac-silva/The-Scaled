@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -6,14 +8,12 @@ using MegaCrit.Sts2.Core.Models;
 using TheScaled.TheScaledCode.Afflictions;
 
 namespace TheScaled.TheScaledCode.Cards;
-//Deal {Damage:diff()} damage. The next [gold]Afflicted[/gold] card you play costs [blue]0[/blue] [gold]Energy[/gold].
 public class CreepUp : TheScaledCard
 {
     public CreepUp() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 
-    private int previousCostReduction = 0;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(18,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new EnergyVar(1)];
 
@@ -30,88 +30,42 @@ public class CreepUp : TheScaledCard
     }
 
     public override Task AfterCardEnteredCombat(CardModel card)
-    {
-        if(card != this)
-        {
-            return Task.CompletedTask;
-        }
+	{
+		if (card != this)
+		{
+			return Task.CompletedTask;
+		}
+		if (base.IsClone)
+		{
+			return Task.CompletedTask;
+		}
+		int amount = CombatManager.Instance.History.CardPlaysFinished.Count((CardPlayFinishedEntry e) => e.CardPlay.Card.Affliction != null && e.CardPlay.Card.Affliction is Muddied && e.HappenedThisTurn(base.CombatState));
+		ReduceCostBy(amount);
+		return Task.CompletedTask;
+	}
 
-        if(base.IsClone)
-        {
-            return Task.CompletedTask;
-        }
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
+	{
+		if (cardPlay.Card.Owner != base.Owner)
+		{
+			return Task.CompletedTask;
+		}
+		if (cardPlay.Card.Affliction == null || (cardPlay.Card.Affliction is not Muddied))
+		{
+			return Task.CompletedTask;
+		}
+		ReduceCostBy(1);
+		return Task.CompletedTask;
+	}
 
-        int amount = CardPile.Get(PileType.Hand,Owner)?.Cards.Count(c => c.Affliction != null && c.Affliction is Muddied) ?? 0;
-
-        SetCost(amount);
-
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
-    {
-        if(card.Owner != Owner)
-        {
-            return Task.CompletedTask;
-        }
-
-        if(card.Pile is null)
-        {
-            return Task.CompletedTask;
-        }
-
-        if(card.Pile.Type == PileType.Hand && card.Affliction != null && card.Affliction is Muddied)
-        {
-            int amount = CardPile.Get(PileType.Hand,Owner)?.Cards.Count(c => c.Affliction != null && c.Affliction is Muddied) ?? 0;
-
-            SetCost(amount);
-        }
-
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
-    {
-        if(card.Owner != Owner)
-        {
-            return Task.CompletedTask;
-        }
-
-        int amount = CardPile.Get(PileType.Hand,Owner)?.Cards.Count(c => c.Affliction != null && c.Affliction is Muddied) ?? 0;
-
-        SetCost(amount);
-        
-        return Task.CompletedTask;
-
-    }
-
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if(cardPlay.Card.Owner != Owner)
-        {
-            return Task.CompletedTask;
-        }
-
-        int amount = CardPile.Get(PileType.Hand,Owner)?.Cards.Count(c => c.Affliction != null && c.Affliction is Muddied) ?? 0;
-
-        SetCost(amount);
-
-        return Task.CompletedTask;
-    }
+    private void ReduceCostBy(int amount)
+	{
+		base.EnergyCost.AddThisTurn(-amount);
+	}
 
     protected override void OnUpgrade()
     {
         base.DynamicVars.Damage.UpgradeValueBy(6);
-    }
-
-    private void SetCost(int muddiedCards)
-    {
-        CardCostHelper.RemoveRelativeCostReductions(this,previousCostReduction);
-
-        previousCostReduction = muddiedCards;
-        
-        if(muddiedCards == 0) { return; }
-        base.EnergyCost.AddThisTurnOrUntilPlayed(-muddiedCards);
     }
 
 

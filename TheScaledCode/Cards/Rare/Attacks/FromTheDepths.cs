@@ -21,7 +21,7 @@ public class FromTheDepths : TheScaledCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<DrownedPower>(choiceContext,base.CombatState!.Enemies,base.DynamicVars["DrownedPower"].IntValue,Owner.Creature,this);
-
+        
         await DamageCmd
             .Attack(DynamicVars.Damage.IntValue)
             .FromCard(this, cardPlay)

@@ -59,7 +59,7 @@ public class AbhorrentMass : CustomRelicModel
         }
 
         CardCmd.PreviewCardPileAdd(addedCards, 2f);
-        await Cmd.Wait(0.5f);
+        await Cmd.CustomScaledWait(0.5f,0.8f);
     }
 
     

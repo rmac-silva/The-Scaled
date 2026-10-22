@@ -14,28 +14,40 @@ namespace TheScaled.TheScaledCode.Powers.ReusablePowers;
 /// Note: This needs to have a minimum value of 1, otherwise you will infinitely add strength
 /// to your character with any attack as it is always over the threshold.
 /// </summary>
-
 public class DrownedPower : TheScaledPower
 {
-
     public override PowerType Type => PowerType.Debuff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override async Task AfterDamageReceived(
+        PlayerChoiceContext choiceContext,
+        Creature target,
+        DamageResult result,
+        ValueProp props,
+        Creature? dealer,
+        CardModel? cardSource
+    )
     {
         //Took 0 damage, don't trigger the power
-        if(result.Props.HasFlag(ValueProp.Unpowered) || result.TotalDamage <= 0 )
+        if (result.Props.HasFlag(ValueProp.Unpowered) || result.TotalDamage <= 0)
         {
             return;
-        } else
+        }
+        else
         {
             //Deal damage to the enemy equal to the power amount
-            if(target == base.Owner)
+            if (target == base.Owner)
             {
-                await Cmd.Wait(0.3f);
-                
-                await CreatureCmd.Damage(choiceContext, base.Owner, base.Amount, ValueProp.Unpowered, base.Owner);
+                await Cmd.CustomScaledWait(0.13f,0.3f);
+
+                await CreatureCmd.Damage(
+                    choiceContext,
+                    base.Owner,
+                    base.Amount,
+                    ValueProp.Unpowered,
+                    base.Owner
+                );
 
                 //Tick down the power by 1
                 await PowerCmd.Decrement(this);
@@ -43,29 +55,32 @@ public class DrownedPower : TheScaledPower
         }
     }
 
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
-    {        
-        if(CombatState.Creatures.Any( (Creature c) => c.HasPower<PersistDrownedPower>()))
+    public override async Task AfterSideTurnStart(
+        CombatSide side,
+        IReadOnlyList<Creature> participants,
+        ICombatState combatState
+    )
+    {
+        if (side == CombatSide.Player)
         {
-            //Do nothing, the power is persistent
-        } else if(CombatState.Allies.Any( (Creature c) => c.HasPower<SmotheringPresencePower>()))
-        {
-            SetAmount((int)Math.Floor(base.Amount / 2.0));
-            InvokeDisplayAmountChanged();
+            if (CombatState.Creatures.Any((Creature c) => c.HasPower<PersistDrownedPower>()))
+            {
+                //Do nothing, the power is persistent
+            }
+            else if (CombatState.Allies.Any((Creature c) => c.HasPower<SmotheringPresencePower>()))
+            {
+                SetAmount((int)Math.Floor(base.Amount / 2.0));
+                InvokeDisplayAmountChanged();
 
-            if(Amount <= 0)
+                if (Amount <= 0)
+                {
+                    await PowerCmd.Remove(this);
+                }
+            }
+            else
             {
                 await PowerCmd.Remove(this);
             }
         }
-        else {
-            await PowerCmd.Remove(this);
-        }
-        
     }
-
-
-
-    
-
 }

@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://plkxuxj6s7b3"]
+
+[ext_resource type="Shader" uid="uid://r6ofo4wanifi" path="res://TheScaled/shaders/vfx/vfx_poison_skull_shader.gdshader" id="1_kq5le"]
+
+[sub_resource type="Curve" id="Curve_5gn18"]
+_limits = [-0.15, 1.0, 0.0, 1.0]
+_data = [Vector2(0.101, -0.15), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7eyt2"]
+curve = SubResource("Curve_5gn18")
+
+[sub_resource type="Gradient" id="Gradient_ne73k"]
+offsets = PackedFloat32Array(0, 0.51)
+colors = PackedColorArray(0.19607843, 0.26666668, 0.6, 1, 0.36862746, 0.56078434, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kgk3s"]
+gradient = SubResource("Gradient_ne73k")
+
+[resource]
+shader = ExtResource("1_kq5le")
+shader_parameter/lut = SubResource("GradientTexture1D_kgk3s")
+shader_parameter/distortion_panning_speed = Vector2(0, 0.375)
+shader_parameter/distortion_strength = 0.1
+shader_parameter/erosion_curve = SubResource("CurveTexture_7eyt2")
+shader_parameter/erosion_offset = 0.125

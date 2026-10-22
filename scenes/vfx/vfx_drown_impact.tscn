@@ -1,0 +1,66 @@
+[gd_scene load_steps=15 format=3 uid="uid://c7yf8s5p2oepi"]
+
+[ext_resource type="PackedScene" uid="uid://d0j3q6q5py8q7" path="res://scenes/vfx/drown/vfx_drown_skull.tscn" id="1_a6bj1"]
+[ext_resource type="Script" uid="uid://bmjyiib3kmn23" path="res://TheScaledCode/Nodes/Vfx/NDrownImpactVfx.cs" id="1_qc68c"]
+[ext_resource type="Material" uid="uid://plkxuxj6s7b3" path="res://materials/vfx/drown/vfx_drown_skull.tres" id="3_d0ihe"]
+
+[sub_resource type="Curve" id="Curve_5geno"]
+_data = [Vector2(0, 0), 0.0, 15.245632, 0, 0, Vector2(0.20365536, 1), 0.0, 0.0, 0, 0, Vector2(0.60313314, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_av4la"]
+curve = SubResource("Curve_5geno")
+
+[sub_resource type="Gradient" id="Gradient_21kn2"]
+offsets = PackedFloat32Array(0.32173914, 0.68405795)
+colors = PackedColorArray(1, 1, 1, 1, 0.24705882, 0.40392157, 0.67058825, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bskm1"]
+gradient = SubResource("Gradient_21kn2")
+
+[sub_resource type="Curve" id="Curve_3rtms"]
+
+[sub_resource type="Curve" id="Curve_dddgi"]
+_limits = [-1.0, 0.0, 0.0, 1.0]
+_data = [Vector2(0, -1), 0.0, 2.3736076, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_gxvfc"]
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_6ujvi"]
+curve_x = SubResource("Curve_3rtms")
+curve_y = SubResource("Curve_dddgi")
+curve_z = SubResource("Curve_gxvfc")
+
+[sub_resource type="Curve" id="Curve_6ujvi"]
+_data = [Vector2(0, 0.8043689), 0.0, 0.58791673, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5geno"]
+curve = SubResource("Curve_6ujvi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2gmb7"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+angle_min = -4.9999895
+angle_max = -4.9999895
+angular_velocity_min = -4.000016
+angular_velocity_max = -4.000016
+directional_velocity_min = 79.999985
+directional_velocity_max = 79.999985
+directional_velocity_curve = SubResource("CurveXYZTexture_6ujvi")
+scale_min = 0.39999998
+scale_max = 0.39999998
+scale_curve = SubResource("CurveTexture_5geno")
+color_ramp = SubResource("GradientTexture1D_bskm1")
+alpha_curve = SubResource("CurveTexture_av4la")
+
+[node name="vfx_drown_impact" type="Node2D"]
+script = ExtResource("1_qc68c")
+
+[node name="vfx_drown_skull" parent="." instance=ExtResource("1_a6bj1")]
+z_index = 3
+material = ExtResource("3_d0ihe")
+position = Vector2(0, -94.99988)
+lifetime = 1.35
+process_material = SubResource("ParticleProcessMaterial_2gmb7")

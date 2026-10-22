@@ -7,14 +7,17 @@
 - Reworked Collapse Lung, Double(Triple) all drown on the target.
 - Reworked Drag Under, Remove all drown from yourself. Apply 3(5) drown per drown removed.
 - Reworked Negative Buoyancy, (Retain) Drown will not be removed at the start of your next turn.
-- Reworked Riptide, Apply 10(15) drown to a random enemy.
+- Reworked Riptide, 2(2) Apply 9(14) drown to a random enemy.
 - Reworked Deep Dive, ~~1~~ 3 Energy.
 - Reworked Submerge, ~~8(12)~~ 8(11) Block
+- Reworked Negative Buyancy, (Retain), Apply 4 drown, Drown will not be removed at the start of your next turn
+- Reworked Death from Below, Deal 3 damage to a random enemy 3(4) times. Apply drown equal to the damage dealt.
 
 **Card Art**:
 - Remade Muddied Overlay
 - Remade energy icon
 - Added Emerge / Submerge
+- Added DrownVFX for applying drown for various cards.
 
 **Bugfixes**:
 - Fixed Emerge+ not adding a Submerge+ and vice versa.

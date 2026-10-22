@@ -1,4 +1,10 @@
 {
     "godotTools.editorPath.godot4": "e:\\GodotModdingTools\\Godot\\MegaDot_v4.5.1-stable_mono_win64.exe",
-    "dotnet.defaultSolution": "TheScaled.slnx"
+    "dotnet.defaultSolution": "TheScaled.slnx",
+    "files.exclude": {
+        "**/*.rpyc": true,
+        "**/*.rpa": true,
+        "**/*.rpymc": true,
+        "**/cache/": true
+    }
 }

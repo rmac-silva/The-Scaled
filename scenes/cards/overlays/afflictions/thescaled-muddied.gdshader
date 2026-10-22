@@ -11,7 +11,7 @@ uniform vec4 tint_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 void fragment() {
 	// Create a horizontal wobble effect based on the vertical coordinate (UV.y) and TIME
 	vec2 wobbled_uv = UV;
-	wobbled_uv.x += sin(UV.y * frequency + TIME * speed) * intensity;
+	wobbled_uv.x += cos(UV.y * frequency + TIME * speed) * intensity;
 	
 	// Sample the texture using the modified UV coordinates
 	vec4 tex_color = texture(TEXTURE, wobbled_uv);

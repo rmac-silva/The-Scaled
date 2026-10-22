@@ -39,10 +39,9 @@ public class Retaliate : TheScaledCard
             ArgumentNullException.ThrowIfNull(cardPlay.Target.Monster, "cardPlay.Target.Monster");
             await CreatureCmd.GainBlock(base.Owner.Creature, DynamicVars.Block, cardPlay);
 
-            if(cardPlay.Target.Monster.IntendsToAttack)
-            {
-                await PowerCmd.Apply<RetaliatePower>(choiceContext, cardPlay.Target, DynamicVars["StrengthLoss"].BaseValue, base.Owner.Creature, cardPlay.Card);
-            }
+            
+            await PowerCmd.Apply<RetaliatePower>(choiceContext, cardPlay.Target, DynamicVars["StrengthLoss"].BaseValue, base.Owner.Creature, cardPlay.Card);
+            
         }
 
         protected override void OnUpgrade()

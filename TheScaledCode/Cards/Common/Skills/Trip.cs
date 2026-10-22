@@ -2,9 +2,12 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Cards
@@ -31,9 +34,11 @@ public class Trip : TheScaledCard
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target,base.DynamicVars["VulnerablePower"].IntValue,Owner.Creature,this);
             await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target,base.DynamicVars["WeakPower"].IntValue,Owner.Creature,this);
-        
+            
             if(cardPlay.Target.GetPower<DrownedPower>() is null)
             {
+                NDrownImpactVfx? child = NDrownImpactVfx.Create(cardPlay.Target);
+                NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(child);
                 await PowerCmd.Apply<DrownedPower>(choiceContext, cardPlay.Target,base.DynamicVars["DrownedPower"].IntValue,Owner.Creature,this);
             }
         }

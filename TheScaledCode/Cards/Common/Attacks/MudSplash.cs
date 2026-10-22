@@ -33,7 +33,7 @@ public class MudSplash : TheScaledCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        var cards = await CardSelectCmd.FromHand(choiceContext, Owner, new CardSelectorPrefs(base.SelectionScreenPrompt, 0, base.DynamicVars.Cards.IntValue), Muddied.CanAfflictMuddied,this);
+        var cards = await CardSelectCmd.FromHand(choiceContext, Owner, new CardSelectorPrefs(base.SelectionScreenPrompt, base.DynamicVars.Cards.IntValue, base.DynamicVars.Cards.IntValue), Muddied.CanAfflictMuddied,this);
 
         await Mud.MuddyCardsNoVisuals(cards.ToList());
     }
