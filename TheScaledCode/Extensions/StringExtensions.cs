@@ -63,6 +63,23 @@ public static class StringExtensions
         MainFile.Logger.Info("Could not find big relic image path: " + path);
         return Path.Join(MainFile.ResPath, "images", "relics", "big", "relic.png");
     }
+    public static string PotionImagePath(this string path)
+    {
+        path = Path.Join(MainFile.ResPath, "images", "potions", path);
+        if (ResourceLoader.Exists(path)) return path;
+        
+        MainFile.Logger.Info("Could not find potion image path: " + path);
+        return Path.Join(MainFile.ResPath, "images", "potions", "potion.png");
+    }
+
+    public static string PotionBigImagePath(this string path)
+    {
+        path = Path.Join(MainFile.ResPath, "images", "potions", "big", path);
+        if (ResourceLoader.Exists(path)) return path;
+        
+        MainFile.Logger.Info("Could not find big potion image path: " + path);
+        return Path.Join(MainFile.ResPath, "images", "potions", "big", "potion.png");
+    }
 
     public static string CharacterUiPath(this string path)
     {

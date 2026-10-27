@@ -26,6 +26,7 @@ public abstract class SetupCard : TheScaledCard
     protected SetupCard(int cost, CardType type, CardRarity rarity, TargetType target) : base(cost, type, rarity, target)
     {
         EventManager.OnSetupAdded += OnSetupPlayed;
+        EventManager.OnAmbushTriggered += OnAmbushTriggered;
     }
 
     /// <summary>
@@ -112,6 +113,11 @@ public abstract class SetupCard : TheScaledCard
     }
 
     protected virtual void OnSetupPlayed(Player p)
+    {
+        return;
+    }
+
+    protected virtual void OnAmbushTriggered(Player p)
     {
         return;
     }

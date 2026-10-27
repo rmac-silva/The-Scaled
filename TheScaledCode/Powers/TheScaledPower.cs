@@ -18,7 +18,7 @@ public abstract class TheScaledPower : CustomPowerModel
 {
     //Loads from TheScaled/images/powers/your_power.png
     public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
-    public override string CustomBigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigPowerImagePath();
+    public override string CustomBigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
 
     /// <summary>
     /// Whether this power is a buff or debuff.

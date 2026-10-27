@@ -98,7 +98,7 @@ public class Mud : CustomCardModel
     /// <param name="owner"></param>
     /// <param name="skipVisuals"></param>
     /// <returns></returns>
-    public static async Task AddMudCard(PileType pile, int amount, Player owner, bool skipVisuals = false)
+    public static async Task AddMudCard(PileType pile, int amount, Player owner, bool skipVisuals = false, bool upgraded = false)
     {
         ArgumentNullException.ThrowIfNull(owner.Creature.CombatState, "owner.Creature.CombatState");
 
@@ -106,6 +106,10 @@ public class Mud : CustomCardModel
         for (int i = 0; i < amount; i++)
         {
             CardModel card = owner.Creature.CombatState.CreateCard<Mud>(owner);
+            if(upgraded)
+            {
+                CardCmd.Upgrade(card);
+            }
             list.Add(card);
         }
         //Add the cards to the discard pile

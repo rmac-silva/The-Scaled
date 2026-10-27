@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -133,9 +134,9 @@ public class Ambush : TheScaledPower
     private async Task TriggerAmbush(AmbushMethodInfo info)
     {
         var effects = EffectsForOwner;
-        var savedListOfEffects = effects.ToArray();
+        var savedListOfEffects = effects.ToArray(); //Save the list of effects to a temporary copy, to avoid modifying the existing list
 
-        if(ShouldResetEffects())
+        if(ShouldResetEffects()) //Reset the effects first
         {
             effects.Clear();
             GetSetupPowerForApplier()?.RemoveSetup();
@@ -151,19 +152,23 @@ public class Ambush : TheScaledPower
         }
 
         ClearResetEffects();
+
+        EventManager.InvokeAmbushTriggered(base.Applier!.Player!);
     }
 
     /// <summary>
     /// Public method for triggering an Ambush from external sources. Could be from a relic.
     /// Ignores threshold amount and triggers an ambush immediately
     /// </summary>
-    public async Task TriggerAmbushExternal()
+    /// <param name="choiceContext"></param>
+    /// <returns></returns>
+    public async Task TriggerAmbushExternal(PlayerChoiceContext? choiceContext = null)
     {
         await TriggerAmbush(
             new AmbushMethodInfo(
                 applier: base.Applier,
                 target: base.Owner,
-                choiceContext: new ThrowingPlayerChoiceContext()
+                choiceContext: choiceContext ?? new ThrowingPlayerChoiceContext()
             )
         );
     }
@@ -201,7 +206,6 @@ public class Ambush : TheScaledPower
         {
             return;
         }
-
         setupPower.AddHovertip(hoverTip);
 
         EffectsForOwner.Add(effect);

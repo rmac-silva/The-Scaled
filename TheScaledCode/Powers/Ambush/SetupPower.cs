@@ -17,12 +17,12 @@ public class SetupPower : TheScaledPower
 
     public override LocString Title => getFormattedTitle();
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips {
-        get {
-            
-
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
+        get
+        {
             var creatureHovertips = HoverTipsForOwner;
-            
+
             //Uses SQL like LINQ grouping
             IEnumerable<IHoverTip> processedExtraTips = creatureHovertips
             .Where(tip => !string.IsNullOrEmpty(tip.Title))
@@ -34,8 +34,8 @@ public class SetupPower : TheScaledPower
 
                 // Append (Nx) if there are multiple identical tips
                 string? displayTitle = count > 1 ? $"{first.Title} ({count}x)" : first.Title;
-                
-                if(string.IsNullOrEmpty(displayTitle))
+
+                if (string.IsNullOrEmpty(displayTitle))
                 {
                     displayTitle = "Setup";
                 }
@@ -44,19 +44,18 @@ public class SetupPower : TheScaledPower
                 return (IHoverTip)TooltipHelper.CreateHoverTooltip(displayTitle, first.Description, true, first.Icon);
             }).ToList();
 
-            
+
             return processedExtraTips;
         }
-        
     }
 
     public override int DisplayAmount
-	{
-		get
-		{
-			return HoverTipsForOwner.Count();
-		}
-	}
+    {
+        get
+        {
+            return HoverTipsForOwner.Count();
+        }
+    }
 
     private List<HoverTip> _extraHoverTips = [];
 
@@ -66,25 +65,21 @@ public class SetupPower : TheScaledPower
     /// </summary>
     public void RemoveSetup()
     {
-        
         _extraHoverTips.Clear();
         base.RemoveInternal();
-
     }
-    
 
     public void AddHovertip(HoverTip hoverTip)
     {
-        
         _extraHoverTips.Add(hoverTip);
-
+        EventManager.InvokeSetupAdded(base.Applier!.Player!);
         InvokeDisplayAmountChanged();
     }
 
     public HoverTip GetHoverTip(string Title)
     {
 
-        var res = HoverTipsForOwner.First( (HoverTip h) => h.Title == Title);
+        var res = HoverTipsForOwner.First((HoverTip h) => h.Title == Title);
         return res;
     }
 
@@ -100,6 +95,6 @@ public class SetupPower : TheScaledPower
         _extraHoverTips = [];
     }
 
-    
+
 
 }
