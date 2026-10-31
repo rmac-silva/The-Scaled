@@ -12,7 +12,7 @@ public class NaturalHabitatPower : TheScaledPower
 {
     private class Data
 	{
-		public int mudPlayedThisTurn;
+		public int mudPlayedThisTurn = 0;
 	}
 
     public override PowerType Type => PowerType.Buff;

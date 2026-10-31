@@ -33,7 +33,7 @@ public class JarOfDirt : TheScaledPotion
 	protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
 	{
 		AssertValidForTargetedPotion(target);
-		await Mud.AddMudCard(PileType.Hand, base.DynamicVars.Cards.IntValue, target.Player!, upgraded: true);
+		await Mud.AddMudCard(PileType.Hand, base.DynamicVars.Cards.IntValue, target.Player!, upgraded: true, skipVisuals: true);
 		
 	}
 }

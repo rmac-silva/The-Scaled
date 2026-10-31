@@ -17,7 +17,7 @@ public class MudSplash : TheScaledCard
             new CardsVar(1),
         ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>()];
 
     public MudSplash()
         : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }

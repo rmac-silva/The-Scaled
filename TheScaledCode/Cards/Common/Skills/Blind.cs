@@ -21,7 +21,7 @@ public class Blind : TheScaledCard
             ];
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<VulnerablePower>(),HoverTipFactory.FromCard<Mud>()];
+            [HoverTipFactory.FromPower<VulnerablePower>(),HoverTipFactory.FromAffliction<Muddied>().First()];
 
         public Blind()
             : base(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }

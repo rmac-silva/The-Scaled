@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -25,19 +26,28 @@ public class DeathFromBelow : TheScaledCard
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>()];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-        var atk = await DamageCmd
-            .Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this,cardPlay)
-            .TargetingRandomOpponents(base.CombatState!)
-            .WithHitCount(DynamicVars.Repeat.IntValue)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        for(int i = 0; i < DynamicVars.Repeat.IntValue; i++)
+        {
+            Creature? enemy = Owner.RunState.Rng.CombatTargets.NextItem(base.CombatState!.HittableEnemies);
+            if(enemy == null)
+            {
+                return;
+            } 
+            var atk = await DamageCmd
+                .Attack(DynamicVars.Damage.BaseValue)
+                .FromCard(this,cardPlay)
+                .Targeting(enemy)
+                .WithHitFx("vfx/vfx_attack_slash")
+                .Execute(choiceContext);
+            var totalDamage = atk.Results.Sum( r => r.Sum( h => h.UnblockedDamage));
+            NDrownImpactVfx? child = NDrownImpactVfx.Create(cardPlay.Target!);
+            NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(child);
+            await PowerCmd.Apply<DrownedPower>(choiceContext,enemy,totalDamage,Owner.Creature,this);
+            await Cmd.CustomScaledWait(0.15f,0.3f);
+        }
+        
 
-        var totalDamage = atk.Results.Sum( r => r.Sum( h => h.UnblockedDamage));
-        NDrownImpactVfx? child = NDrownImpactVfx.Create(cardPlay.Target!);
-        NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(child);
-        await PowerCmd.Apply<DrownedPower>(choiceContext,cardPlay.Target,totalDamage,Owner.Creature,this);
+        
 
     }
 

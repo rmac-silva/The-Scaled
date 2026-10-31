@@ -8,7 +8,7 @@
   "THESCALED-STICKS_AND_STONES.description": "Whenever you trigger [gold]Ambush[/gold], deal 6 damage to ALL enemies.",
   "THESCALED-STICKS_AND_STONES.flavor": "TODO Flavor Text",
   "THESCALED-STICKS_AND_STONES.title": "Sticks and Stones",
-  "THESCALED-THE_LOO.description": "Whenever you apply [gold]Drowned[/gold], apply 1 more",
+  "THESCALED-THE_LOO.description": "Whenever you apply [gold]Drown[/gold], apply 1 more",
   "THESCALED-THE_LOO.flavor": "TODO Flavor Text",
   "THESCALED-THE_LOO.title": "The Loo",
   "THESCALED-ABHORRENT_MASS.description": "Upon pickup, obtain [blue]{Relics}[/blue] random [gold]{Relics:plural:Relic|Relics}[/gold] from other Act 3 [gold]Ancients[/gold] and add [blue]{AbyssCards:diff()}[/blue] [purple]Abyss[/purple] cards to your [gold]Deck[/gold].",

@@ -16,7 +16,7 @@ public class RaptureOfTheDeep : TheScaledCard
     {
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
-                new PowerVar<DrownedPower>(5),
+                new PowerVar<DrownedPower>(4),
                 new CardsVar(2)
             ];
 
