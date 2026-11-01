@@ -137,9 +137,13 @@ public class Ambush : TheScaledPower
     private async Task TriggerAmbush(AmbushMethodInfo info)
     {
         //Create Cloud VFX
-        var vfx = NSetupImpactVfx.Create(info.target);
-        NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(vfx);
-        if(vfx != null) { _ = vfx.ShowClouds(NumSetupsForCreature); }
+        if(EffectsForOwner.Count != 0)
+        {
+            var vfx = NSetupImpactVfx.Create(info.target);
+            NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(vfx);
+            if(vfx != null) { _ = vfx.ShowClouds(NumSetupsForCreature); }
+        }
+        
 
         var effects = EffectsForOwner;
         var savedListOfEffects = effects.ToArray(); //Save the list of effects to a temporary copy, to avoid modifying the existing list

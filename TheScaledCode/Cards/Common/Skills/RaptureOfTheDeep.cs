@@ -24,7 +24,7 @@ public class RaptureOfTheDeep : TheScaledCard
             [HoverTipFactory.FromPower<DrownedPower>()];
 
         public RaptureOfTheDeep()
-            : base(1, CardType.Skill, CardRarity.Common, TargetType.None) { }
+            : base(0, CardType.Skill, CardRarity.Common, TargetType.None) { }
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {

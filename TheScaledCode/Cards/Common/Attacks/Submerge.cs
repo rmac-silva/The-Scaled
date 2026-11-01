@@ -34,7 +34,7 @@ public class Submerge : TheScaledCard
         {
             CardCmd.Upgrade(cardModel);
         }
-        await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner, CardPilePosition.Random); 
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner, CardPilePosition.Random)); 
     }
 
 

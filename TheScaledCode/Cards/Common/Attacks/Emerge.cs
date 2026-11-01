@@ -47,7 +47,7 @@ public class Emerge : CustomCardModel
         {
             CardCmd.Upgrade(cardModel);
         }
-        await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner,CardPilePosition.Random);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner,CardPilePosition.Random));
     }
 
     public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)

@@ -22,6 +22,13 @@ namespace TheScaled.TheScaledCode.Afflictions
             return true;
         }
 
+        public override Task AfterCardEnteredCombat(CardModel card)
+        {
+            card.AddKeyword(CardKeyword.Retain);
+            return Task.CompletedTask;
+        }
+
+
         public override bool CanAfflict(CardModel card)
         {
 

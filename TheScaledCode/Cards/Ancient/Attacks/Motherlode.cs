@@ -42,7 +42,7 @@ public class Motherlode : AncientCard
 
             item.SetToFreeThisCombat();
 
-			await CardPileCmd.AddGeneratedCardToCombat(item, PileType.Hand, base.Owner);
+			CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(item, PileType.Hand, base.Owner));
 		}
 	}
 
