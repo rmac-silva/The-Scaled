@@ -30,7 +30,7 @@ namespace TheScaled.TheScaledCode.Afflictions
 
         public override async Task OnPlay(PlayerChoiceContext choiceContext, Creature? target)
         {
-            await Mud.AddMudCard(PileType.Draw,MUD_CARDS, Card.Owner);
+            await Mud.AddMudCard(PileType.Discard, MUD_CARDS, Card.Owner);
         }
 
         public static bool CanAfflictMuddied(CardModel card)

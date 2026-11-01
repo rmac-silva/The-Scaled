@@ -18,13 +18,13 @@ public class BlindFlail : TheScaledCard
 
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromAffliction<Muddied>().First()];
+        [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>()];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var card = CardPile.Get(PileType.Draw,Owner)?.Cards.Where((c) => c.Affliction != null && c.Affliction is Muddied).FirstOrDefault();
+        var card = CardPile.Get(PileType.Draw,Owner)?.Cards.FirstOrDefault((c) => c.Affliction != null && c.Affliction is Muddied);
         if (card is null)
         {
             return;

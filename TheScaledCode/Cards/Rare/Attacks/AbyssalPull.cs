@@ -20,7 +20,7 @@ public class AbyssalPull : TheScaledCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(20,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<DrownedPower>(15)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Innate, CardKeyword.Exhaust];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>(),HoverTipFactory.Static(StaticHoverTip.Fatal)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>()];
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

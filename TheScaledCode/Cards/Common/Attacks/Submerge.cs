@@ -16,7 +16,7 @@ public class Submerge : TheScaledCard
             new BlockVar(8m,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)
         ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Emerge>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Emerge>(base.IsUpgraded)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     public Submerge()

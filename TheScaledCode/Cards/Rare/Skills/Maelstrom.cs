@@ -24,7 +24,7 @@ public class Maelstrom : TheScaledCard
             [
                 new PowerVar<SetupPower>(2)
             ];
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>(),HoverTipFactory.FromPower<SetupPower>()];
 
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

@@ -12,7 +12,7 @@ namespace TheScaled.TheScaledCode.Cards;
 public class Rinse : TheScaledCard
 {
     public Rinse()
-        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.None) { }
+        : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.None) { }
 
     protected override bool ShouldGlowGoldInternal
     {
@@ -28,7 +28,7 @@ public class Rinse : TheScaledCard
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(2)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
+        [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>(),HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

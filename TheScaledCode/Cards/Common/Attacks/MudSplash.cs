@@ -13,8 +13,8 @@ public class MudSplash : TheScaledCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [
-            new DamageVar(9m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
-            new CardsVar(1),
+            new DamageVar(12m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move),
+            new CardsVar(2),
         ];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>()];
@@ -40,7 +40,6 @@ public class MudSplash : TheScaledCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3);
-        DynamicVars.Cards.UpgradeValueBy(1);
+        DynamicVars.Damage.UpgradeValueBy(4);
     }
 }

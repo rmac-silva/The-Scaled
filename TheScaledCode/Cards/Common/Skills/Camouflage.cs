@@ -14,7 +14,7 @@ namespace TheScaled.TheScaledCode.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
-                new CalculationBaseVar(0),
+                new CalculationBaseVar(6),
                 new CalculationExtraVar(1),
                 new CalculatedBlockVar(MegaCrit.Sts2.Core.ValueProps.ValueProp.Move).WithMultiplier(
                     (c, _) => GetNumMuddiedCardsInDeck(c.Owner)
@@ -34,10 +34,10 @@ namespace TheScaled.TheScaledCode.Cards
         }
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromAffliction<Muddied>().First()];
+            [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>()];
 
         public Camouflage()
-            : base(1, CardType.Skill, CardRarity.Common, TargetType.None) { }
+            : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.None) { }
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {

@@ -16,7 +16,7 @@ public class MuckRain : TheScaledCard
     {
     }
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromKeyword(CardKeyword.Exhaust),HoverTipFactory.FromCard<Mud>()];
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [

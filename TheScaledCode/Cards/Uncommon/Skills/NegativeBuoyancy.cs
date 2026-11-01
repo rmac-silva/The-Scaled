@@ -22,7 +22,7 @@ public class NegativeBuoyancy : TheScaledCard
     protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<DrownedPower>(4)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<PersistDrownedPower>(), HoverTipFactory.FromPower<DrownedPower>()];
+        [HoverTipFactory.FromPower<DrownedPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

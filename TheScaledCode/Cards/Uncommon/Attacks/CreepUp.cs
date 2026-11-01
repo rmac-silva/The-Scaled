@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using TheScaled.TheScaledCode.Afflictions;
@@ -14,6 +15,7 @@ public class CreepUp : TheScaledCard
     {
     }
 
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First(), HoverTipFactory.FromCard<Mud>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(18,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new EnergyVar(1)];
 

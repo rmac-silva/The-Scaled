@@ -15,7 +15,7 @@ public class BogBeast : TheScaledCard
 
         
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<BogBeastPower>(), HoverTipFactory.FromCard<Mud>(true)];
+            [HoverTipFactory.FromCard<Mud>(true)];
         
 
 
