@@ -24,7 +24,7 @@ public class Trip : TheScaledCard
             ];
         protected override bool ShouldGlowGoldInternal => base.CombatState?.HittableEnemies.Any((Creature e) => !e.HasPower<DrownedPower>()) ?? false;
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<DrownedPower>()];
+            [HoverTipFactory.FromPower<WeakPower>(),HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<DrownedPower>()];
 
         public Trip()
             : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }

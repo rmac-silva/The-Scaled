@@ -1,3 +1,7 @@
+**Mechanics**
+- Muddied: ~~Adds 2 Mud to your Discard pile~~ Add 1 Mud to your Draw pile. Add 1 Mud to your Discard pile.
+- Muddied: Muddied cards now gain Retain.
+
 **Card Changes**:
 - Reworked Calculated Strike ~~0~~1E, Retain. Deal ~~6(9)~~7(10) damage. Ambush ~~5~~1(2).
 - Reworked Concussion ~~Common~~Rare ~~1~~3(2)E ~~Attack~~Skill: ~~Deal 8 damage. Setup: Apply 1(2) Vulnerable and 1(2) Frail.~~ Setup: Stun the enemy. Exhaust.
@@ -7,7 +11,6 @@
 **Programming**
 - Remade Setup tooltips into their own separate tooltips under cards.json localization. Each setup card now needs a .setup entry.
 
-**Card Art**:
-- Reworked file structure to lose the big version of powers and relics.
-
-**Bugfixes**:
+**Bugfixes**
+- Fixed a bug where cards added to the draw pile would not increase the counter
+- Fixed Abyssal Pull having Innate

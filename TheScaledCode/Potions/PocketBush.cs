@@ -34,6 +34,10 @@ public class PocketBush : TheScaledPotion
 			if(amb != null)
 			{
 				await amb.TriggerAmbushExternal(choiceContext);
+			} else
+			{
+				amb = await PowerCmd.Apply<Ambush>(choiceContext, target, 1, Owner.Creature, null);
+				await amb!.TriggerAmbushExternal(choiceContext);
 			}
 		}
 	}

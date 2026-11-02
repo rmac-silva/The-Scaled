@@ -21,7 +21,7 @@ namespace TheScaled.TheScaledCode.Cards
   
 public class Riptide : TheScaledCard
     {
-        public Riptide() : base(2, CardType.Skill, CardRarity.Common, TargetType.None)
+        public Riptide() : base(1, CardType.Skill, CardRarity.Common, TargetType.None)
         {
         }
 
@@ -46,7 +46,7 @@ public class Riptide : TheScaledCard
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars["DrownedPower"].UpgradeValueBy(5);
+            AddKeyword(CardKeyword.Retain);
         }
     }
 }

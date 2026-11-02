@@ -17,7 +17,7 @@ public class Soak : TheScaledCard
             ];
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromAffliction<Muddied>().First()];
+            [HoverTipFactory.FromAffliction<Muddied>().First(), HoverTipFactory.FromCard<Mud>()];
         public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
 

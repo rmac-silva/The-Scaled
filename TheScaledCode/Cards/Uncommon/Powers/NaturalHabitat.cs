@@ -17,8 +17,7 @@ public class NaturalHabitat : TheScaledCard
     {
     }
     protected override IEnumerable<DynamicVar> CanonicalVars => [new EnergyVar(1)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<NaturalHabitatPower>(),
-        HoverTipFactory.FromAffliction<Muddied>().First()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

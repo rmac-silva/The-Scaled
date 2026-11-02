@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using TheScaled.TheScaledCode.Powers;
 
-namespace TheScaled.TheScaledCode.Cards;
+// namespace TheScaled.TheScaledCode.Cards;
 
   
 public class Inertia : SetupCard
@@ -26,7 +26,7 @@ public class Inertia : SetupCard
         await AddSetup(cardPlay);
         _applied = true;
 
-    }
+//     }
 
     public override async Task AmbushEffect(AmbushMethodInfo info)
     {

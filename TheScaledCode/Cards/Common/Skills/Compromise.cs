@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace TheScaled.TheScaledCode.Cards;
 
+
 public class Compromise : TheScaledCard
 {
 

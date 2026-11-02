@@ -3,10 +3,13 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Runs;
 
 namespace TheScaled.TheScaledCode.Powers;
@@ -124,6 +127,15 @@ public class Ambush : TheScaledPower
     /// </summary>
     private async Task TriggerAmbush(AmbushMethodInfo info)
     {
+        //Create Cloud VFX
+        if(EffectsForOwner.Count != 0)
+        {
+            var vfx = NSetupImpactVfx.Create(info.target);
+            NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(vfx);
+            if(vfx != null) { _ = vfx.ShowClouds(NumSetupsForCreature); }
+        }
+        
+
         var effects = EffectsForOwner;
         var savedListOfEffects = effects.ToArray(); //Save the list of effects to a temporary copy, to avoid modifying the existing list
 

@@ -1,43 +1,43 @@
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using TheScaled.TheScaledCode.Powers;
+// using MegaCrit.Sts2.Core.Commands;
+// using MegaCrit.Sts2.Core.Entities.Cards;
+// using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+// using MegaCrit.Sts2.Core.HoverTips;
+// using MegaCrit.Sts2.Core.Localization.DynamicVars;
+// using TheScaled.TheScaledCode.Powers;
 
-namespace TheScaled.TheScaledCode.Cards
-{
+// namespace TheScaled.TheScaledCode.Cards
+// {
     
-public class Exertion : SetupCard
-    {
-        protected override IEnumerable<DynamicVar> CanonicalVars =>
-            [
-                new CardsVar(3),
-                new EnergyVar(1),
-            ];
+// public class Exertion : SetupCard
+//     {
+//         protected override IEnumerable<DynamicVar> CanonicalVars =>
+//             [
+//                 new CardsVar(3),
+//                 new EnergyVar(1),
+//             ];
 
-        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            [HoverTipFactory.FromPower<Ambush>()];
+//         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+//             [HoverTipFactory.FromPower<Ambush>()];
 
-        protected override SetupCardType CardSetupType => SetupCardType.Buff;
+//         protected override SetupCardType CardSetupType => SetupCardType.Buff;
 
-        public Exertion()
-            : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+//         public Exertion()
+//             : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
-        protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-        {
-            await CardPileCmd.Draw(choiceContext,base.DynamicVars.Cards.IntValue,base.Owner);
-            await base.AddSetup(cardPlay);
-        }
+//         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+//         {
+//             await CardPileCmd.Draw(choiceContext,base.DynamicVars.Cards.IntValue,base.Owner);
+//             await base.AddSetup(cardPlay);
+//         }
 
-        protected override void OnUpgrade()
-        {
-            base.DynamicVars.Cards.UpgradeValueBy(1);
-        }
+//         protected override void OnUpgrade()
+//         {
+//             base.DynamicVars.Cards.UpgradeValueBy(1);
+//         }
 
-        public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
-        {
-            await PlayerCmd.GainEnergy(base.DynamicVars.Energy.IntValue,base.Owner);
-        }
-    }
-}
+//         public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
+//         {
+//             await PlayerCmd.GainEnergy(base.DynamicVars.Energy.IntValue,base.Owner);
+//         }
+//     }
+// }

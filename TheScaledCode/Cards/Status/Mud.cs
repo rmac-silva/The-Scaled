@@ -113,7 +113,7 @@ public class Mud : CustomCardModel
             list.Add(card);
         }
         //Add the cards to the discard pile
-        await CardPileCmd.AddGeneratedCardsToCombat(list, pile, owner,CardPilePosition.Random);
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(list, pile, owner,CardPilePosition.Random));
 
         if (!skipVisuals)
         {

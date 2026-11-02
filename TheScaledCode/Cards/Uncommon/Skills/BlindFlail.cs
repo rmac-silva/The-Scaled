@@ -18,7 +18,7 @@ public class BlindFlail : TheScaledCard
 
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromAffliction<Muddied>().First()];
+        [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(3)];
 

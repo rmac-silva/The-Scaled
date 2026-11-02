@@ -15,7 +15,7 @@ public class MudBath : TheScaledCard
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Mud>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Mud>(true)];
 
     protected override bool HasEnergyCostX => true;
 
@@ -26,7 +26,7 @@ public class MudBath : TheScaledCard
         int blockAmount = base.DynamicVars.Block.IntValue * num;
         await CreatureCmd.GainBlock(Owner.Creature,blockAmount,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move,cardPlay);
 
-        await Mud.AddMudCard(PileType.Draw,num,Owner);
+        await Mud.AddMudCard(PileType.Draw,num,Owner,upgraded:true);
 
     }
 

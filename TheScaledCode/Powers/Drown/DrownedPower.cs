@@ -9,11 +9,6 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace TheScaled.TheScaledCode.Powers.ReusablePowers;
 
-/// <summary>
-///
-/// Note: This needs to have a minimum value of 1, otherwise you will infinitely add strength
-/// to your character with any attack as it is always over the threshold.
-/// </summary>
 public class DrownedPower : TheScaledPower
 {
     public override PowerType Type => PowerType.Debuff;
@@ -55,11 +50,7 @@ public class DrownedPower : TheScaledPower
         }
     }
 
-    public override async Task AfterSideTurnStart(
-        CombatSide side,
-        IReadOnlyList<Creature> participants,
-        ICombatState combatState
-    )
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == CombatSide.Player)
         {

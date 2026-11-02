@@ -24,7 +24,7 @@ public class Engulf : TheScaledCard
 		new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) => card.Owner.PlayerCombatState?.AllCards.Count((CardModel c) => c.Affliction is Muddied) ?? 0)
     ];
     
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

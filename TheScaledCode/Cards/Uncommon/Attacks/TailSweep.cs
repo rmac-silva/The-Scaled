@@ -23,8 +23,8 @@ public class TailSweep : TheScaledCard
             }
         }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First()];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First(), HoverTipFactory.FromCard<Mud>()];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         

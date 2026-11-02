@@ -31,7 +31,7 @@ public class BuriedTreasure : TheScaledCard
     protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(1)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromAffliction<Muddied>().First()];
+        [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -48,7 +48,7 @@ public class BuriedTreasure : TheScaledCard
             allCards = drawPile;
         }
 
-        var cards = await CardSelectCmd.FromSimpleGrid(
+        var pickedCards = await CardSelectCmd.FromSimpleGrid(
             choiceContext,
             allCards,
             Owner,
@@ -59,13 +59,14 @@ public class BuriedTreasure : TheScaledCard
             )
         );
 
-        if (cards is null || cards.Count() == 0)
+        if (pickedCards is null || pickedCards.Count() == 0)
         {
             return;
         }
-        foreach (CardModel card in cards)
+        foreach (CardModel card in pickedCards)
         {
             await CardPileCmd.Add(card, PileType.Hand);
+            card.SetToFreeThisTurn();
         }
         
     }

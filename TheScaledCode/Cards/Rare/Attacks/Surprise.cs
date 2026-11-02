@@ -9,7 +9,7 @@ using TheScaled.TheScaledCode.Afflictions;
 namespace TheScaled.TheScaledCode.Cards;
 public class Surprise : TheScaledCard
 {
-    public Surprise() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+    public Surprise() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
     }
 
@@ -20,7 +20,7 @@ public class Surprise : TheScaledCard
         new DamageVar(50,ValueProp.Move)
         ];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>().First(),HoverTipFactory.FromCard<Mud>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

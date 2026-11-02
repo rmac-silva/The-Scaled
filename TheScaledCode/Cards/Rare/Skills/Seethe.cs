@@ -23,7 +23,7 @@ public class Seethe : TheScaledCard
                 new CalculationExtraVar(1),
                 new CalculatedVar("ReplayAmount").WithMultiplier( (CardModel card, Creature? _) => CardPile.Get(PileType.Discard,card.Owner)?.Cards.Count((CardModel c) => c.Affliction != null && c.Affliction is Muddied) ?? 0)
             ];
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>(1).First(), HoverTipFactory.Static(StaticHoverTip.ReplayStatic), HoverTipFactory.FromKeyword(CardKeyword.Exhaust)];
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromAffliction<Muddied>(1).First(), HoverTipFactory.FromCard<Mud>(), HoverTipFactory.Static(StaticHoverTip.ReplayStatic)];
         public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
 
