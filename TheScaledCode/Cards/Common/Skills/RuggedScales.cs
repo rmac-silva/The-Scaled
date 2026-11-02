@@ -19,7 +19,7 @@ public class RuggedScales : SetupCard
 
     protected override SetupCardType CardSetupType => SetupCardType.Buff;
 
-    public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> data)
+    public override async Task AmbushEffect(AmbushMethodInfo info)
     {
         if(info.applier is null)
         {

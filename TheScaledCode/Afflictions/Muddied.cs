@@ -22,9 +22,18 @@ namespace TheScaled.TheScaledCode.Afflictions
             return true;
         }
 
+        public override Task AfterCardEnteredCombat(CardModel card)
+        {
+            if(card == base.Card && !card.Keywords.Contains(CardKeyword.Retain))
+            {
+                card.AddKeyword(CardKeyword.Retain);
+            }
+            return Task.CompletedTask;
+        }
+
+
         public override bool CanAfflict(CardModel card)
         {
-
             return CanAfflictMuddied(card);
         }
 

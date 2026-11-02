@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using TheScaled.TheScaledCode.Helpers;
 using TheScaled.TheScaledCode.Powers;
 namespace TheScaled.TheScaledCode.Cards;
@@ -16,13 +17,14 @@ public abstract class SetupCard : TheScaledCard
         Defensive,
         Buff,
         Debuff,
-        Mystery
+        Mystery,
+        Stun
     }
 
-    protected abstract SetupCardType CardSetupType { get;}
+    protected abstract SetupCardType CardSetupType { get; }
     protected IHoverTip AmbushHoverTip => HoverTipFactory.FromPower<SetupPower>();
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat([AmbushHoverTip]);
-    public virtual Dictionary<string,decimal> SetupData => new Dictionary<string, decimal>();
+    public virtual Dictionary<string, decimal> SetupData => new Dictionary<string, decimal>();
     protected SetupCard(int cost, CardType type, CardRarity rarity, TargetType target) : base(cost, type, rarity, target)
     {
         EventManager.OnSetupAdded += OnSetupPlayed;
@@ -35,20 +37,21 @@ public abstract class SetupCard : TheScaledCard
     /// <param name="choiceContext"></param>
     /// <param name="cardPlay"></param>
     /// <returns></returns>
-    protected async Task AddSetup( CardPlay cardPlay, Dictionary<string,decimal>? data = null)
+    protected async Task AddSetup(CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
         var ambush = GetAmbushPowerForApplier(base.Owner.Creature, cardPlay.Target);
 
-        if(ambush is null)
+        if (ambush is null)
         {
-            ModLog.Info(this,$"Applying Ambush at 0 for enemy {cardPlay.Target.Name}");
-            ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(),cardPlay.Target,1,base.Owner.Creature,this);
-            if(ambush != null)
+            ModLog.Info(this, $"Applying Ambush at 0 for enemy {cardPlay.Target.Name}");
+            ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(), cardPlay.Target, 1, base.Owner.Creature, this);
+            if (ambush != null)
             {
                 ambush.SetAmount(0);
-            } else
+            }
+            else
             {
                 return;
             }
@@ -56,22 +59,14 @@ public abstract class SetupCard : TheScaledCard
 
         if (ambush is not null)
         {
-            
             AmbushEntry entry;
+            entry = new AmbushEntry(AmbushEffect, this);
 
-            if(data is null)
-            {
-                entry = new AmbushEntry(AmbushEffect,this);
-            } else
-            {
-                entry = new AmbushEntry(AmbushEffect,this, data);
-            }
-        
-            await ambush.AddAmbushEffect(entry, GetHovertip(cardPlay.Target));
+            await ambush.AddAmbushEffect(entry, GetHovertip());
         }
     }
 
-    protected async Task AddSetupToAllEnemies( Dictionary<string, decimal>? data = null )
+    protected async Task AddSetupToAllEnemies()
     {
         ArgumentNullException.ThrowIfNull(base.CombatState, "wner.Creature.CombatState");
 
@@ -81,33 +76,25 @@ public abstract class SetupCard : TheScaledCard
         {
             var ambush = GetAmbushPowerForApplier(base.Owner.Creature, enemy);
 
-            if(ambush is null)
+            if (ambush is null)
             {
-                ModLog.Info(this,$"Applying Ambush at 0 for enemy {enemy.Name}");
-            ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(),enemy,1,base.Owner.Creature,this);
-            if(ambush != null)
-            {
-                ambush.SetAmount(0);
-            } else
-            {
-                return;
+                ModLog.Info(this, $"Applying Ambush at 0 for enemy {enemy.Name}");
+                ambush = await PowerCmd.Apply<Ambush>(new ThrowingPlayerChoiceContext(), enemy, 1, base.Owner.Creature, this);
+                if (ambush != null)
+                {
+                    ambush.SetAmount(0);
+                }
+                else
+                {
+                    return;
+                }
             }
-            }
-
             AmbushEntry entry;
-
-            if (data is null)
-            {
-                entry = new AmbushEntry(AmbushEffect, this);
-            }
-            else
-            {
-                entry = new AmbushEntry(AmbushEffect, this, data);
-            }
+            entry = new AmbushEntry(AmbushEffect, this);
 
             if (ambush is not null)
             {
-                await ambush.AddAmbushEffect(entry, GetHovertip(enemy));
+                await ambush.AddAmbushEffect(entry, GetHovertip());
             }
         }
     }
@@ -122,23 +109,13 @@ public abstract class SetupCard : TheScaledCard
         return;
     }
 
-    public abstract Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> data);
+    public abstract Task AmbushEffect(AmbushMethodInfo info);
 
-    public HoverTip GetHovertip(Creature target)
+    public HoverTip GetHovertip()
     {
-        var description = GetCleanSetupText(GetDescriptionForPile(PileType.Hand, target));
+        var description = new LocString("cards", $"THESCALED-{base.Id.Entry.ToUpperInvariant()}.setup");
 
-        return TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", description, CardSetupType);
-    }
-
-    /// <summary>
-    /// Specific override to replace the description manually, when we need to inject specific variables that won't be present on the card itself.
-    /// </summary>
-    /// <param name="descriptionOverride"></param>
-    /// <returns></returns>
-    public HoverTip GetHovertip(string descriptionOverride)
-    {
-        return TooltipHelper.CreateHoverTooltip($"Setup ({base.Title})", descriptionOverride, CardSetupType);
+        return TooltipHelper.CreateSmartHoverTooltip($"Setup ({base.Title})", description, CardSetupType);
     }
 
 
@@ -160,7 +137,7 @@ public abstract class SetupCard : TheScaledCard
             setupIndex = input.IndexOf("[gold]Setup[/gold] ALL enemies:", StringComparison.OrdinalIgnoreCase);
         }
 
-        if(setupIndex != -1)
+        if (setupIndex != -1)
         {
             var textWithoutSetup = input.Substring(setupIndex + "[gold]Setup[/gold]:".Length);
             int positionOfNewLine = textWithoutSetup.IndexOf("\n");
@@ -185,9 +162,9 @@ public abstract class SetupCard : TheScaledCard
         }
         catch (Exception)
         {
-            
+
             return null;
-        }   
+        }
     }
 
 }

@@ -41,9 +41,6 @@
   "THESCALED-AMBUSH_NEXT_TURN.description": "Adds [gold]Ambush[/gold] at the start of your next turn.",
   "THESCALED-AMBUSH_NEXT_TURN.smartDescription": "Adds [blue]{Amount}[/blue] [gold]Ambush[/gold] at the start of your next turn.",
   "THESCALED-AMBUSH_NEXT_TURN.title": "Ambush Next Turn",
-  "THESCALED-PURSUIT_POWER.description": "The next card you play cost 1E less.",
-  "THESCALED-PURSUIT_POWER.smartDescription": "The next [blue]{Amount}[/blue] {Amount:plural:card|cards} you play cost 1E less.",
-  "THESCALED-PURSUIT_POWER.title": "Pursuit",
   "THESCALED-ADVANTAGE_POWER.description": "The first Setup you apply each turn is applied an additional time.",
   "THESCALED-ADVANTAGE_POWER.smartDescription": "The first Setup you apply each turn is applied an additional time.",
   "THESCALED-ADVANTAGE_POWER.title": "Advantage",
@@ -56,5 +53,8 @@
   "THESCALED-CLIMAX_JUMPING_POWER.description": "This creature takes [blue]{DamageMult}[/blue] times the damage from other players and attacks are played [blue]{CardMult}[/blue] extra times this turn.",
   "THESCALED-CLIMAX_JUMPING_POWER.remoteDescription": "You deal [blue]{DamageMult}[/blue] times the damage to this enemy, and attacks are played [blue]{CardMult}[/blue] extra times because of [gold]{Applier}[/gold].",
   "THESCALED-CLIMAX_JUMPING_POWER.smartDescription": "Other allies deal [blue]{DamageMult:diff()}[/blue] times more damage to this enemy and attacks are played [blue]{PlayMult:diff()}[/blue] extra times this turn.",
-  "THESCALED-CLIMAX_JUMPING_POWER.title": "Climax Jumping"
+  "THESCALED-CLIMAX_JUMPING_POWER.title": "Climax Jumping",
+  "THESCALED-HUNTERS_MARK_POWER.description": "The next attack against this enemy deals double damage.",
+  "THESCALED-HUNTERS_MARK_POWER.smartDescription": "The next [blue]{Amount}[/blue] {Amount:plural:attack|attacks} against this enemy deals double damage.",
+  "THESCALED-HUNTERS_MARK_POWER.title": "Hunter's Mark"
 }

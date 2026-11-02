@@ -19,20 +19,11 @@ public struct AmbushEntry
 {
     public AmbushEffect effect;
     public CardModel source;
-    public Dictionary<string, decimal> data;
 
     public AmbushEntry(AmbushEffect e, CardModel src)
     {
-        this.effect = e;
-        this.source = src;
-        this.data = new Dictionary<string, decimal>();
-    }
-
-    public AmbushEntry(AmbushEffect e, CardModel src, Dictionary<string, decimal> data)
-    {
-        this.effect = e;
-        this.source = src;
-        this.data = data;
+        effect = e;
+        source = src;
     }
 }
 
@@ -50,7 +41,7 @@ public struct AmbushMethodInfo
     }
 }
 
-public delegate Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> data);
+public delegate Task AmbushEffect(AmbushMethodInfo info);
 
 public class Ambush : TheScaledPower
 {
@@ -148,7 +139,7 @@ public class Ambush : TheScaledPower
         // Do the registered effects last, since they can re-add setups & such
         foreach (var entry in savedListOfEffects)
         {
-            await entry.effect(info, entry.data);
+            await entry.effect(info);
         }
 
         ClearResetEffects();

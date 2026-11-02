@@ -1,93 +1,66 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using TheScaled.TheScaledCode.Powers;
 
 namespace TheScaled.TheScaledCode.Cards;
 
+  
 public class Inertia : SetupCard
 {
-    public Inertia() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public Inertia() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
-
-    private string dummy_tooltip = "[gold]Setup[/gold]: Deal {0} damage, then reapply this [gold]Setup[/gold] with 50% additional damage.";
+    bool _applied = false;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("AmbushEffect", 4)];
-
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered), new DynamicVar("DamageIncrease", 6m)];
     protected override SetupCardType CardSetupType => SetupCardType.Offensive;
-
-    public override Dictionary<string, decimal> SetupData => new Dictionary<string, decimal>(1)
-    {
-        { "damage", base.DynamicVars["AmbushEffect"].BaseValue }
-    };
-
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-
-        await DamageCmd
-            .Attack(base.DynamicVars.Damage.BaseValue)
-            .FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
-        
-        await AddSetup(cardPlay,SetupData);
+        await AddSetup(cardPlay);
+        _applied = true;
 
     }
 
-    public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> data)
+    public override async Task AmbushEffect(AmbushMethodInfo info)
     {
-        if (info.applier is null)
-        {
-            ModLog.Warning(this, "Applier for AmbushMethodInfo was null, which should not happen.");
-            return;
-        }
-
-        // Safely check for data and perform a single dictionary lookup
-        if (data != null && data.TryGetValue("damage", out decimal damage))
-        {
-            await CreatureCmd.Damage(
-                info.choiceContext,
-                info.target,
-                damage,
-                MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,
-                info.applier
-            );
-
-            // Add a new setup effect with increased damage
-            var ambushPower = GetAmbushPowerForApplier(base.Owner.Creature,info.target);
-
-            if (ambushPower != null)
-            {
-                var newData = new Dictionary<string, decimal>(1)
-                {
-                    ["damage"] = damage * 1.5m
-                };
-
-                var newEntry = new AmbushEntry(this.AmbushEffect, this, newData);
-
-                var tt = dummy_tooltip.Replace("{0}",((int)newData["damage"]).ToString());
-
-                await ambushPower.AddAmbushEffect(newEntry, GetHovertip(tt));
-            }
-        }
-        else
-        {
-            ModLog.Error(
-                this,
-                "Inertia needs parameter \"damage\" to be defined in its data sources. But none was found!",
-                new KeyNotFoundException("No key 'damage' found for Inertia's data Dictionary.")
-            );
-        }
+        await CreatureCmd.Damage(
+            info.choiceContext,
+            info.target,
+            base.DynamicVars.Damage.IntValue,
+            MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,
+            base.Owner.Creature
+        );
+        _applied = false;
+        return;
     }
+
+    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    {
+       if(side == CombatSide.Player && _applied)
+        {
+            base.DynamicVars.Damage.BaseValue += base.DynamicVars["DamageIncrease"].IntValue;
+        }
+        return Task.CompletedTask;
+    }
+
+    protected override void AfterCloned()
+    {
+        base.AfterCloned();
+        _applied = false;
+    }
+
+
 
     protected override void OnUpgrade()
     {
-        base.EnergyCost.UpgradeBy(-1);
+        DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars["DamageIncrease"].UpgradeValueBy(3);
     }
 }

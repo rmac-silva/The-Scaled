@@ -3,6 +3,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using static TheScaled.TheScaledCode.Cards.SetupCard;
@@ -18,6 +19,7 @@ public static class TooltipHelper
     public static readonly string BuffIcon = ImageHelper.GetImagePath("atlases/intent_atlas.sprites/intent_buff.tres");
     public static readonly string DebuffIcon = ImageHelper.GetImagePath("atlases/intent_atlas.sprites/intent_debuff.tres");
     public static readonly string MysteryIcon = ImageHelper.GetImagePath("atlases/intent_atlas.sprites/intent_unknown.tres");
+    public static readonly string Stun = ImageHelper.GetImagePath("atlases/intent_atlas.sprites/intent_stun.tres");
 
     /// <summary>
     /// Creates a new HoverTip instance with the specified title, description, debuff and possible Texture2D Icon.
@@ -59,7 +61,7 @@ public static class TooltipHelper
     /// <param name="iconType"></param>
     /// <param name="isDebuff"></param>
     /// <returns></returns>
-    public static HoverTip CreateHoverTooltip(String title, String description, SetupCardType iconType, bool isDebuff = false)
+    public static HoverTip CreateHoverTooltip(string title, string description, SetupCardType iconType, bool isDebuff = false)
     {
         var baseTooltip = new HoverTip(
             ModelDb.Power<StrengthPower>(),
@@ -82,6 +84,30 @@ public static class TooltipHelper
         return newTooltip;
     }
 
+    public static HoverTip CreateSmartHoverTooltip(
+        string title,
+        LocString description,
+        SetupCardType iconType
+        )
+    {
+        var tooltip = new HoverTip(
+            new LocString("cards","THESCALED-STRIKE_SCALED.title"),
+            description
+        )
+        {
+            Id = $"CardTracker_SetupTooltip_{title.GetHashCode()}",
+            IsSmart = true,
+        };
+
+        var traverse = Traverse.Create(tooltip);
+        traverse.Property("Title").SetValue(title);
+        traverse.Property("Icon").SetValue(
+            PreloadManager.Cache.GetTexture2D(GetIconPathForSetupCardType(iconType))
+        );
+
+        return traverse.GetValue<HoverTip>();
+    }
+
     private static string GetIconPathForSetupCardType(SetupCardType cardType)
     {
         return cardType switch
@@ -91,6 +117,7 @@ public static class TooltipHelper
             SetupCardType.Buff => BuffIcon,
             SetupCardType.Debuff => DebuffIcon,
             SetupCardType.Mystery => MysteryIcon,
+            SetupCardType.Stun => Stun,
             _ => throw new ArgumentOutOfRangeException(nameof(cardType), cardType, null)
         };
     }

@@ -10,6 +10,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
   
   
+  
 public class CalculatedStrike : TheScaledCard
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
@@ -17,9 +18,9 @@ public class CalculatedStrike : TheScaledCard
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(3m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<Ambush>(2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(7m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<Ambush>(1)];
 
-    public CalculatedStrike() : base(0, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)
+    public CalculatedStrike() : base(1, CardType.Attack, CardRarity.Common,TargetType.AnyEnemy)
     {
     }
 

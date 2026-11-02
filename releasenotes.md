@@ -1,13 +1,11 @@
 **Card Changes**:
+- Reworked Calculated Strike ~~0~~1E, Retain. Deal ~~6(9)~~7(10) damage. Ambush ~~5~~1(2).
+- Reworked Concussion ~~Common~~Rare ~~1~~3(2)E ~~Attack~~Skill: ~~Deal 8 damage. Setup: Apply 1(2) Vulnerable and 1(2) Frail.~~ Setup: Stun the enemy. Exhaust.
+- Reworked Hunter's Mark: ~~2(1) Cost Rare Attack: Deal 4 damage. Setup: Deal 15 damage and reapply this Setup. Exhaust.~~ 1(0) Cost Uncommon Skill: Setup: The next attack against this enemy deals double damage.
+- Reworked Inertia, ~~1 Cost Rare Attack: Deal 4 damage. Setup: Deal 8(10) damage, then reapply this Setup with double damage. Exhaust.~~ 1 Cost Uncommon Skill: Setup: deal 6(9) damage, at the end of your turn increase this damage by 6(9). Exhaust
 
-**Relics**
-- Added 'Sticks and Stones', Whenever you trigger Ambush, deal 6 damage to ALL enemies.
-- Added 'The Loo', Whenever you apply drown, apply 1 more
-
-**Potions**
-- Added Potion of Water, Apply 10 Drown to an enemy.
-- Added Pocket Bush, Trigger [gold]Ambush[/gold] on an enemy.
-- Added Jar of Dirt, Add 3 [gold]Upgraded Mud[/gold] to your hand.
+**Programming**
+- Remade Setup tooltips into their own separate tooltips under cards.json localization. Each setup card now needs a .setup entry.
 
 **Card Art**:
 - Reworked file structure to lose the big version of powers and relics.
