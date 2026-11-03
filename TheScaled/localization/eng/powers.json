@@ -56,5 +56,8 @@
   "THESCALED-CLIMAX_JUMPING_POWER.title": "Climax Jumping",
   "THESCALED-HUNTERS_MARK_POWER.description": "The next attack against this enemy deals double damage.",
   "THESCALED-HUNTERS_MARK_POWER.smartDescription": "The next [blue]{Amount}[/blue] {Amount:plural:attack|attacks} against this enemy deals double damage.",
-  "THESCALED-HUNTERS_MARK_POWER.title": "Hunter's Mark"
+  "THESCALED-HUNTERS_MARK_POWER.title": "Hunter's Mark",
+  "THESCALED-SUFFOCATE_POWER.description": "At the start of your turn apply 1 [gold]Ambush[/gold] to all enemies.",
+  "THESCALED-SUFFOCATE_POWER.smartDescription": "At the start of your turn apply {Amount} [gold]Ambush[/gold] to all enemies.",
+  "THESCALED-SUFFOCATE_POWER.title": "Suffocate"
 }

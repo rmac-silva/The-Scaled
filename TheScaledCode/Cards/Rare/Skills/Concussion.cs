@@ -2,8 +2,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using TheScaled.TheScaledCode.Powers;
 
@@ -11,6 +9,7 @@ namespace TheScaled.TheScaledCode.Cards;
 
   
   
+
 public class Concussion : SetupCard
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip, StunIntent.GetStaticHoverTip()];
@@ -33,7 +32,7 @@ public class Concussion : SetupCard
         EnergyCost.UpgradeBy(-1);
     }
 
-    public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string, decimal> _)
+    public override async Task AmbushEffect(AmbushMethodInfo info)
     {
         if(info.target is null)
         {

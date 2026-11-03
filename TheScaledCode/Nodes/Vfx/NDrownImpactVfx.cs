@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
