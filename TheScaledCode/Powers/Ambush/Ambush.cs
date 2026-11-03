@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Runs;
+using TheScaled.TheScaledCode.Cards;
 
 namespace TheScaled.TheScaledCode.Powers;
 
@@ -20,9 +21,9 @@ namespace TheScaled.TheScaledCode.Powers;
 public struct AmbushEntry
 {
     public AmbushEffect effect;
-    public CardModel source;
+    public SetupCard source;
 
-    public AmbushEntry(AmbushEffect e, CardModel src)
+    public AmbushEntry(AmbushEffect e, SetupCard src)
     {
         effect = e;
         source = src;
@@ -180,7 +181,7 @@ public class Ambush : TheScaledPower
     /// This is called by Setup cards to register their effects.
     /// </summary>
     /// <param name="effect"></param>
-    public async Task AddAmbushEffect(AmbushEntry effect, HoverTip hoverTip)
+    public async Task AddAmbushEffect(AmbushEntry effect)
     {
         if (base.Owner is null || base.Applier is null)
         {
@@ -208,7 +209,7 @@ public class Ambush : TheScaledPower
         {
             return;
         }
-        setupPower.AddHovertip(hoverTip);
+        setupPower.AddHovertip(effect.source.GetHovertip);
 
         EffectsForOwner.Add(effect);
     }
@@ -237,9 +238,7 @@ public class Ambush : TheScaledPower
             return;
         }
 
-        var hoverTip = setupPower.GetHoverTip($"Setup ({effect.source.Title})");
-
-        await AddAmbushEffect(effect,hoverTip);
+        await AddAmbushEffect(effect);
     }
 
     /// <summary>

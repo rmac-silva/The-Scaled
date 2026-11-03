@@ -69,8 +69,8 @@ public class Maelstrom : TheScaledCard
 
                 if(ambPwr != null && c is SetupCard)
                 {
-                    var ambEntry = new AmbushEntry(setupCard.AmbushEffect,setupCard,setupCard.SetupData);
-                    await ambPwr.AddAmbushEffect(ambEntry,setupCard.GetHovertip(cardPlay.Target));
+                    var ambEntry = new AmbushEntry(setupCard.AmbushEffect,setupCard);
+                    await ambPwr.AddAmbushEffect(ambEntry);
                 }
             }
 

@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using TheScaled.TheScaledCode.Helpers;
 using TheScaled.TheScaledCode.Powers;
 namespace TheScaled.TheScaledCode.Cards;
@@ -62,7 +63,7 @@ public abstract class SetupCard : TheScaledCard
             AmbushEntry entry;
             entry = new AmbushEntry(AmbushEffect, this);
 
-            await ambush.AddAmbushEffect(entry, GetHovertip());
+            await ambush.AddAmbushEffect(entry);
         }
     }
 
@@ -94,7 +95,7 @@ public abstract class SetupCard : TheScaledCard
 
             if (ambush is not null)
             {
-                await ambush.AddAmbushEffect(entry, GetHovertip());
+                await ambush.AddAmbushEffect(entry);
             }
         }
     }
@@ -113,8 +114,11 @@ public abstract class SetupCard : TheScaledCard
 
     public HoverTip GetHovertip()
     {
-        var description = new LocString("cards", $"THESCALED-{base.Id.Entry.ToUpperInvariant()}.setup");
-
+        var description = new LocString("cards", $"{base.Id.Entry.ToUpperInvariant()}.setup");
+        foreach (var dynamicVar in base.DynamicVars)
+        {
+            description.Add(dynamicVar.Value);
+        }
         return TooltipHelper.CreateSmartHoverTooltip($"Setup ({base.Title})", description, CardSetupType);
     }
 

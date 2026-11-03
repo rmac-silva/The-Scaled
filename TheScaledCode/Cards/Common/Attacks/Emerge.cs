@@ -50,14 +50,14 @@ public class Emerge : CustomCardModel
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(cardModel, PileType.Draw, Owner,CardPilePosition.Random));
     }
 
-    public override Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
+    public override async Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
     {
         if(card == this)
         {
-            CardCmd.Afflict<Muddied>(this, 1);
+            await Muddied.AfflictMuddied(card);
         }
 
-        return Task.CompletedTask;
+        return;
     }
 
 

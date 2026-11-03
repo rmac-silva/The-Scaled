@@ -67,5 +67,17 @@ namespace TheScaled.TheScaledCode.Afflictions
 
             return true;
         }
+
+        public static async Task<CardModel> AfflictMuddied(CardModel card)
+        {
+            if (!CanAfflictMuddied(card))
+            {
+                throw new InvalidOperationException($"Cannot afflict card {card.Title} with Muddied.");
+            }
+
+            await CardCmd.Afflict<Muddied>(card,1);
+            card.AddKeyword(CardKeyword.Retain);
+            return card;
+        }
     }
 }

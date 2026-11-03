@@ -45,7 +45,7 @@ public class Inertia : SetupCard
     {
        if(side == CombatSide.Player && _applied)
         {
-            base.DynamicVars.Damage.BaseValue += base.DynamicVars["DamageIncrease"].IntValue;
+            DynamicVars.Damage.BaseValue += base.DynamicVars["DamageIncrease"].IntValue;
         }
         return Task.CompletedTask;
     }

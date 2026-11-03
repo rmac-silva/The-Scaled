@@ -42,7 +42,7 @@ public class Chomp : SetupCard
     }
 
 
-    public override async Task AmbushEffect(AmbushMethodInfo info, Dictionary<string,decimal> _)
+    public override async Task AmbushEffect(AmbushMethodInfo info)
     {
         if (info.target == null)
         {

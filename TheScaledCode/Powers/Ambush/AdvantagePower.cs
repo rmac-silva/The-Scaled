@@ -44,8 +44,8 @@ public class AdvantagePower : TheScaledPower
         if(ambPwr != null)
         {
             _hasTriggeredThisTurn = true;
-            var ambEntry = new AmbushEntry(setupCard.AmbushEffect,setupCard,setupCard.SetupData);
-            await ambPwr.AddAmbushEffect(ambEntry,setupCard.GetHovertip(cardPlay.Target));
+            var ambEntry = new AmbushEntry(setupCard.AmbushEffect,setupCard);
+            await ambPwr.AddAmbushEffect(ambEntry);
             CardCmd.Preview(cardPlay.Card,1f,CardPreviewStyle.MessyLayout);
         }
     }

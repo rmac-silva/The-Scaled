@@ -13,7 +13,9 @@ public class SetupPower : TheScaledPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
     public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier; //One per player, stacking
-    private IEnumerable<HoverTip> HoverTipsForOwner => _extraHoverTips;
+    private List<Func<HoverTip>> _extraHoverTips = [];
+    private IEnumerable<HoverTip> HoverTipsForOwner =>
+    _extraHoverTips.Select(getHoverTip => getHoverTip());
 
     public override LocString Title => getFormattedTitle();
 
@@ -57,8 +59,6 @@ public class SetupPower : TheScaledPower
         }
     }
 
-    private List<HoverTip> _extraHoverTips = [];
-
     /// <summary>
     /// Removes the setup power from the creature, including any extra hover tips that were added.
     /// This is called when an ambush is triggered or when the combat ends.
@@ -69,9 +69,9 @@ public class SetupPower : TheScaledPower
         base.RemoveInternal();
     }
 
-    public void AddHovertip(HoverTip hoverTip)
+    public void AddHovertip(Func<HoverTip> getHoverTip)
     {
-        _extraHoverTips.Add(hoverTip);
+        _extraHoverTips.Add(getHoverTip);
         EventManager.InvokeSetupAdded(base.Applier!.Player!);
         InvokeDisplayAmountChanged();
     }

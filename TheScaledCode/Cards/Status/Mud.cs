@@ -82,7 +82,7 @@ public class Mud : CustomCardModel
             {
                 if (Muddied.CanAfflictMuddied(card))
                 {
-                    await CardCmd.Afflict<Muddied>(card, 1);
+                    await Muddied.AfflictMuddied(card);
                 }
             }
 

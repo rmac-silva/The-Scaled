@@ -1,0 +1,2 @@
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QReworked Left Hook, 0 Cost Uncommon Attack: Deal 4(6) Damage.\\E$"}
+{"rule":"PCT_SINGULAR_NOUN_PLURAL_VERB_AGREEMENT","sentence":"^\\QReworked Bide, Next turn draw 2(3) cards.\\E$"}

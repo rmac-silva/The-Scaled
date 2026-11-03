@@ -26,7 +26,7 @@ public class Squelsh : TheScaledCard
         var cardsDrawn = await CardPileCmd.Draw(choiceContext,base.DynamicVars.Cards.IntValue, base.Owner);
         foreach (var card in cardsDrawn)
         {
-            await CardCmd.Afflict<Muddied>(card,1);
+            await Muddied.AfflictMuddied(card);
         }
     }
 
