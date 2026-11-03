@@ -14,18 +14,19 @@ public class Lurk : TheScaledCard
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(11m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("EnemyAmbushGain", 3m)];
+        [new BlockVar(11m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<Ambush>(2)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
         await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block,cardPlay);
-        await PowerCmd.Apply<Ambush>(choiceContext, cardPlay.Target, base.DynamicVars["EnemyAmbushGain"].BaseValue, base.Owner.Creature,this);
+        await PowerCmd.Apply<Ambush>(choiceContext, cardPlay.Target, base.DynamicVars["Ambush"].BaseValue, base.Owner.Creature,this);
 
     }
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.Block.UpgradeValueBy(3m);
+        base.DynamicVars.Block.UpgradeValueBy(5m);
+        base.DynamicVars["Ambush"].UpgradeValueBy(1);
     }
 }

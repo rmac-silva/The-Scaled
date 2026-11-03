@@ -12,7 +12,7 @@ namespace TheScaled.TheScaledCode.Cards;
 public class Chomp : SetupCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [new DamageVar(8m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<VulnerablePower>(2), new PowerVar<WeakPower>(2)];
+    [new DamageVar(9m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new PowerVar<VulnerablePower>(2), new PowerVar<WeakPower>(2)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip, HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<WeakPower>()];
 
     protected override SetupCardType CardSetupType { get => SetupCardType.Debuff; }

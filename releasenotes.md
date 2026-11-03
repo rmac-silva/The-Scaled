@@ -3,6 +3,8 @@
 - Muddied: Muddied cards now gain Retain.
 
 **Card Changes**:
+- Updated Chomp, Deal 9(12) damage. Setup: Apply 2 Vulnerable and 2 Weak.
+- Updated Lurk, Gain 11(16) Block. Ambush 2(3).
 - Reworked Calculated Strike ~~0~~1E, Retain. Deal ~~6(9)~~7(10) damage. Ambush ~~5~~1(2).
 - Reworked Concussion Rare 3(2)E Skill: Setup: Stun the enemy. Exhaust.
 - Reworked Hunter's Mark: 1(0) Cost Uncommon Skill: Setup: The next attack against this enemy deals double damage.
