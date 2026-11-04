@@ -25,7 +25,7 @@ public class Whirlpool : TheScaledCard
             }
         }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new RepeatVar(2)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>()];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -36,7 +36,7 @@ public class Whirlpool : TheScaledCard
             .Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this,cardPlay)
             .TargetingAllOpponents(CombatState)
-            .WithHitCount(hitCount + 1)
+            .WithHitCount(hitCount + DynamicVars.Repeat.IntValue)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 

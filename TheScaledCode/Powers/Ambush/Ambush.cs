@@ -32,13 +32,11 @@ public struct AmbushEntry
 
 public struct AmbushMethodInfo
 {
-    public Creature? applier;
     public Creature target;
     public PlayerChoiceContext choiceContext;
 
-    public AmbushMethodInfo(Creature? applier, Creature target, PlayerChoiceContext choiceContext)
+    public AmbushMethodInfo(Creature target, PlayerChoiceContext choiceContext)
     {
-        this.applier = applier;
         this.target = target;
         this.choiceContext = choiceContext;
     }
@@ -107,8 +105,7 @@ public class Ambush : TheScaledPower
         {
             await TriggerAmbush(
                 new AmbushMethodInfo(
-                    applier: base.Applier,
-                    target: base.Owner,
+                    target: Owner,
                     choiceContext: choiceContext
                 )
             );
@@ -169,8 +166,7 @@ public class Ambush : TheScaledPower
     {
         await TriggerAmbush(
             new AmbushMethodInfo(
-                applier: base.Applier,
-                target: base.Owner,
+                target: Owner,
                 choiceContext: choiceContext ?? new ThrowingPlayerChoiceContext()
             )
         );

@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.ValueProps;
 using TheScaled.TheScaledCode.Powers.ReusablePowers;
 
 namespace TheScaled.TheScaledCode.Cards
@@ -18,8 +19,7 @@ public class Trip : TheScaledCard
     {
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
-                new PowerVar<VulnerablePower>(1),
-                new PowerVar<WeakPower>(1),
+                new BlockVar(5,ValueProp.Move),
                 new PowerVar<DrownedPower>(5)
             ];
         protected override bool ShouldGlowGoldInternal => base.CombatState?.HittableEnemies.Any((Creature e) => !e.HasPower<DrownedPower>()) ?? false;
@@ -32,8 +32,7 @@ public class Trip : TheScaledCard
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target,base.DynamicVars["VulnerablePower"].IntValue,Owner.Creature,this);
-            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target,base.DynamicVars["WeakPower"].IntValue,Owner.Creature,this);
+            await CreatureCmd.GainBlock(Owner.Creature, base.DynamicVars.Block,cardPlay);
             
             if(cardPlay.Target.GetPower<DrownedPower>() is null)
             {
@@ -45,7 +44,8 @@ public class Trip : TheScaledCard
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars["DrownedPower"].UpgradeValueBy(2);
+            base.DynamicVars["DrownedPower"].UpgradeValueBy(3);
+            base.DynamicVars.Block.UpgradeValueBy(3);
         }
     }
 }
