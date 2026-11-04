@@ -17,7 +17,7 @@ public class PredatoryInstinct : TheScaledRelic
     public override RelicModel GetUpgradeReplacement() => ModelDb.Relic<ApexInstinct>();
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("EnemyAmbushGain", 2m)];
+        [new DynamicVar("EnemyAmbushGain", 3m)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>(base.DynamicVars["EnemyAmbushGain"].IntValue)];
 

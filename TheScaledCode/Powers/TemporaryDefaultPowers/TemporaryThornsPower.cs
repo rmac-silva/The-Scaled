@@ -83,9 +83,9 @@ public abstract class TemporaryThornsPower : CustomPowerModel, ITemporaryPower
 		{
 			if (!IsPositive)
 			{
-				return "TEMPORARY_STRENGTH_DOWN.smartDescription";
+				return "THESCALED-TEMPORARY_THORNS_DOWN.smartDescription";
 			}
-			return "TEMPORARY_STRENGTH_POWER.smartDescription";
+			return "THESCALED-TEMPORARY_THORNS.smartDescription";
 		}
 	}
 
@@ -149,7 +149,7 @@ public abstract class TemporaryThornsPower : CustomPowerModel, ITemporaryPower
 			}
 			else
 			{
-				await PowerCmd.Apply<ThornsPower>(choiceContext, base.Owner, (decimal)Sign * amount, applier, cardSource, silent: true);
+				await PowerCmd.Apply<DexterityPower>(choiceContext, base.Owner, (decimal)Sign * amount, applier, cardSource, silent: true);
 			}
 		}
 	}
@@ -160,7 +160,7 @@ public abstract class TemporaryThornsPower : CustomPowerModel, ITemporaryPower
 		{
 			Flash();
 			await PowerCmd.Remove(this);
-			await PowerCmd.Apply<ThornsPower>(choiceContext, base.Owner, -Sign * base.Amount, base.Owner, null);
+			await PowerCmd.Apply<DexterityPower>(choiceContext, base.Owner, -Sign * base.Amount, base.Owner, null);
 		}
 	}
 }

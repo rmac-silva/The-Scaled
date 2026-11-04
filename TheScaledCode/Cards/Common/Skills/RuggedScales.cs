@@ -21,13 +21,7 @@ public class RuggedScales : SetupCard
 
     public override async Task AmbushEffect(AmbushMethodInfo info)
     {
-        if(info.applier is null)
-        {
-            ModLog.Warning(this,$"Ambush effect applier was null, which shouldn't happen!");
-            return;
-        }
-        
-        await CreatureCmd.GainBlock(info.applier,base.DynamicVars["AmbushEffect"].IntValue,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
+        await CreatureCmd.GainBlock(Owner.Creature,base.DynamicVars["AmbushEffect"].IntValue,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
     }
 
 

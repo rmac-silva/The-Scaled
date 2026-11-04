@@ -122,40 +122,6 @@ public abstract class SetupCard : TheScaledCard
         return TooltipHelper.CreateSmartHoverTooltip($"Setup ({base.Title})", description, CardSetupType);
     }
 
-
-
-    /// <summary>
-    /// Strips BBcode tags
-    /// </summary>
-    /// <param name="input"></param>
-    /// <returns></returns>
-    public static string GetCleanSetupText(string input)
-    {
-        //Strip out all BBCode style tags
-
-        //Setup finding
-        int setupIndex = input.IndexOf("[gold]Setup[/gold]:", StringComparison.OrdinalIgnoreCase);
-
-        if (setupIndex == -1) //Look for ALL enemies version
-        {
-            setupIndex = input.IndexOf("[gold]Setup[/gold] ALL enemies:", StringComparison.OrdinalIgnoreCase);
-        }
-
-        if (setupIndex != -1)
-        {
-            var textWithoutSetup = input.Substring(setupIndex + "[gold]Setup[/gold]:".Length);
-            int positionOfNewLine = textWithoutSetup.IndexOf("\n");
-            if (positionOfNewLine == -1)
-            {
-                positionOfNewLine = textWithoutSetup.Length;
-            }
-
-            return textWithoutSetup.Substring(0, positionOfNewLine).Trim();
-        }
-
-        return string.Empty; // Return empty string if "Setup:" is not found
-    }
-
     public static Ambush? GetAmbushPowerForApplier(Creature owner, Creature c)
     {
         try

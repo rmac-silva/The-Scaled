@@ -11,7 +11,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class Inertia : SetupCard
 {
-    public Inertia() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public Inertia() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
     bool _applied = false;

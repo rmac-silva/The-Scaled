@@ -52,38 +52,6 @@ public static class TooltipHelper
         return newTooltip;
     }
 
-    /// <summary>
-    /// Creates a new HoverTip instance with the specified title, description, icon type, and debuff status.
-    /// Useful for creating HoverTips from scratch.
-    /// </summary>
-    /// <param name="title"></param>
-    /// <param name="description"></param>
-    /// <param name="iconType"></param>
-    /// <param name="isDebuff"></param>
-    /// <returns></returns>
-    public static HoverTip CreateHoverTooltip(string title, string description, SetupCardType iconType, bool isDebuff = false)
-    {
-        var baseTooltip = new HoverTip(
-            ModelDb.Power<StrengthPower>(),
-            "Some test description",
-            false
-        );
-
-        var newTooltip = baseTooltip with { Id = "CardTracker_CustomTip", IsSmart = false };
-
-        var traverse = Traverse.Create(newTooltip);
-
-        traverse.Property("Title").SetValue(title);
-        traverse.Property("Description").SetValue(description);
-
-        traverse.Property("Icon").SetValue(PreloadManager.Cache.GetTexture2D(GetIconPathForSetupCardType(iconType)));
-
-        newTooltip = traverse.GetValue<HoverTip>();
-        newTooltip.IsDebuff = isDebuff;
-        newTooltip.Id = $"CardTracker_CustomTip_{title.GetHashCode()}";
-        return newTooltip;
-    }
-
     public static HoverTip CreateSmartHoverTooltip(
         string title,
         LocString description,

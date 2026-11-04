@@ -10,7 +10,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class SmotheringPresence : TheScaledCard
 {
-    public SmotheringPresence() : base(3, CardType.Power, CardRarity.Rare, TargetType.None)
+    public SmotheringPresence() : base(2, CardType.Power, CardRarity.Rare, TargetType.None)
     {
     }
 

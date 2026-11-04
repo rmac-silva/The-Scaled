@@ -12,7 +12,7 @@ namespace TheScaled.TheScaledCode.Cards;
 
 public class Suffocate : TheScaledCard
 {
-    public Suffocate() : base(3, CardType.Power, CardRarity.Rare, TargetType.None)
+    public Suffocate() : base(1, CardType.Power, CardRarity.Rare, TargetType.None)
     {
     }
 

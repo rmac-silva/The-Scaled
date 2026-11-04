@@ -36,7 +36,7 @@ public class Respite : SetupCard
 
         public override async Task AmbushEffect(AmbushMethodInfo info)
         {
-            await PlayerCmd.GainEnergy(base.DynamicVars.Energy.IntValue, info.applier!.Player!);
+            await PlayerCmd.GainEnergy(base.DynamicVars.Energy.IntValue, Owner);
         }
     }
 }

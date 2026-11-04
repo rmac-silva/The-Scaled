@@ -11,11 +11,11 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class TidalShield : TheScaledCard
 {
-    public TidalShield() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.None)
+    public TidalShield() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.None)
     {
     }
     public override bool GainsBlock => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("BlockGain",1)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("BlockGain",2)];
 
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<DrownedPower>()];
