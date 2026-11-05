@@ -31,7 +31,7 @@ public class DwellingPower : TheScaledPower
         if(cardPlay.Card.Owner.Creature == Owner && cardPlay.Card is SetupCard)
         {
             //Gain Dexterity this turn equal to DexterityGain
-            await PowerCmd.Apply<TemporaryDexterityPower>(choiceContext,Owner, DynamicVars["DexterityGain"].IntValue, Owner, null);
+            await PowerCmd.Apply<DwellingDexterityPower>(choiceContext,Owner, DynamicVars["DexterityGain"].IntValue, Owner, null);
         }
     }
 

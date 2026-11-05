@@ -16,18 +16,18 @@ public class Dwelling : TheScaledCard
     public Dwelling() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.None)
     {
     }
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<TemporaryDexterityPower>(2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("DexterityGain", 2)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        (await PowerCmd.Apply<DwellingPower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this))?.IncreaseDexterityGain(DynamicVars["TemporaryDexterityPower"].IntValue);
+        (await PowerCmd.Apply<DwellingPower>(choiceContext, base.Owner.Creature, 1, base.Owner.Creature, this))?.IncreaseDexterityGain(DynamicVars["DexterityGain"].IntValue);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["TemporaryDexterityPower"].UpgradeValueBy(1);
+        DynamicVars["DexterityGain"].UpgradeValueBy(1);
     }
 
     

@@ -28,6 +28,8 @@ public class BellyFlop : SetupCard
         .FromCard(this, cardPlay)
         .TargetingAllOpponents(CombatState)
         .Execute(choiceContext);
+
+        await AddSetupToAllEnemies();
         
     }
     public override async Task AmbushEffect(AmbushMethodInfo info)

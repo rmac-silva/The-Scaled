@@ -24,7 +24,8 @@ public class LeftHook : SetupCard
         List<CardModel> generatedCards = [];
         for(int i = 0; i < DynamicVars.Cards.IntValue; i++)
         {
-            generatedCards.Add(Owner.Creature.CombatState!.CreateCard<LeftHook>(Owner));
+            CardModel card = CreateClone();
+            generatedCards.Add(card);
         }
         await CardPileCmd.AddGeneratedCardsToCombat(generatedCards,PileType.Hand,Owner);
     }

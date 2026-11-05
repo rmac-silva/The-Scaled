@@ -22,6 +22,7 @@
 - Added Nourishment, 1 Cost Rare Skill: Setup: Enemy loses 2(3) strength this turn. Gain 2(3) Strength this turn. 
 - Added Callback, 1(0) Cost Common Skill: Ambush 2. Play a random attack from your discard pile, then exhaust it.
 - The Hat is now 3
+
 **Programming**
 - Remade Setup tooltips into their own separate tooltips under cards.JSON localization. Each Setup card now needs a `.setup` entry. This allows us to have smart tooltips within Setup tooltips (that use variables).
 

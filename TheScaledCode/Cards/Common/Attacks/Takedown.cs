@@ -27,15 +27,15 @@ public class Takedown : TheScaledCard
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
 
-        NDrownImpactVfx? child = NDrownImpactVfx.Create(cardPlay.Target);
-        NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(child);
-        await PowerCmd.Apply<DrownedPower>(choiceContext, cardPlay.Target, base.DynamicVars["DrownedPower"].BaseValue, Owner.Creature,this);
         await DamageCmd
             .Attack(base.DynamicVars.Damage.BaseValue)
             .FromCard(this,cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+        NDrownImpactVfx? child = NDrownImpactVfx.Create(cardPlay.Target);
+        NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(child);
+        await PowerCmd.Apply<DrownedPower>(choiceContext, cardPlay.Target, base.DynamicVars["DrownedPower"].BaseValue, Owner.Creature,this);
     }
 
     protected override void OnUpgrade()

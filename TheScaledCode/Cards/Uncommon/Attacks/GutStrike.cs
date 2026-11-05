@@ -25,11 +25,12 @@ public class GutStrike : TheScaledCard
         new CalculationBaseVar(0),
         new ExtraDamageVar(6),
         new CalculatedDamageVar(ValueProp.Move)
-        .WithMultiplier((CardModel _, Creature? target) =>
+        .WithMultiplier((CardModel card, Creature? target) =>
             target is null
                 ? 0m
-                : SetupCard.GetAmbushPowerForApplier(Owner.Creature, target)
-                    ?.NumSetupsForCreature ?? 0m)
+                : target.Powers
+            .OfType<Ambush>()
+            .FirstOrDefault(power => power.Applier == card.Owner.Creature)?.NumSetupsForCreature ?? 0m)
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

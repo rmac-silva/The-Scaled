@@ -11,7 +11,7 @@ namespace TheScaled.TheScaledCode.Cards;
   
 public class Callback : TheScaledCard
 {
-    public Callback() : base(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
+    public Callback() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 

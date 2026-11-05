@@ -33,6 +33,7 @@ public class Surprise : TheScaledCard
             .Execute(choiceContext);
 
         CardCmd.ClearAffliction(this);
+        
     }
 
     protected override void OnUpgrade()
