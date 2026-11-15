@@ -38,18 +38,16 @@ public static class TooltipHelper
             false
         );
 
-        var newTooltip = baseTooltip with { Id = "CardTracker_CustomTip", IsSmart = false };
+        var traverse = Traverse.Create(baseTooltip);
 
-        var traverse = Traverse.Create(newTooltip);
+        traverse.Field("<Title>k__BackingField").SetValue(title);
+        traverse.Field("<Description>k__BackingField").SetValue(description);
+        traverse.Field("<Icon>k__BackingField").SetValue(icon);
+        traverse.Field("<IsDebuff>k__BackingField").SetValue(isDebuff);
+        traverse.Field("<Id>k__BackingField").SetValue($"CardTracker_CustomTip_{title.GetHashCode()}");
+        traverse.Field("<IsSmart>k__BackingField").SetValue(false);
 
-        traverse.Property("Title").SetValue(title);
-        traverse.Property("Description").SetValue(description);
-        traverse.Property("Icon").SetValue(icon);
-
-        newTooltip = traverse.GetValue<HoverTip>();
-        newTooltip.IsDebuff = isDebuff;
-        newTooltip.Id = $"CardTracker_CustomTip_{title.GetHashCode()}";
-        return newTooltip;
+        return traverse.GetValue<HoverTip>();
     }
 
     public static HoverTip CreateSmartHoverTooltip(
@@ -61,17 +59,15 @@ public static class TooltipHelper
         var tooltip = new HoverTip(
             new LocString("cards","THESCALED-STRIKE_SCALED.title"),
             description
-        )
-        {
-            Id = $"CardTracker_SetupTooltip_{title.GetHashCode()}",
-            IsSmart = true,
-        };
+        );
 
         var traverse = Traverse.Create(tooltip);
-        traverse.Property("Title").SetValue(title);
-        traverse.Property("Icon").SetValue(
+        traverse.Field("<Title>k__BackingField").SetValue(title);
+        traverse.Field("<Icon>k__BackingField").SetValue(
             PreloadManager.Cache.GetTexture2D(GetIconPathForSetupCardType(iconType))
         );
+        traverse.Field("<Id>k__BackingField").SetValue($"CardTracker_SetupTooltip_{title.GetHashCode()}");
+        traverse.Field("<IsSmart>k__BackingField").SetValue(true);
 
         return traverse.GetValue<HoverTip>();
     }

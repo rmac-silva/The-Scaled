@@ -81,7 +81,7 @@ public class TheScaled : PlaceholderCharacterModel
     private string Cookie_PackedIconPath => "cookie.png".RelicImagePath();
     private string Cookie_PackedIconOutlinePath => "cookie_outline.png".RelicImagePath();
     private string Cookie_BigIconPath => "cookie.png".RelicImagePath();
-
+    public override string CustomCharacterSelectTransitionPath => "res://materials/transitions/the_scaled_transition_mat.tres";
     public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
     public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
     public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
