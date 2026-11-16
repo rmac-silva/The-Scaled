@@ -74,7 +74,7 @@
   "THESCALED-COMPROMISE.title": "Compromise",
   "THESCALED-CAMOUFLAGE.description": "Gain {CalculationBase:diff()} [gold]Block[/gold].\nGain an additional {CalculationExtra:diff()} [gold]Block[/gold] for each [gold]Muddied[/gold] card in your [gold]Deck[/gold].{InCombat:\n(Gives {CalculatedBlock:diff()} [gold]Block[/gold])|}",
   "THESCALED-CAMOUFLAGE.title": "Camouflage",
-  "THESCALED-TAKEDOWN.description": "Deal {Damage:diff()} damage.\nApply {DrownedPower:diff()} [gold]Drown[/gold].",
+  "THESCALED-TAKEDOWN.description": "Apply {DrownedPower:diff()} [gold]Drown[/gold].\nDeal {Damage:diff()} damage.",
   "THESCALED-TAKEDOWN.title": "Takedown",
   "THESCALED-GUT_STRIKE.description": "Deals {ExtraDamage:diff()} damage for each [gold]Setup[/gold] on the enemy.{InCombat:\n(Deals {CalculatedDamage:diff()} damage)|}", 
   "THESCALED-GUT_STRIKE.title": "Gut Strike",

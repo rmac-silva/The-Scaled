@@ -19,7 +19,7 @@ public class Mud : CustomCardModel
         "res://TheScaled/images/card_portraits/big/mud.png";
     public override int MaxUpgradeLevel => 1;
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Exhaust];
+        [CardKeyword.Exhaust, CardKeyword.Ethereal];
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         HoverTipFactory.FromAffliction<Muddied>();
 
@@ -96,9 +96,9 @@ public class Mud : CustomCardModel
     /// <param name="pile"></param>
     /// <param name="amount"></param>
     /// <param name="owner"></param>
-    /// <param name="skipVisuals"></param>
+    /// <param name="upgraded"></param>
     /// <returns></returns>
-    public static async Task AddMudCard(PileType pile, int amount, Player owner, bool skipVisuals = false, bool upgraded = false)
+    public static async Task AddMudCard(PileType pile, int amount, Player owner, bool upgraded = false)
     {
         ArgumentNullException.ThrowIfNull(owner.Creature.CombatState, "owner.Creature.CombatState");
 
@@ -114,11 +114,6 @@ public class Mud : CustomCardModel
         }
         //Add the cards to the discard pile
         CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardsToCombat(list, pile, owner,CardPilePosition.Random));
-
-        if (!skipVisuals)
-        {
-            CardCmd.Preview(list, 0.4f);
-        }
         
         CardPile.Get(PileType.Draw,owner)?.InvokeContentsChanged();
     }

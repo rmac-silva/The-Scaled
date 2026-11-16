@@ -13,7 +13,7 @@ public partial class NSetupImpactVfx : Node2D
 {
 	
 	private Vector2 CloudShowDuration = new Vector2(0.4f, 0.65f);
-	public static readonly string scenePath = SceneHelper.GetScenePath("vfx/vfx_setup_impact");
+	public static readonly string scenePath = PathHelper.GetScenePathScaled("vfx/vfx_setup_impact");
 
 	[Export]
 	private Sprite2D[] _cloudImages = [];

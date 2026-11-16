@@ -11,7 +11,7 @@ namespace MegaCrit.Sts2.Core.Nodes.Vfx;
 
 public partial class NDrownImpactVfx : Node2D
 {
-	public static readonly string scenePath = SceneHelper.GetScenePath("vfx/vfx_drown_impact");
+	public static readonly string scenePath = PathHelper.GetScenePathScaled("vfx/vfx_drown_impact");
 
 	[Export]
 	private GpuParticles2D[] _impactParticles = [];

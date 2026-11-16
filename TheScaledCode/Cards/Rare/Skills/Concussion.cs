@@ -14,6 +14,7 @@ public class Concussion : SetupCard
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip, StunIntent.GetStaticHoverTip()];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override bool CanBeGeneratedInCombat => false;
 
     protected override SetupCardType CardSetupType => SetupCardType.Stun;
 

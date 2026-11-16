@@ -30,7 +30,7 @@ public static class TooltipHelper
     /// <param name="isDebuff"></param>
     /// <param name="icon"></param>
     /// <returns></returns>
-    public static HoverTip CreateHoverTooltip(String title, String description, bool isDebuff = false, Texture2D? icon = null)
+    public static HoverTip CreateHoverTooltip(string title, string description, bool isDebuff = false, Texture2D? icon = null)
     {
         var baseTooltip = new HoverTip(
             ModelDb.Power<StrengthPower>(),

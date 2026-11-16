@@ -16,7 +16,7 @@ public class MudBath : TheScaledCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(8,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromCard<Mud>(true)];
-
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override bool HasEnergyCostX => true;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

@@ -20,11 +20,12 @@ public class Callback : TheScaledCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<Ambush>(choiceContext, cardPlay.Target!, DynamicVars["Ambush"].IntValue, Owner.Creature, this);
-        var cards = PileType.Draw.GetPile(Owner).Cards.Where((CardModel c) => c.Type == CardType.Attack && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList();
+        var cards = PileType.Discard.GetPile(Owner).Cards.Where((CardModel c) => c.Type == CardType.Attack && !c.Keywords.Contains(CardKeyword.Unplayable)).ToList();
         CardModel? cardModel = Owner.RunState.Rng.Shuffle.NextItem(cards);
 			if (cardModel != null)
 			{
 				await CardCmd.AutoPlay(choiceContext, cardModel, null);
+                await CardCmd.Exhaust(choiceContext,cardModel);
 			}
     }
 
