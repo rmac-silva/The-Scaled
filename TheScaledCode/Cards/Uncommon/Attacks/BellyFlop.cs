@@ -19,8 +19,6 @@ public class BellyFlop : SetupCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(10,ValueProp.Move), new CardsVar(1)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip];
-    protected override SetupCardType CardSetupType => SetupCardType.Mystery;
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(CombatState, "CombatState");
@@ -29,20 +27,13 @@ public class BellyFlop : SetupCard
         .TargetingAllOpponents(CombatState)
         .Execute(choiceContext);
 
-        await AddSetupToAllEnemies();
+        await PowerCmd.Apply<BellyFlopSetup>(choiceContext, CombatState.HittableEnemies, 1, Owner.Creature, this);
         
     }
-    public override async Task AmbushEffect(AmbushMethodInfo info)
+
+    protected override void OnUpgrade()
     {
-        CardModel? cardModel = PileType.Draw.GetPile(base.Owner).Cards.Where((CardModel c) => !c.Keywords.Contains(CardKeyword.Unplayable)).ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle)
-				.FirstOrDefault();
-			if (cardModel == null)
-			{
-				cardModel = PileType.Draw.GetPile(base.Owner).Cards.ToList().StableShuffle(base.Owner.RunState.Rng.Shuffle).FirstOrDefault();
-			}
-			if (cardModel != null)
-			{
-				await CardCmd.AutoPlay(info.choiceContext, cardModel, null);
-			}
+        DynamicVars.Damage.UpgradeValueBy(5);
     }
+
 }

@@ -31,22 +31,4 @@ public abstract class TheScaledPower : CustomPowerModel
     /// Single, but you're suggested to use Single as it is more explicit about how it will work.
     /// </summary>
     public abstract override PowerStackType StackType { get; }
-
-    protected LocString getFormattedTitle() {
-        var title = new LocString("powers", base.Id.Entry + ".title");
-        var isSP = RunManager.Instance.IsSingleplayerOrFakeMultiplayer;
-
-        if (base.Applier?.Player is null || isSP)
-        {
-            title.Add("PlayerName", "");
-            return title;
-        }
-
-        string playerName = PlatformUtil.GetPlayerName(
-            RunManager.Instance.NetService.Platform,
-            base.Applier.Player.NetId
-        );
-        title.Add("PlayerName", $"[{playerName}] ");
-        return title;
-    }
 }

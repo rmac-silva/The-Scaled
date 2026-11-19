@@ -1,6 +1,7 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using TheScaled.TheScaledCode.Powers;
@@ -14,22 +15,16 @@ public class Nourishment : SetupCard
     {
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<StrengthPower>(2)];
-
-    protected override SetupCardType CardSetupType => SetupCardType.Debuff;
-
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new PowerVar<NourishmentSetup>(2)];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip];
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await AddSetup(cardPlay);
+        await PowerCmd.Apply<NourishmentSetup>(choiceContext, cardPlay.Target!, DynamicVars["NourishmentSetup"].IntValue, Owner.Creature, this);
     }
 
-    public override async Task AmbushEffect(AmbushMethodInfo info)
-    {
-        await PowerCmd.Apply<NourishmentPower>(info.choiceContext, info.target, DynamicVars["StrengthPower"].IntValue, Owner.Creature, this);
-        await PowerCmd.Apply<NourishmentPower>(info.choiceContext, Owner.Creature, DynamicVars["StrengthPower"].IntValue, Owner.Creature, this);
-    }
+    
     protected override void OnUpgrade()
     {
-        base.DynamicVars["StrengthPower"].UpgradeValueBy(1);
+        DynamicVars["NourishmentSetup"].UpgradeValueBy(1);
     }
 }

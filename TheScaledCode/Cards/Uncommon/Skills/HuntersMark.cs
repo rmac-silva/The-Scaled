@@ -13,16 +13,13 @@ public class HuntersMark : SetupCard
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new PowerVar<HuntersMarkPower>(1)
+        new PowerVar<HuntersMarkSetup>(1)
         ];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip];
 
-    protected override SetupCardType CardSetupType => SetupCardType.Buff;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await base.AddSetup(cardPlay);
     }
 
     protected override void OnUpgrade()
@@ -30,10 +27,5 @@ public class HuntersMark : SetupCard
         base.EnergyCost.UpgradeBy(-1);
     }
 
-    public override async Task AmbushEffect(AmbushMethodInfo info)
-    {
 
-        await PowerCmd.Apply<HuntersMarkPower>(info.choiceContext,info.target,base.DynamicVars["HuntersMarkPower"].IntValue,base.Owner.Creature,this);
-        return;
-    }
 }

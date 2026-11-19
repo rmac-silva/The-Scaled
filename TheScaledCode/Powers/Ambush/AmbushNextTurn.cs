@@ -7,10 +7,6 @@ using MegaCrit.Sts2.Core.HoverTips;
 
 namespace TheScaled.TheScaledCode.Powers;
 
-
-
-  
-  
 public class AmbushNextTurn : TheScaledPower
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

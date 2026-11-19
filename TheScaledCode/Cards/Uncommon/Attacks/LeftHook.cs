@@ -14,21 +14,9 @@ public class LeftHook : SetupCard
     {
     }
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new CardsVar(2)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)];
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
-    protected override SetupCardType CardSetupType => SetupCardType.Offensive;
-
-    public override async Task AmbushEffect(AmbushMethodInfo info)
-    {
-        List<CardModel> generatedCards = [];
-        for(int i = 0; i < DynamicVars.Cards.IntValue; i++)
-        {
-            CardModel card = CreateClone();
-            generatedCards.Add(card);
-        }
-        await CardPileCmd.AddGeneratedCardsToCombat(generatedCards,PileType.Hand,Owner);
-    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -41,11 +29,10 @@ public class LeftHook : SetupCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await AddSetup(cardPlay);
-        
+        (await PowerCmd.Apply<LeftHookSetup>(choiceContext, cardPlay.Target, 1, Owner.Creature, this))?.AddCardModel(this);         
     }
     protected override void OnUpgrade()
     {
-        base.DynamicVars.Damage.UpgradeValueBy(3);
+        DynamicVars.Damage.UpgradeValueBy(3);
     }
 }

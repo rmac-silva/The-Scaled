@@ -14,49 +14,15 @@ public class Inertia : SetupCard
     public Inertia() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
-    bool _applied = false;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered), new DynamicVar("DamageIncrease", 6m)];
-    protected override SetupCardType CardSetupType => SetupCardType.Offensive;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-        await AddSetup(cardPlay);
-        _applied = true;
-
+        await PowerCmd.Apply<InertiaSetup>(choiceContext, cardPlay.Target, 1, Owner.Creature, this);
     }
-
-    public override async Task AmbushEffect(AmbushMethodInfo info)
-    {
-        await CreatureCmd.Damage(
-            info.choiceContext,
-            info.target,
-            base.DynamicVars.Damage.IntValue,
-            MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,
-            base.Owner.Creature
-        );
-        _applied = false;
-        return;
-    }
-
-    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
-    {
-       if(side == CombatSide.Player && _applied)
-        {
-            DynamicVars.Damage.BaseValue += base.DynamicVars["DamageIncrease"].IntValue;
-        }
-        return Task.CompletedTask;
-    }
-
-    protected override void AfterCloned()
-    {
-        base.AfterCloned();
-        _applied = false;
-    }
-
-
 
     protected override void OnUpgrade()
     {

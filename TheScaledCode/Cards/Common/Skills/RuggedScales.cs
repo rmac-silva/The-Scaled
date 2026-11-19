@@ -17,23 +17,16 @@ public class RuggedScales : SetupCard
     protected override IEnumerable<DynamicVar> CanonicalVars => [new BlockVar(6, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move), new DynamicVar("AmbushEffect", 9)];
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [AmbushHoverTip];
 
-    protected override SetupCardType CardSetupType => SetupCardType.Buff;
-
-    public override async Task AmbushEffect(AmbushMethodInfo info)
-    {
-        await CreatureCmd.GainBlock(Owner.Creature,base.DynamicVars["AmbushEffect"].IntValue,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
-    }
-
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         
-        await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
-        await base.AddSetup(cardPlay);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+        await PowerCmd.Apply<BlockSetup>(choiceContext, cardPlay.Target!, DynamicVars["AmbushEffect"].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        base.DynamicVars.Block.UpgradeValueBy(3);
+        DynamicVars.Block.UpgradeValueBy(3);
     }
 }

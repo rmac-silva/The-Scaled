@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using TheScaled.TheScaledCode.Cards;
 
@@ -13,42 +14,20 @@ namespace TheScaled.TheScaledCode.Powers;
 public class AdvantagePower : TheScaledPower
 {
     private bool _hasTriggeredThisTurn = false;
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<SetupPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override decimal ModifyPowerAmountGivenAdditive(PowerModel power, Creature giver, decimal amount, Creature? target, CardModel? cardSource)
     {
-        if(cardPlay.Player.Creature != base.Owner)
-        {
-            return;
-        }
-
-        if(cardPlay.Target == null)
-        {
-            return;
-        }
-
-        if (cardPlay.Card is not SetupCard setupCard)
-        {
-            return;
-        }
-
-        if(_hasTriggeredThisTurn)
-        {
-            return;
-        }
-
-        var ambPwr = SetupCard.GetAmbushPowerForApplier(base.Owner,cardPlay.Target);
-
-        if(ambPwr != null)
+        if (power is ISetupPower && !_hasTriggeredThisTurn)
         {
             _hasTriggeredThisTurn = true;
-            var ambEntry = new AmbushEntry(setupCard.AmbushEffect,setupCard);
-            await ambPwr.AddAmbushEffect(ambEntry);
-            CardCmd.Preview(cardPlay.Card,1f,CardPreviewStyle.MessyLayout);
+            return amount + 1;
         }
+        return amount;
     }
+
 
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
