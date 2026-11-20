@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=3 uid="uid://c7yf8s5p2oepi"]
 
-[ext_resource type="PackedScene" uid="uid://d0j3q6q5py8q7" path="res://scenes/vfx/drown/vfx_drown_skull.tscn" id="1_a6bj1"]
+[ext_resource type="PackedScene" uid="uid://d0j3q6q5py8q7" path="res://TheScaled/scenes/vfx/drown/vfx_drown_skull.tscn" id="1_a6bj1"]
 [ext_resource type="Script" uid="uid://bmjyiib3kmn23" path="res://TheScaledCode/Nodes/Vfx/NDrownImpactVfx.cs" id="1_qc68c"]
-[ext_resource type="Material" uid="uid://plkxuxj6s7b3" path="res://materials/vfx/drown/vfx_drown_skull.tres" id="3_d0ihe"]
+[ext_resource type="Material" uid="uid://plkxuxj6s7b3" path="res://TheScaled/materials/vfx/drown/vfx_drown_skull.tres" id="3_d0ihe"]
 
 [sub_resource type="Curve" id="Curve_5geno"]
 _data = [Vector2(0, 0), 0.0, 15.245632, 0, 0, Vector2(0.20365536, 1), 0.0, 0.0, 0, 0, Vector2(0.60313314, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

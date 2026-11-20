@@ -6,7 +6,7 @@ namespace TheScaled.TheScaledCode.Powers;
 public class KeepSetupsPower : TheScaledPower
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<SetupPower>()];
+        [HoverTipFactory.FromPower<Ambush>()];
 
     public override PowerType Type => PowerType.Buff;
 

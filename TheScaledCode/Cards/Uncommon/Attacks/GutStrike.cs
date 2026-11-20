@@ -1,5 +1,4 @@
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -20,7 +19,7 @@ public class GutStrike : TheScaledCard
     }
     protected override HashSet<CardTag> CanonicalTags => new HashSet<CardTag> {CardTag.Strike};
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<SetupPower>()];
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new CalculationBaseVar(0),
         new ExtraDamageVar(6),
@@ -29,8 +28,7 @@ public class GutStrike : TheScaledCard
             target is null
                 ? 0m
                 : target.Powers
-            .OfType<Ambush>()
-            .FirstOrDefault(power => power.Applier == card.Owner.Creature)?.NumSetupsForCreature ?? 0m)
+            .OfType<ISetupPower>().Count())
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

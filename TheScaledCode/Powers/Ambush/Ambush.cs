@@ -4,14 +4,10 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
-using MegaCrit.Sts2.Core.Runs;
-using TheScaled.TheScaledCode.Cards;
 
 namespace TheScaled.TheScaledCode.Powers;
 
@@ -33,7 +29,7 @@ public class Ambush : TheScaledPower
 {
     public override PowerType Type => PowerType.None;
     public override PowerStackType StackType => PowerStackType.Counter;
-    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
+    public override PowerInstanceType InstanceType => PowerInstanceType.InstancedPerApplier;
     protected override bool IsVisibleInternal => LocalContext.IsMe(base.Applier);
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("AmbushThreshold", 0m), new DynamicVar("AmbushThresholdBase", 5m)];
@@ -98,7 +94,7 @@ public class Ambush : TheScaledPower
     private async Task TriggerAmbush(AmbushMethodInfo info)
     {
         //Fetch powers for creature that implement ISetupPower, and trigger their setup methods
-        var setupPowers = base.Owner.Powers.Where(p => p is ISetupPower && p.Applier == Applier).Cast<ISetupPower>();
+        var setupPowers = base.Owner.Powers.Where(p => p is ISetupPower && p.Applier == Applier).Cast<ISetupPower>().ToList();
         //Create Cloud VFX
         if(setupPowers.Count() != 0)
         {

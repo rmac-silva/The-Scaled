@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://ds75hjm851hwx"]
 
-[ext_resource type="Texture2D" uid="uid://8867hpi65hl4" path="res://Art/CharacterSelect/bg.png" id="1_v8i1w"]
-[ext_resource type="Texture2D" uid="uid://b7qhvstig4mul" path="res://Art/Vfx/light.png" id="2_u7i82"]
+[ext_resource type="Texture2D" uid="uid://bitb0vwh01j6a" path="res://TheScaled/assets/CharacterSelect/bg.png" id="1_v8i1w"]
+[ext_resource type="Texture2D" uid="uid://c2fjulcwxdlte" path="res://TheScaled/assets/Vfx/Preset/light.png" id="2_u7i82"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qoc78"]
 blend_mode = 1

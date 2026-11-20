@@ -15,7 +15,6 @@ namespace TheScaled.TheScaledCode.Afflictions
         public override bool CanAfflictUnplayableCards => false;
         public override bool HasExtraCardText => true;
         private const int MUD_CARDS = 1;
-        public new string OverlayPath => PathHelper.GetScenePathScaled("cards/overlays/afflictions/" + base.Id.Entry.ToLowerInvariant());
 
         public override bool CanAfflictCardType(CardType card)
         {

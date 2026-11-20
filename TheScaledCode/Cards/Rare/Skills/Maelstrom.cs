@@ -17,14 +17,20 @@ public class Maelstrom : TheScaledCard
         {
         }
 
+        private readonly List<Type> exceptions = new List<Type>()
+        {
+            typeof(StunSetup),
+
+        };
+
         protected override bool HasEnergyCostX => true;
 
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             [
-                new PowerVar<SetupPower>(2)
+                new PowerVar<Ambush>(2)
             ];
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>(),HoverTipFactory.FromPower<SetupPower>()];
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
 
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -34,47 +40,20 @@ public class Maelstrom : TheScaledCard
             int num = ResolveEnergyXValue();
 
            //Apply 2X random setups
+            var setupPool = ModelDb.AllPowers.Where(p => p is ISetupPower && !exceptions.Contains(p.GetType()));
             
-            var setupPool = base.Owner.Character.CardPool
-                    .GetUnlockedCards(
-                        base.Owner.UnlockState,
-                        base.Owner.RunState.CardMultiplayerConstraint)
-                    .OfType<SetupCard>().Where( (SetupCard c) => c.CanBeGeneratedInCombat);
 
-            var cardModels = CardFactory.GetForCombat(
-                base.Owner,
-                setupPool,
-                base.DynamicVars["SetupPower"].IntValue * num,
-                base.Owner.RunState.Rng.CombatCardGeneration);
-        
-
-            foreach(CardModel c in cardModels)
+            for (int i = 0; i < DynamicVars["SetupPower"].IntValue * num; i++)
             {
-
-                if (c is not SetupCard setupCard)
+                var randomSetup = Owner.RunState.Rng.GetRng(MegaCrit.Sts2.Core.Entities.Rngs.RunRngType.CombatCardSelection).NextItem(setupPool);
+                if(randomSetup == null)
                 {
                     continue;
                 }
-
-                var ambPwr = SetupCard.GetAmbushPowerForApplier(base.Owner.Creature,cardPlay.Target);
-
-                if(ambPwr is null)
-                {
-                    ambPwr = await PowerCmd.Apply<Ambush>(choiceContext,cardPlay.Target,1,base.Owner.Creature,this);
-                    if(ambPwr != null)
-                    {
-                        ambPwr.SetAmount(0);
-                    }
-                }
-
-                if(ambPwr != null && c is SetupCard)
-                {
-                    var ambEntry = new AmbushEntry(setupCard.AmbushEffect,setupCard);
-                    await ambPwr.AddAmbushEffect(ambEntry);
-                }
+                await PowerCmd.Apply(choiceContext, randomSetup, cardPlay.Target, 1, base.Owner.Creature, this);
             }
 
-
+            
             await PowerCmd.Apply<TriggerAmbushNextTurn>(choiceContext,cardPlay.Target,1,base.Owner.Creature,this);
 
         }

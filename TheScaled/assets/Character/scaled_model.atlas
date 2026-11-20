@@ -1,0 +1,72 @@
+scaled_model.png
+size:747,144
+filter:Linear,Linear
+scale:0.5
+Armor crotch
+bounds:703,13,34,36
+Feather
+bounds:444,51,57,25
+Fist
+bounds:167,3,37,38
+Fore arm
+bounds:543,80,62,51
+rotate:90
+Fore arm guard
+bounds:261,2,48,45
+Hat hat
+bounds:348,71,71,32
+rotate:90
+Hat insides
+bounds:348,49,65,20
+Hip feathers R
+bounds:115,2,50,33
+Left forearm
+bounds:596,83,59,40
+rotate:90
+Left shoulderish
+bounds:359,3,44,52
+rotate:90
+Neck
+bounds:436,78,63,64
+Right foot
+bounds:311,2,45,46
+rotate:90
+Shadow
+bounds:413,5,196,42
+Shoulderish guards
+bounds:611,3,41,54
+Tail
+bounds:198,49,148,93
+Top jaw
+bounds:115,37,105,43
+rotate:90
+bottom jaw
+bounds:160,43,99,36
+rotate:90
+eye
+bounds:415,50,27,20
+hip feathers L
+bounds:687,51,48,47
+kinda shoulder
+bounds:501,78,40,64
+left foot
+bounds:533,57,54,19
+left shin
+bounds:638,84,47,58
+left shoulder feathers
+bounds:503,51,28,25
+left thigh
+bounds:687,100,58,42
+right shin
+bounds:382,72,70,52
+rotate:90
+right thigh
+bounds:206,2,45,53
+rotate:90
+right toesies
+bounds:589,59,41,19
+shoulder feathers
+bounds:654,2,47,47
+torso Armor
+bounds:2,18,124,111
+rotate:90

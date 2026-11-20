@@ -1,13 +1,17 @@
+using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using TheScaled.TheScaledCode.Extensions;
 
 namespace TheScaled.TheScaledCode.Powers;
 
 public abstract class BaseSetupPower : TheScaledPower, ISetupPower
 {
+    public override string CustomPackedIconPath => $"setups/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
+    public override string CustomBigIconPath => $"setups/{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
     public override PowerType Type => PowerType.None;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => [HoverTipFactory.FromPower<Ambush>()];
 

@@ -22,6 +22,11 @@
 - Lacerate
 - From the depths
 - Death from Below
+- Blind Flail
+- Surprise!
+- Dive Bomb
+
+- Added Rock Paper Scissors
 - Hunter's Mark power icon
 - Suffocate power icon
 - Lead Boots power icon
@@ -33,3 +38,7 @@
 
 **Bugfixes**
 - Fixed Callback not behaving properly
+
+**TODO**
+- Rework Drown
+- Rework Muddied, from affliction to a power that tracks which cards are muddied. Change the visual to something like infection.

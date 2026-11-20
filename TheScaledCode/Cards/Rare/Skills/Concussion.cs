@@ -16,8 +16,6 @@ public class Concussion : SetupCard
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
     public override bool CanBeGeneratedInCombat => false;
 
-    protected override SetupCardType CardSetupType => SetupCardType.Stun;
-
     public Concussion() : base(3, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy)
     {
     }
@@ -25,24 +23,11 @@ public class Concussion : SetupCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-        await AddSetup(cardPlay);
+        await PowerCmd.Apply<StunSetup>(choiceContext, cardPlay.Target, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
         EnergyCost.UpgradeBy(-1);
-    }
-
-    public override async Task AmbushEffect(AmbushMethodInfo info)
-    {
-        if(info.target is null)
-        {
-            ModLog.Warning(this,"AmbushEffect called with null target");
-            return;
-        }
-
-        await CreatureCmd.Stun(info.target);
-
-        return;
     }
 }

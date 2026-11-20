@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dmbmi86o4myw8"]
 
-[ext_resource type="Texture2D" uid="uid://cxqgi3vqpvl10" path="res://Art/EnergyIcon/Gem.png" id="1_h4scr"]
+[ext_resource type="Texture2D" uid="uid://cdcqbaqcv5483" path="res://TheScaled/assets/EnergyIcon/Gem.png" id="1_h4scr"]
 [ext_resource type="FontFile" uid="uid://demryfuyhvysy" path="res://TheScaled/fonts/kreon_bold.ttf" id="2_d60p1"]
-[ext_resource type="Texture2D" uid="uid://5ixxlx8pg1ke" path="res://Art/EnergyIcon/Spinner.png" id="2_itm8g"]
-[ext_resource type="Texture2D" uid="uid://b4b3vk8og8mvt" path="res://Art/EnergyIcon/Outline.png" id="3_n0bad"]
+[ext_resource type="Texture2D" uid="uid://dffya1ctdxyrd" path="res://TheScaled/assets/EnergyIcon/Spinner.png" id="2_itm8g"]
+[ext_resource type="Texture2D" uid="uid://jujdwxrvyo7b" path="res://TheScaled/assets/EnergyIcon/Outline.png" id="3_n0bad"]
 
 [sub_resource type="FontVariation" id="FontVariation_ea61d"]
 base_font = ExtResource("2_d60p1")

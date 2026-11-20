@@ -74,17 +74,23 @@ public class TheScaled : PlaceholderCharacterModel
         return NodeFactory<NCreatureVisuals>.CreateFromScene("res://TheScaled/scenes/character/character.tscn");
     }
 
-    public override string CustomIconTexturePath => "character_icon_char_name.png".CharacterUiPath();
-    public override string? CustomIconOutlineTexturePath => "character_icon_char_name_ouline.png".CharacterUiPath();
+    public override string CustomIconTexturePath => "character_icon_scaled.png".CharacterUiPath();
+    public override string? CustomIconOutlineTexturePath => "character_icon_scaled_outline.png".CharacterUiPath();
     public override RelicIconData? CustomYummyCookie => new RelicIconData(Cookie_BigIconPath, Cookie_PackedIconPath, Cookie_PackedIconOutlinePath);
 
     private string Cookie_PackedIconPath => "cookie.png".RelicImagePath();
     private string Cookie_PackedIconOutlinePath => "cookie_outline.png".RelicImagePath();
     private string Cookie_BigIconPath => "cookie.png".RelicImagePath();
     public override string CustomCharacterSelectTransitionPath => "res://TheScaled/materials/transitions/the_scaled_transition_mat.tres";
-    public override string CustomCharacterSelectIconPath => "char_select_char_name.png".CharacterUiPath();
-    public override string CustomCharacterSelectLockedIconPath => "char_select_char_name_locked.png".CharacterUiPath();
-    public override string CustomMapMarkerPath => "map_marker_char_name.png".CharacterUiPath();
     public override string CustomEnergyCounterPath => "res://TheScaled/scenes/combat/energy_counters/scaled_energy_counter.tscn";
     public override string CustomCharacterSelectBg => "res://TheScaled/scenes/char_select/char_select_bg_scaled.tscn";
+    public override string CustomCharacterSelectIconPath => "char_select_scaled.png".CharacterUiPath();
+    public override string CustomCharacterSelectLockedIconPath => "char_select_scaled_locked.png".CharacterUiPath();
+    public override string CustomMapMarkerPath => "map_marker_scaled.png".CharacterUiPath();
+    public override string CustomArmRockTexturePath => "scaled_rock.png".CharacterUiPath();
+    public override string CustomArmPaperTexturePath => "scaled_paper.png".CharacterUiPath();
+    public override string CustomArmScissorsTexturePath => "scaled_scissors.png".CharacterUiPath();
+    public override string CustomArmPointingTexturePath => "scaled_point.png".CharacterUiPath();
+
+
 }
