@@ -1,19 +1,27 @@
-[gd_scene format=3 uid="uid://cvbrlr31yh26a"]
+[gd_scene load_steps=2 format=3 uid="uid://cvbrlr31yh26a"]
+
+[ext_resource type="SpineSkeletonDataResource" uid="uid://cme72ulummko4" path="res://TheScaled/assets/Character/scaled_skel_data.tres" id="1_461kx"]
 
 [node name="ScaledCharacter" type="Node2D"]
 
 [node name="Visuals" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("1_461kx")
+preview_skin = "Default"
+preview_animation = "idle_loop"
+preview_frame = false
+preview_time = 0.0
+scale = Vector2(0.85, 0.85)
 
 [node name="Bounds" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -158.0
-offset_top = -287.0
-offset_right = 138.0
-offset_bottom = -2.0
+offset_left = -174.0
+offset_top = -310.0
+offset_right = 181.0
+offset_bottom = 35.0
 
 [node name="CenterPos" type="Marker2D" parent="."]
 position = Vector2(2, -148)
 
 [node name="IntentPosition" type="Marker2D" parent="."]
-position = Vector2(24, -308)
+position = Vector2(29, -367)

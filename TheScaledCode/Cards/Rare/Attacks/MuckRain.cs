@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -20,10 +21,10 @@ public class MuckRain : TheScaledCard
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new CalculationBaseVar(0m),
+        new CalculationBaseVar(7m),
 		new ExtraDamageVar(7m),
-		new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) => PileType.Exhaust.GetPile(card.Owner).Cards.Count((CardModel c) => c is Mud))
-        ];
+		new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel _, Creature? _) => CombatManager.Instance.History.CardPlaysFinished.Count(cardPlay => cardPlay.CardPlay.Card is Mud && cardPlay.CardPlay.Card.Owner == Owner) ),
+    ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -36,6 +37,7 @@ public class MuckRain : TheScaledCard
 
     protected override void OnUpgrade()
     {
+        base.DynamicVars.CalculationBase.UpgradeValueBy(3);
         base.DynamicVars.ExtraDamage.UpgradeValueBy(3);
     }
 
